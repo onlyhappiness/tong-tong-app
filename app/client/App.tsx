@@ -57,8 +57,6 @@ const MoveBoxSystem = (entities, {time}) => {
 };
 
 const App = () => {
-  // console.log('SCREEN_WIDTH::: ', SCREEN_WIDTH / SCREEN_WIDTH);
-
   const gameEngine = useRef(null);
 
   const setupWorld = () => {
