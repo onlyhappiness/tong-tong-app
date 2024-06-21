@@ -1,14 +1,14 @@
 import React, {useEffect, useRef} from 'react';
 import {Animated, StyleSheet, View} from 'react-native';
 
-const App = () => {
+const Egg = () => {
   const scaleY = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     const breathingAnimation = Animated.loop(
       Animated.sequence([
         Animated.timing(scaleY, {
-          toValue: 1.2,
+          toValue: 1.1,
           duration: 700,
           useNativeDriver: true,
         }),
@@ -26,7 +26,7 @@ const App = () => {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require('../assets/egg.png')}
+        source={require('../assets/test.png')}
         style={[styles.box, {transform: [{scaleY}]}]}
         resizeMode="contain"
       />
@@ -39,13 +39,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   box: {
     width: 100,
     height: 100,
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
   },
 });
 
-export default App;
+export default Egg;
