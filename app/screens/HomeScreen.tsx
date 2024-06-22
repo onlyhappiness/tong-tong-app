@@ -4,15 +4,19 @@ import {screenWidth} from '@/constants/screenSize';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 
 const HomeScreen = () => {
   const gameEngine = useRef(null);
-  //   const [systemsActive, setSystemsActive] = useState(true);
-  //   const [backgroundColor, setBackgroundColor] = useState('#fff');
 
-  const [character, setCharacter] = useState('egg');
+  const [status, setStatus] = useState<any>('start');
+
+  const [character, setCharacter] = useState('chick');
+
+  const handleCharacterPress = () => {
+    // console.log('test:: ');
+  };
 
   const setupWorld = (characterType: string) => {
     const selectedCharacter = characterTypes[characterType];
@@ -29,6 +33,9 @@ const HomeScreen = () => {
         idleImages: selectedCharacter.idleImages,
         image: selectedCharacter.idleImages[0], // 초기 이미지를 멈춤 상태 이미지로 설정
         renderer: Character,
+
+        // 캐릭터 이벤트
+        onPress: handleCharacterPress,
       },
     };
   };
@@ -44,9 +51,19 @@ const HomeScreen = () => {
           ref={gameEngine}
           style={styles.container}
           systems={[MoveCharacterSystem]}
-          entities={entities}
+          entities={{...entities, status}}
         />
       )}
+
+      <View style={{padding: 30}}>
+        <Button
+          title="테스트"
+          onPress={() => {
+            setStatus('stop');
+            // setCharacter('egg');
+          }}
+        />
+      </View>
     </View>
   );
 };

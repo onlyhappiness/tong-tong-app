@@ -26,7 +26,7 @@ const Egg = () => {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require('../assets/test.png')}
+        source={require('../assets/Egg_item.png')}
         style={[styles.box, {transform: [{scaleY}]}]}
         resizeMode="contain"
       />

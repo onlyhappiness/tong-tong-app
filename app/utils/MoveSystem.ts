@@ -1,8 +1,16 @@
 import {screenWidth} from '../constants/screenSize';
 
 const MoveCharacterSystem = (entities: any, {time}: any) => {
+  // console.log('entities:: ', entities);
+
   const speed = 0.05; // 속도 값을 조절하여 이동 속도 변경
   const character = entities.character;
+
+  console.log('status:: ', entities.character.status);
+
+  if (character.status === 'stop') {
+    character.state = 0;
+  }
 
   // 일정 시간마다 상태를 변경하도록 설정
   if (!character.nextChangeTime || time.current > character.nextChangeTime) {
