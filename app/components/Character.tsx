@@ -1,4 +1,4 @@
-import {screenHeight} from '@/constants/screenSize';
+import {windowHeight} from '@/constants/screenSize';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -14,7 +14,13 @@ const Character = (props: any) => {
   const width = props.size[0];
   const height = props.size[1];
   const x = props.position[0] - width / 2;
-  const y = screenHeight / 1.8;
+  const y =
+    props.size[0] === 70
+      ? (windowHeight * 0.7) / 1.3
+      : (windowHeight * 0.7) / 1.3;
+
+  // console.log('screenHeight:: ', screenHeight);
+  // console.log('windowHeight:::', windowHeight);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,7 +45,7 @@ const Character = (props: any) => {
   };
 
   return (
-    <View style={[styles.container, {left: x, top: y}]}>
+    <View style={[styles.container, {left: x, top: y, zIndex: 50}]}>
       <TouchableWithoutFeedback onPress={handlePress}>
         <View>
           {showDialog && (
@@ -60,7 +66,6 @@ const Character = (props: any) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   character: {
     position: 'absolute',

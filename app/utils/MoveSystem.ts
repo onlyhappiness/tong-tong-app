@@ -1,4 +1,4 @@
-import {screenWidth} from '../constants/screenSize';
+import {windowWidth} from '../constants/screenSize';
 
 const MoveCharacterSystem = (entities: any, {time}: any) => {
   // console.log('entities:: ', entities);
@@ -6,9 +6,7 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
   const speed = 0.05; // 속도 값을 조절하여 이동 속도 변경
   const character = entities.character;
 
-  console.log('status:: ', entities.character.status);
-
-  if (character.status === 'stop') {
+  if (entities.status === 'stop') {
     character.state = 0;
   }
 
@@ -19,6 +17,7 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
 
     // 0: 멈춤, 1: 왼쪽, 2: 오른쪽
     character.state = Math.floor(Math.random() * 3);
+    // character.state = 2;
   }
 
   // 애니메이션 프레임 변경 (0.2초마다 변경)
@@ -51,9 +50,10 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
   // 화면의 왼쪽 끝 또는 오른쪽 끝에 도달하면 상태를 멈춤으로 변경
   if (character.position[0] - character.size[0] / 2 <= 0) {
     character.state = 2; // 오른쪽으로 이동
-  } else if (character.position[0] + character.size[0] / 2 >= screenWidth) {
+  } else if (character.position[0] + character.size[0] / 2 >= windowWidth) {
     character.state = 1; // 왼쪽으로 이동
   }
+  // console.log(character.position[0], character.size[0]);
 
   // 캐릭터 이동
   if (character.state === 1) {

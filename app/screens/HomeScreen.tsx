@@ -1,6 +1,7 @@
+import Background from '@/components/Background';
 import Character from '@/components/Character';
 import Egg from '@/components/Egg';
-import {screenWidth} from '@/constants/screenSize';
+import {windowWidth} from '@/constants/screenSize';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useRef, useState} from 'react';
@@ -8,23 +9,29 @@ import {Button, StyleSheet, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 
 const HomeScreen = () => {
-  const gameEngine = useRef(null);
+  const gameEngine = useRef<any>(null);
 
-  const [status, setStatus] = useState<any>('start');
+  const [character, setCharacter] = useState<any>('chick');
 
-  const [character, setCharacter] = useState('chick');
+  const handleChangeStatus = (state: string) => {
+    const currentEntities = gameEngine.current.props;
+    const entities = currentEntities.entities;
+    entities.status = state;
 
-  const handleCharacterPress = () => {
-    // console.log('test:: ');
+    // console.log('currentEntities:: ', entities);
   };
 
   const setupWorld = (characterType: string) => {
     const selectedCharacter = characterTypes[characterType];
 
     return {
+      background: {
+        image: require('../assets/farm/background-remove.png'),
+        renderer: Background,
+      },
       character: {
-        position: [screenWidth / 2, 200],
-        size: [70, 70],
+        position: [windowWidth / 2, 200],
+        size: [selectedCharacter.size, selectedCharacter.size],
         state: 0,
         imageIndex: 0,
         leftImages: selectedCharacter.leftImages,
@@ -35,7 +42,10 @@ const HomeScreen = () => {
         renderer: Character,
 
         // 캐릭터 이벤트
-        onPress: handleCharacterPress,
+        // onPress: handleCharacterPress,
+        onPress: () => {
+          handleChangeStatus('stop');
+        },
       },
     };
   };
@@ -43,27 +53,19 @@ const HomeScreen = () => {
   const entities = setupWorld(character);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container]}>
       {character === 'egg' ? (
         <Egg />
       ) : (
-        <GameEngine
-          ref={gameEngine}
-          style={styles.container}
-          systems={[MoveCharacterSystem]}
-          entities={{...entities, status}}
-        />
+        <View style={styles.engineContainer}>
+          <GameEngine
+            ref={gameEngine}
+            style={[styles.engine]}
+            systems={[MoveCharacterSystem]}
+            entities={entities}
+          />
+        </View>
       )}
-
-      <View style={{padding: 30}}>
-        <Button
-          title="테스트"
-          onPress={() => {
-            setStatus('stop');
-            // setCharacter('egg');
-          }}
-        />
-      </View>
     </View>
   );
 };
@@ -73,9 +75,42 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  engineContainer: {
+    width: '100%',
+    height: '70%',
+  },
+  engine: {
+    flex: 1,
+    backgroundColor: 'gray',
+  },
   character: {
     position: 'absolute',
   },
 });
+
+const test = () => {
+  return (
+    <View
+      style={{
+        padding: 30,
+        // position: 'absolute',
+        top: 0,
+        backgroundColor: 'yellow',
+      }}>
+      <Button
+        title="멈춤"
+        onPress={() => {
+          handleChangeStatus('stop');
+        }}
+      />
+      <Button
+        title="다시 움직이기"
+        onPress={() => {
+          handleChangeStatus('start');
+        }}
+      />
+    </View>
+  );
+};
 
 export default HomeScreen;
