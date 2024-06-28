@@ -7,8 +7,10 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import Egg from './Egg';
 
 const Character = (props: any) => {
+  // console.log('캐릭터 props;:: ', props);
   const [showDialog, setShowDialog] = useState(false);
 
   const width = props.size[0];
@@ -16,11 +18,8 @@ const Character = (props: any) => {
   const x = props.position[0] - width / 2;
   const y =
     props.size[0] === 70
-      ? (windowHeight * 0.7) / 1.3
-      : (windowHeight * 0.7) / 1.3;
-
-  // console.log('screenHeight:: ', screenHeight);
-  // console.log('windowHeight:::', windowHeight);
+      ? (windowHeight * 0.7) / 1
+      : (windowHeight * 0.7) / 1.1;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -53,10 +52,16 @@ const Character = (props: any) => {
               <Text style={styles.dialogText}>Hello!</Text>
             </View>
           )}
-          <Image
-            source={props.image}
-            style={[styles.character, {width: width, height: height}]}
-          />
+          {props.type === 'egg' ? (
+            <View style={{width: '100%'}}>
+              <Egg />
+            </View>
+          ) : (
+            <Image
+              source={props.image}
+              style={[styles.character, {width: width, height: height}]}
+            />
+          )}
         </View>
       </TouchableWithoutFeedback>
     </View>

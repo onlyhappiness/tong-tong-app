@@ -1,11 +1,10 @@
 import Background from '@/components/Background';
 import Character from '@/components/Character';
-import Egg from '@/components/Egg';
 import {windowWidth} from '@/constants/screenSize';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useRef, useState} from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 
 const HomeScreen = () => {
@@ -13,23 +12,19 @@ const HomeScreen = () => {
 
   const [character, setCharacter] = useState<any>('chick');
 
+  // 펫 상태 변경
   const handleChangeStatus = (state: string) => {
     const currentEntities = gameEngine.current.props;
     const entities = currentEntities.entities;
     entities.status = state;
-
-    // console.log('currentEntities:: ', entities);
   };
 
   const setupWorld = (characterType: string) => {
     const selectedCharacter = characterTypes[characterType];
 
     return {
-      background: {
-        image: require('../assets/farm/background-remove.png'),
-        renderer: Background,
-      },
       character: {
+        type: character,
         position: [windowWidth / 2, 200],
         size: [selectedCharacter.size, selectedCharacter.size],
         state: 0,
@@ -50,22 +45,25 @@ const HomeScreen = () => {
     };
   };
 
-  const entities = setupWorld(character);
+  const entities = character ? setupWorld(character) : {};
 
   return (
     <View style={[styles.container]}>
-      {character === 'egg' ? (
-        <Egg />
-      ) : (
-        <View style={styles.engineContainer}>
+      <View style={styles.engineContainer}>
+        <Background image={require('../assets/farm/background.png')} />
+        {character && (
           <GameEngine
             ref={gameEngine}
             style={[styles.engine]}
             systems={[MoveCharacterSystem]}
             entities={entities}
           />
-        </View>
-      )}
+        )}
+      </View>
+
+      <View style={styles.bottom}>
+        <Text>Bottom</Text>
+      </View>
     </View>
   );
 };
@@ -77,14 +75,19 @@ const styles = StyleSheet.create({
   },
   engineContainer: {
     width: '100%',
-    height: '70%',
+    height: '85%',
+    // borderWidth: 3,
+    // borderBlockColor: 'red',
   },
   engine: {
     flex: 1,
-    backgroundColor: 'gray',
   },
   character: {
     position: 'absolute',
+  },
+  bottom: {
+    backgroundColor: '#DEAF85',
+    height: '15%',
   },
 });
 

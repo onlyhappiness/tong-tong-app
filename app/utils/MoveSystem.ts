@@ -4,9 +4,14 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
   // console.log('entities:: ', entities);
 
   const speed = 0.05; // 속도 값을 조절하여 이동 속도 변경
-  const character = entities.character;
+  const character = entities?.character;
 
   if (entities.status === 'stop') {
+    character.state = 0;
+  }
+
+  // 캐릭터가 알이면 움직이지 않기
+  if (entities.character.type === 'egg') {
     character.state = 0;
   }
 
@@ -17,7 +22,6 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
 
     // 0: 멈춤, 1: 왼쪽, 2: 오른쪽
     character.state = Math.floor(Math.random() * 3);
-    // character.state = 2;
   }
 
   // 애니메이션 프레임 변경 (0.2초마다 변경)

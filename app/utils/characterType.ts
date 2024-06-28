@@ -1,8 +1,9 @@
 const characterTypes: any = {
   egg: {
-    idleImages: [],
-    leftImages: [],
-    rightImages: [],
+    size: 100,
+    idleImages: [require('../assets/egg.png')],
+    leftImages: [require('../assets/egg.png')],
+    rightImages: [require('../assets/egg.png')],
   },
   chick: {
     size: 70,

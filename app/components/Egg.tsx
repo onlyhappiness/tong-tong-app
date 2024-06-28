@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 
 const Egg = () => {
   const scaleY = useRef(new Animated.Value(1)).current;
@@ -8,7 +8,7 @@ const Egg = () => {
     const breathingAnimation = Animated.loop(
       Animated.sequence([
         Animated.timing(scaleY, {
-          toValue: 1.1,
+          toValue: 1.2,
           duration: 700,
           useNativeDriver: true,
         }),
@@ -24,26 +24,23 @@ const Egg = () => {
   }, [scaleY]);
 
   return (
-    <View style={styles.container}>
-      <Animated.Image
-        source={require('../assets/Egg_item.png')}
-        style={[styles.box, {transform: [{scaleY}]}]}
-        resizeMode="contain"
-      />
-    </View>
+    <Animated.Image
+      source={require('../assets/egg.png')}
+      style={[styles.egg, {transform: [{scaleY}]}]}
+      resizeMode="contain"
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  box: {
-    width: 100,
-    height: 100,
-    // backgroundColor: 'blue',
+  egg: {
+    // position: 'absolute',
+    width: 80,
+    height: 80,
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // backgroundColor: 'red',
+    // right: windowWidth / 2,
   },
 });
 
