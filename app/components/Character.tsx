@@ -10,7 +10,6 @@ import {
 import Egg from './Egg';
 
 const Character = (props: any) => {
-  // console.log('캐릭터 props;:: ', props);
   const [showDialog, setShowDialog] = useState(false);
 
   const width = props.size[0];
@@ -18,7 +17,7 @@ const Character = (props: any) => {
   const x = props.position[0] - width / 2;
   const y =
     props.size[0] === 70
-      ? (windowHeight * 0.7) / 1
+      ? (windowHeight * 0.7) / 1.25
       : (windowHeight * 0.7) / 1.1;
 
   useEffect(() => {
@@ -29,6 +28,7 @@ const Character = (props: any) => {
         }
         return prev;
       });
+      // setPetStatus(gameEngine, 'start');
     }, 5000);
 
     return () => clearInterval(interval);

@@ -4,6 +4,7 @@ import React, {useMemo} from 'react';
 
 import {mainNavigations} from '@/constants/navigations';
 import Login from '@/screens/auth/Login';
+import useGetAuthLogin from '@/services/queries/auth/useGetAuthLogin';
 import HomeScreen from '../screens/HomeScreen';
 
 const AuthStack = () => {
@@ -24,6 +25,8 @@ const MainStack = () => {
 };
 
 const Navigation = () => {
+  useGetAuthLogin();
+
   const Stack = useMemo(() => createNativeStackNavigator(), []);
 
   return (

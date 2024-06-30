@@ -7,13 +7,11 @@ interface IMainLayout {
   extraChildren?: React.ReactNode;
 }
 export default ({children, extraChildren}: IMainLayout) => {
-  const {top, bottom} = useSafeAreaInsets();
+  const {top} = useSafeAreaInsets();
 
   return (
     <View style={styles.layout}>
-      <View style={[styles.container, {paddingTop: top, bottom: bottom}]}>
-        {children}
-      </View>
+      <View style={[styles.container, {paddingTop: top}]}>{children}</View>
       {extraChildren}
     </View>
   );
@@ -22,7 +20,7 @@ export default ({children, extraChildren}: IMainLayout) => {
 const styles = StyleSheet.create({
   layout: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#7F7FD5',
   },
   container: {
     flex: 1,

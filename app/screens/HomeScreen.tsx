@@ -1,6 +1,7 @@
 import Background from '@/components/Background';
 import Character from '@/components/Character';
 import {windowWidth} from '@/constants/screenSize';
+import MainLayout from '@/layouts/MainLayout';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useRef, useState} from 'react';
@@ -8,13 +9,13 @@ import {Button, StyleSheet, Text, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 
 const HomeScreen = () => {
-  const gameEngine = useRef<any>(null);
+  const gameRef = useRef<any>(null);
 
   const [character, setCharacter] = useState<any>('chick');
 
-  // 펫 상태 변경
+  // // 펫 상태 변경
   const handleChangeStatus = (state: string) => {
-    const currentEntities = gameEngine.current.props;
+    const currentEntities = gameRef.current.props;
     const entities = currentEntities.entities;
     entities.status = state;
   };
@@ -48,12 +49,13 @@ const HomeScreen = () => {
   const entities = character ? setupWorld(character) : {};
 
   return (
-    <View style={[styles.container]}>
+    <MainLayout>
       <View style={styles.engineContainer}>
+        <Header />
         <Background image={require('../assets/farm/background.png')} />
         {character && (
           <GameEngine
-            ref={gameEngine}
+            ref={gameRef}
             style={[styles.engine]}
             systems={[MoveCharacterSystem]}
             entities={entities}
@@ -64,7 +66,7 @@ const HomeScreen = () => {
       <View style={styles.bottom}>
         <Text>Bottom</Text>
       </View>
-    </View>
+    </MainLayout>
   );
 };
 
@@ -90,6 +92,48 @@ const styles = StyleSheet.create({
     height: '15%',
   },
 });
+
+const Header = () => {
+  return (
+    <View style={{padding: 10}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          gap: 30,
+          marginTop: 10,
+        }}>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: 'white',
+            flex: 1,
+            paddingVertical: 15,
+          }}>
+          <Text>날씨</Text>
+        </View>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: 'white',
+            flex: 1,
+            paddingVertical: 15,
+          }}>
+          <Text>시간</Text>
+        </View>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: 'white',
+            flex: 1,
+            paddingVertical: 15,
+          }}>
+          <Text>포인트</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const test = () => {
   return (

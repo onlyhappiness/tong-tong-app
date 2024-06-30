@@ -1,10 +1,10 @@
 import {windowWidth} from '../constants/screenSize';
 
 const MoveCharacterSystem = (entities: any, {time}: any) => {
-  // console.log('entities:: ', entities);
-
   const speed = 0.05; // 속도 값을 조절하여 이동 속도 변경
   const character = entities?.character;
+
+  // console.log('entities:: ', entities.status);
 
   if (entities.status === 'stop') {
     character.state = 0;

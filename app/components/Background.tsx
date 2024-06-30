@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
   background: {
-    top: (windowHeight * 0.7) / 1.05,
+    top: (windowHeight * 0.7) / 1.13,
     width: '100%',
     height: '28%',
   },
