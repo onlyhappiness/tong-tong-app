@@ -1,24 +1,23 @@
 import Background from '@/components/Background';
+import BottomTab from '@/components/BottomTab';
 import Character from '@/components/Character';
 import {windowWidth} from '@/constants/screenSize';
+import {useGameActions} from '@/data/gameStore';
 import MainLayout from '@/layouts/MainLayout';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 
 const HomeScreen = () => {
-  const gameRef = useRef<any>(null);
+  const {setGameEngineRef} = useGameActions();
 
-  const [character, setCharacter] = useState<any>('chick');
+  const [entities, setEntities] = useState({});
 
-  // // 펫 상태 변경
-  const handleChangeStatus = (state: string) => {
-    const currentEntities = gameRef.current.props;
-    const entities = currentEntities.entities;
-    entities.status = state;
-  };
+  const [engineKey, setEngineKey] = useState(0);
+
+  const [character, setCharacter] = useState<string | null>('egg');
 
   const setupWorld = (characterType: string) => {
     const selectedCharacter = characterTypes[characterType];
@@ -38,34 +37,46 @@ const HomeScreen = () => {
         renderer: Character,
 
         // 캐릭터 이벤트
-        // onPress: handleCharacterPress,
-        onPress: () => {
-          handleChangeStatus('stop');
-        },
+        onPress: () => {},
       },
     };
   };
 
-  const entities = character ? setupWorld(character) : {};
+  useEffect(() => {
+    if (character) {
+      setEntities(setupWorld(character));
+      setEngineKey(prevKey => prevKey + 1); // key를 변경하여 GameEngine을 다시 렌더링
+    }
+  }, [character]);
 
   return (
     <MainLayout>
       <View style={styles.engineContainer}>
         <Header />
         <Background image={require('../assets/farm/background.png')} />
+
         {character && (
           <GameEngine
-            ref={gameRef}
+            key={engineKey} // key prop을 추가하여 엔진을 다시 렌더링
+            ref={ref => {
+              setGameEngineRef(ref);
+            }}
             style={[styles.engine]}
             systems={[MoveCharacterSystem]}
             entities={entities}
           />
         )}
+
+        <Button
+          title="캐릭터 테스트"
+          onPress={() => {
+            console.log('테스트');
+            setCharacter('chick');
+          }}
+        />
       </View>
 
-      <View style={styles.bottom}>
-        <Text>Bottom</Text>
-      </View>
+      <BottomTab />
     </MainLayout>
   );
 };
@@ -86,10 +97,6 @@ const styles = StyleSheet.create({
   },
   character: {
     position: 'absolute',
-  },
-  bottom: {
-    backgroundColor: '#DEAF85',
-    height: '15%',
   },
 });
 
@@ -131,31 +138,6 @@ const Header = () => {
           <Text>포인트</Text>
         </View>
       </View>
-    </View>
-  );
-};
-
-const test = () => {
-  return (
-    <View
-      style={{
-        padding: 30,
-        // position: 'absolute',
-        top: 0,
-        backgroundColor: 'yellow',
-      }}>
-      <Button
-        title="멈춤"
-        onPress={() => {
-          handleChangeStatus('stop');
-        }}
-      />
-      <Button
-        title="다시 움직이기"
-        onPress={() => {
-          handleChangeStatus('start');
-        }}
-      />
     </View>
   );
 };

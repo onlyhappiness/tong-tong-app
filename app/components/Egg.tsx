@@ -34,12 +34,14 @@ const Egg = () => {
 
 const styles = StyleSheet.create({
   egg: {
-    // position: 'absolute',
+    position: 'absolute',
+    top: 0,
     width: 80,
     height: 80,
     // justifyContent: 'center',
     // alignItems: 'center',
-    // backgroundColor: 'red',
+    backgroundColor: 'red',
+
     // right: windowWidth / 2,
   },
 });

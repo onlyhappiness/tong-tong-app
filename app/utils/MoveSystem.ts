@@ -4,19 +4,23 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
   const speed = 0.05; // 속도 값을 조절하여 이동 속도 변경
   const character = entities?.character;
 
-  // console.log('entities:: ', entities.status);
+  console.log('entities:: ', entities);
+
+  if (!character) {
+    return entities;
+  }
 
   if (entities.status === 'stop') {
     character.state = 0;
   }
 
   // 캐릭터가 알이면 움직이지 않기
-  if (entities.character.type === 'egg') {
+  if (entities.character?.type === 'egg') {
     character.state = 0;
   }
 
   // 일정 시간마다 상태를 변경하도록 설정
-  if (!character.nextChangeTime || time.current > character.nextChangeTime) {
+  if (!character?.nextChangeTime || time.current > character?.nextChangeTime) {
     // 3초 후 상태 변경
     character.nextChangeTime = time.current + 3000;
 
@@ -57,7 +61,6 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
   } else if (character.position[0] + character.size[0] / 2 >= windowWidth) {
     character.state = 1; // 왼쪽으로 이동
   }
-  // console.log(character.position[0], character.size[0]);
 
   // 캐릭터 이동
   if (character.state === 1) {

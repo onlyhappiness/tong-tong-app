@@ -1,4 +1,6 @@
 import {windowHeight} from '@/constants/screenSize';
+import {useGameState} from '@/data/gameStore';
+import {setPetStatus} from '@/utils/petStatus';
 import React, {useEffect, useState} from 'react';
 import {
   Image,
@@ -10,6 +12,8 @@ import {
 import Egg from './Egg';
 
 const Character = (props: any) => {
+  const gameRef = useGameState();
+
   const [showDialog, setShowDialog] = useState(false);
 
   const width = props.size[0];
@@ -28,6 +32,7 @@ const Character = (props: any) => {
         }
         return prev;
       });
+      setPetStatus(gameRef, 'start');
       // setPetStatus(gameEngine, 'start');
     }, 5000);
 
@@ -35,12 +40,13 @@ const Character = (props: any) => {
   }, []);
 
   const handlePress = () => {
-    console.log('Character pressed');
+    console.log('Character pressed', gameRef);
 
     setShowDialog(!showDialog);
-    if (props.onPress) {
-      props.onPress();
-    }
+    setPetStatus(gameRef, 'stop');
+    // if (props.onPress) {
+    //   props.onPress();
+    // }
   };
 
   return (
