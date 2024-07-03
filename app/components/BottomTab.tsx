@@ -1,6 +1,6 @@
 import {useGameActions, useGameState} from '@/data/gameStore';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 
 const BottomTab = () => {
   const gameRef = useGameState();
@@ -9,14 +9,18 @@ const BottomTab = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Bottom</Text>
+      {/* <Text>Bottom</Text> */}
       <Button
-        title="테스트"
+        title="하트"
         onPress={() => {
           console.log('gameRef::: ', gameRef);
-          setCharacter('chick');
+          // setCharacter('chick');
         }}
       />
+
+      <Button title="씻겨주기" />
+
+      <Button title="먹이주기" />
     </View>
   );
 };
@@ -25,6 +29,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#DEAF85',
     height: '15%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
 });
 
