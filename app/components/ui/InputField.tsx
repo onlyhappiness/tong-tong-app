@@ -1,4 +1,5 @@
 import {screenHeight} from '@/constants/screenSize';
+import {mergeRefs} from '@/utils/func';
 import React, {ForwardedRef, ReactNode, forwardRef, useRef} from 'react';
 import {
   Pressable,
@@ -32,11 +33,12 @@ const InputField = forwardRef(
           <View style={Boolean(icon) && styles.innerContainer}>
             {icon}
             <TextInput
-              // ref={}
+              ref={ref ? mergeRefs(innerRef, ref) : innerRef}
               style={styles.input}
               autoCapitalize="none"
               spellCheck={false}
               autoCorrect={false}
+              // placeholderTextColor={'#333333'}
               {...props}
             />
           </View>
@@ -48,8 +50,8 @@ const InputField = forwardRef(
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: 'gray',
+    borderWidth: 1.2,
+    borderColor: '#e2e8f0',
     width: '100%',
     justifyContent: 'center',
     paddingHorizontal: screenHeight > 700 ? 10 : 8,

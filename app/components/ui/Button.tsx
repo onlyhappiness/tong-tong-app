@@ -1,3 +1,4 @@
+import {BUTTON} from '@/constants/color';
 import {screenHeight} from '@/constants/screenSize';
 import React, {ReactNode} from 'react';
 import {
@@ -5,15 +6,16 @@ import {
   PressableProps,
   StyleProp,
   StyleSheet,
-  Text,
   TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
+import Text from './Text';
 
 interface ButtonProps extends PressableProps {
   label: string;
   variant?: 'filled' | 'outlined';
+  color?: 'primary' | 'secondary' | 'highlight';
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   icon?: ReactNode;
@@ -22,6 +24,7 @@ interface ButtonProps extends PressableProps {
 export default ({
   label,
   variant = 'filled',
+  color = 'primary',
   containerStyle = null,
   textStyle = null,
   icon = null,
@@ -31,11 +34,18 @@ export default ({
     <Pressable
       style={({pressed}) => [
         styles.container,
-        pressed ? styles[`${variant}Pressed`] : styles[variant],
+        pressed
+          ? [styles[`${variant}Pressed`], styles[`${color}Pressed`]]
+          : [styles[variant], styles[color]],
         containerStyle,
-      ]}>
+      ]}
+      {...props}>
       <View style={styles.button}>
-        <Text>{label}</Text>
+        <Text
+          variant="button"
+          textStyle={[styles[`${variant}Text`], textStyle]}>
+          {label}
+        </Text>
       </View>
     </Pressable>
   );
@@ -45,23 +55,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  filled: {
-    backgroundColor: 'gray',
     borderRadius: 30,
-  },
-  outlined: {
-    borderColor: '',
-    borderWidth: 1,
-  },
-  filledPressed: {
-    backgroundColor: 'white',
-    borderRadius: 30,
-  },
-  outlinedPressed: {
-    borderColor: '',
-    borderWidth: 1,
-    opacity: 0.5,
   },
   button: {
     width: '100%',
@@ -72,5 +66,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
+  },
+  filled: {},
+  filledPressed: {},
+  filledText: {},
+
+  outlined: {
+    borderColor: '',
+    borderWidth: 1,
+  },
+  outlinedPressed: {},
+  outlinedText: {},
+
+  // color
+  primary: {
+    backgroundColor: BUTTON.primary,
+  },
+  primaryPressed: {
+    backgroundColor: BUTTON.primary_hover,
+  },
+  secondary: {
+    backgroundColor: BUTTON.secondary,
+  },
+  secondaryPressed: {
+    backgroundColor: BUTTON.secondary_hover,
+  },
+  highlight: {
+    backgroundColor: BUTTON.highlight,
+  },
+  highlightPressed: {
+    backgroundColor: BUTTON.highlight_hover,
   },
 });

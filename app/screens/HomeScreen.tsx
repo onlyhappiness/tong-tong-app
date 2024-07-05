@@ -17,7 +17,7 @@ const HomeScreen = () => {
 
   const [engineKey, setEngineKey] = useState(0);
 
-  const [character, setCharacter] = useState<string | null>('egg');
+  const [character, setCharacter] = useState<string | null>('chick');
 
   const setupWorld = (characterType: string) => {
     const selectedCharacter = characterTypes[characterType];
