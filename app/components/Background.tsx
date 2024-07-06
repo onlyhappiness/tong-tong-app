@@ -40,7 +40,7 @@ const Background = (props: any) => {
             style={[
               styles.star,
               {
-                top: `${Math.random() * 40}%`,
+                top: `${Math.random() * 50}%`,
                 left: `${Math.random() * 100}%`,
               },
             ]}
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   weather: {
     position: 'absolute',
-    height: '80%',
+    height: '75%',
     width: '100%',
   },
   stars: {
@@ -75,15 +75,15 @@ const styles = StyleSheet.create({
   },
   star: {
     position: 'absolute',
-    width: 2,
-    height: 2,
+    width: 3,
+    height: 3,
     backgroundColor: 'white',
     borderRadius: 1,
   },
   background: {
-    top: (windowHeight * 0.7) / 1.13,
+    top: (windowHeight * 0.7) / 1.25,
     width: '100%',
-    height: '28%',
+    height: '30%',
   },
 });
 

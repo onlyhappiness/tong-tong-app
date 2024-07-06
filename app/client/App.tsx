@@ -1,6 +1,5 @@
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import React from 'react';
-import Toast from 'react-native-toast-message';
 import Navigation from './Navigation';
 
 const queryClient = new QueryClient({
@@ -16,7 +15,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Navigation />
-      <Toast />
+      {/* <Toast /> */}
     </QueryClientProvider>
   );
 };

@@ -1,13 +1,15 @@
 import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Character from '@/components/Character';
+import Button from '@/components/ui/Button';
 import {windowWidth} from '@/constants/screenSize';
 import {useGameActions} from '@/data/gameStore';
+import {useUserInfoActions} from '@/data/userStore';
 import MainLayout from '@/layouts/MainLayout';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useEffect, useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 
 const HomeScreen = () => {
@@ -42,6 +44,12 @@ const HomeScreen = () => {
     };
   };
 
+  const {clearUserInfo} = useUserInfoActions();
+
+  const test = async () => {
+    clearUserInfo();
+  };
+
   useEffect(() => {
     if (character) {
       setEntities(setupWorld(character));
@@ -67,13 +75,7 @@ const HomeScreen = () => {
           />
         )}
 
-        <Button
-          title="캐릭터 테스트"
-          onPress={() => {
-            console.log('테스트');
-            setCharacter('chick');
-          }}
-        />
+        <Button label="테스트" onPress={test} />
       </View>
 
       <BottomTab />
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
   },
   engineContainer: {
     width: '100%',
-    height: '85%',
+    height: '82%',
     // borderWidth: 3,
     // borderBlockColor: 'red',
   },

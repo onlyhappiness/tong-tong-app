@@ -30,11 +30,11 @@ const MainStack = () => {
 };
 
 const Navigation = () => {
-  useGetAuthLogin();
-
   const {userInfo} = useUserInfoState();
 
   const Stack = useMemo(() => createNativeStackNavigator(), []);
+
+  useGetAuthLogin();
 
   return (
     <NavigationContainer>

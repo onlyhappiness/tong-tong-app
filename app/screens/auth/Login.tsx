@@ -3,7 +3,9 @@ import InputField from '@/components/ui/InputField';
 import {Center, ColStack, RowStack} from '@/components/ui/Stack';
 import Text from '@/components/ui/Text';
 import useForm from '@/hooks/useForm';
-import {useNavigation} from '@react-navigation/native';
+import usePostAuthLogin from '@/services/queries/auth/usePostAuthLogin';
+import {userLoginRequest} from '@/types/user';
+import {validateLogin} from '@/utils/validate';
 import React, {useRef} from 'react';
 import {
   Image,
@@ -15,19 +17,29 @@ import {
 } from 'react-native';
 
 const Login = () => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
 
   const passwordRef = useRef<TextInput | null>(null);
 
   const login = useForm({
     initialValue: {email: '', password: ''},
-    validate: values => {
-      return values;
-    },
+    validate: validateLogin,
   });
 
+  const {mutate} = usePostAuthLogin();
+
   const handleSubmit = () => {
-    console.log('로그인');
+    const isEmpty = Object.values(login.errors).every(value => value === '');
+    if (!isEmpty) {
+      return;
+    }
+
+    const loginFormData: userLoginRequest = {
+      method: 'email',
+      ...login.values,
+    };
+
+    mutate(loginFormData);
   };
 
   return (
@@ -44,22 +56,31 @@ const Login = () => {
         <InputField
           autoFocus
           placeholder="이메일 입력"
+          error={login.errors.email}
           touched={login.touched.email}
           inputMode="email"
           returnKeyType="next"
           blurOnSubmit={false}
           onSubmitEditing={() => passwordRef.current?.focus()}
+          {...login.getTextInputProps('email')}
         />
 
         <InputField
           ref={passwordRef}
           placeholder="비밀번호 입력"
+          error={login.errors.password}
+          touched={login.touched.password}
           secureTextEntry
           returnKeyType="join"
           onSubmitEditing={handleSubmit}
+          {...login.getTextInputProps('password')}
         />
 
-        <Button label="로그인" textStyle={{color: 'white'}} />
+        <Button
+          label="로그인"
+          textStyle={{color: 'white'}}
+          onPress={handleSubmit}
+        />
       </Center>
 
       <ColStack flex={1}>

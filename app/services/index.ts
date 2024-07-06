@@ -1,4 +1,4 @@
-import {getEncryptStorage} from '@/utils/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 export const getApiHost = () => {
@@ -7,13 +7,14 @@ export const getApiHost = () => {
 
 const api = axios.create({
   baseURL: getApiHost(),
-  withCredentials: true,
+  // withCredentials: true,
 });
 
-api.interceptors.request.use(async config => {
-  const token = await getEncryptStorage('access-token');
+api.interceptors.request.use(async (config: any) => {
+  // const token = await getStorage('token');
+  const token = await AsyncStorage.getItem('token');
 
-  console.log('token::: ', token);
+  config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 });

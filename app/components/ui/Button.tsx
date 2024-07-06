@@ -41,6 +41,7 @@ export default ({
       ]}
       {...props}>
       <View style={styles.button}>
+        {icon}
         <Text
           variant="button"
           textStyle={[styles[`${variant}Text`], textStyle]}>

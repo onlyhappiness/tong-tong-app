@@ -1,38 +1,53 @@
-import EncryptedStorage from 'react-native-encrypted-storage';
+import {getAuthLogin} from '@/services/apis/auth';
+import {removeStorage} from '@/utils/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {useShallow} from 'zustand/react/shallow';
 
-interface State {
+export const fetchUserInfo = async () => {
+  try {
+    const userInfo = await getAuthLogin();
+    return userInfo;
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+    await removeStorage('token');
+    return null;
+  }
+};
+
+type userStore = {
   userInfo: any;
-}
-
-interface Actions {
-  setUserInfo: (data: any) => void;
+  setUserInfo: () => void;
   clearUserInfo: () => void;
-}
+};
 
-interface Store extends State, Actions {}
-
-export const useUserStore = create<Store>()(
-  persist(
+const userStore = create(
+  persist<userStore>(
     set => ({
       userInfo: null,
-      setUserInfo: ({userInfo}) => set({userInfo}),
-      clearUserInfo: () => set({userInfo: null}),
+      setUserInfo: async () => {
+        const userInfo = await fetchUserInfo();
+        set({userInfo});
+      },
+      clearUserInfo: async () => {
+        await removeStorage('token');
+        set({userInfo: null});
+      },
     }),
     {
+      // 참고: https://stackoverflow.com/questions/72311639/unable-to-use-zustand-persist-middleware
       name: 'userInfo',
-      storage: createJSONStorage(() => EncryptedStorage),
+      storage: createJSONStorage(() => AsyncStorage),
     },
   ),
 );
 
 export const useUserInfoState = () =>
-  useUserStore(useShallow(({userInfo}) => ({userInfo})));
+  userStore(useShallow(({userInfo}) => ({userInfo})));
 
 export const useUserInfoActions = () =>
-  useUserStore(
+  userStore(
     useShallow(({setUserInfo, clearUserInfo}) => ({
       setUserInfo,
       clearUserInfo,

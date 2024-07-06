@@ -8,6 +8,7 @@ import {
   TextInputProps,
   View,
 } from 'react-native';
+import Text from './Text';
 
 interface InputFieldProps extends TextInputProps {
   disabled?: boolean;
@@ -29,7 +30,11 @@ const InputField = forwardRef(
 
     return (
       <Pressable onPress={handlePressInput} style={{width: '100%'}}>
-        <View style={[styles.container]}>
+        <View
+          style={[
+            styles.container,
+            touched && Boolean(error) && styles.inputError,
+          ]}>
           <View style={Boolean(icon) && styles.innerContainer}>
             {icon}
             <TextInput
@@ -38,11 +43,15 @@ const InputField = forwardRef(
               autoCapitalize="none"
               spellCheck={false}
               autoCorrect={false}
-              // placeholderTextColor={'#333333'}
               {...props}
             />
           </View>
         </View>
+        {touched && Boolean(error) && (
+          <Text variant="caption" textStyle={styles.error}>
+            {error!}
+          </Text>
+        )}
       </Pressable>
     );
   },
@@ -66,6 +75,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 8,
     fontSize: 14,
+  },
+  inputError: {
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  error: {
+    color: 'red',
+    paddingTop: 5,
   },
 });
 

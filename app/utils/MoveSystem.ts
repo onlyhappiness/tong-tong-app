@@ -4,7 +4,7 @@ const MoveCharacterSystem = (entities: any, {time}: any) => {
   const speed = 0.05; // 속도 값을 조절하여 이동 속도 변경
   const character = entities?.character;
 
-  console.log('entities:: ', entities);
+  // console.log('entities:: ', entities);
 
   if (!character) {
     return entities;

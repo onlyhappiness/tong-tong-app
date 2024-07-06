@@ -21,8 +21,8 @@ const Character = (props: any) => {
   const x = props.position[0] - width / 2;
   const y =
     props.size[0] === 70
-      ? (windowHeight * 0.7) / 1.25
-      : (windowHeight * 0.7) / 1.1;
+      ? (windowHeight * 0.7) / 1.35
+      : (windowHeight * 0.7) / 1.3;
 
   useEffect(() => {
     const interval = setInterval(() => {
