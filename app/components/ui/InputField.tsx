@@ -1,3 +1,4 @@
+import {COLOR} from '@/constants/color';
 import {screenHeight} from '@/constants/screenSize';
 import {mergeRefs} from '@/utils/func';
 import React, {ForwardedRef, ReactNode, forwardRef, useRef} from 'react';
@@ -60,7 +61,7 @@ const InputField = forwardRef(
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1.2,
-    borderColor: '#e2e8f0',
+    borderColor: COLOR.border,
     width: '100%',
     justifyContent: 'center',
     paddingHorizontal: screenHeight > 700 ? 10 : 8,

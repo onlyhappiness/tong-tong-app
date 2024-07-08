@@ -21,8 +21,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   body: {
-    fontSize: 15,
-    fontWeight: 'normal',
+    fontSize: 16,
+    fontWeight: 'medium',
+    color: '#555555',
   },
   caption: {
     fontSize: 13,

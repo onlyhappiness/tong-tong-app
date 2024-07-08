@@ -9,12 +9,10 @@ const BottomTab = () => {
 
   return (
     <View style={styles.container}>
-      {/* <Text>Bottom</Text> */}
       <Button
         title="하트"
         onPress={() => {
           console.log('gameRef::: ', gameRef);
-          // setCharacter('chick');
         }}
       />
 
@@ -28,7 +26,7 @@ const BottomTab = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#DEAF85',
-    height: '18%',
+    height: '20%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',

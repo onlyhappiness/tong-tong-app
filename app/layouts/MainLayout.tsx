@@ -1,26 +1,33 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {
+  SafeAreaView,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface IMainLayout {
   children: React.ReactNode;
+  className?: StyleProp<ViewStyle>;
   extraChildren?: React.ReactNode;
 }
-export default ({children, extraChildren}: IMainLayout) => {
+export default ({children, extraChildren, className}: IMainLayout) => {
   const {top} = useSafeAreaInsets();
 
   return (
-    <View style={styles.layout}>
+    <SafeAreaView style={[styles.layout, className]}>
       <View style={[styles.container, {paddingTop: top}]}>{children}</View>
       {extraChildren}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   layout: {
     flex: 1,
-    backgroundColor: '#7F7FD5',
+    // backgroundColor: '#7F7FD5',
   },
   container: {
     flex: 1,

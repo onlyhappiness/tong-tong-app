@@ -3,7 +3,7 @@ import api from '..';
 // 내 농장 확인하기
 const getUserFarm = async () => {
   const {data} = await api.get('/user/farm');
-  return data;
+  return data.data;
 };
 
 // 내 펫 목록

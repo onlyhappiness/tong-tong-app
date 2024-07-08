@@ -3,7 +3,7 @@ import InputField from '@/components/ui/InputField';
 import {Center, ColStack, RowStack} from '@/components/ui/Stack';
 import Text from '@/components/ui/Text';
 import useForm from '@/hooks/useForm';
-import usePostAuthLogin from '@/services/queries/auth/usePostAuthLogin';
+import useAuth from '@/services/queries/auth/useAuth';
 import {userLoginRequest} from '@/types/user';
 import {validateLogin} from '@/utils/validate';
 import React, {useRef} from 'react';
@@ -17,8 +17,6 @@ import {
 } from 'react-native';
 
 const Login = () => {
-  // const navigation = useNavigation();
-
   const passwordRef = useRef<TextInput | null>(null);
 
   const login = useForm({
@@ -26,7 +24,8 @@ const Login = () => {
     validate: validateLogin,
   });
 
-  const {mutate} = usePostAuthLogin();
+  // const {mutate} = usePostAuthLogin();
+  const {loginMutation} = useAuth();
 
   const handleSubmit = () => {
     const isEmpty = Object.values(login.errors).every(value => value === '');
@@ -39,7 +38,7 @@ const Login = () => {
       ...login.values,
     };
 
-    mutate(loginFormData);
+    loginMutation.mutate(loginFormData);
   };
 
   return (
@@ -109,6 +108,12 @@ const Login = () => {
             <View style={styles.line} />
             <Text>간편 계정 연결</Text>
             <View style={styles.line} />
+          </RowStack>
+
+          <RowStack containerStyle={{marginTop: 30, gap: 30}}>
+            <Text>카카오톡</Text>
+            <Text>구글</Text>
+            <Text>네이버</Text>
           </RowStack>
         </View>
       </ColStack>

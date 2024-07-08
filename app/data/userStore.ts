@@ -1,4 +1,5 @@
 import {getAuthLogin} from '@/services/apis/auth';
+import {userData} from '@/types/user';
 import {removeStorage} from '@/utils/storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
@@ -17,8 +18,8 @@ export const fetchUserInfo = async () => {
 };
 
 type userStore = {
-  userInfo: any;
-  setUserInfo: () => void;
+  userInfo: userData | null;
+  setUserInfo: (data: userData | unknown) => void;
   clearUserInfo: () => void;
 };
 
@@ -26,8 +27,8 @@ const userStore = create(
   persist<userStore>(
     set => ({
       userInfo: null,
-      setUserInfo: async () => {
-        const userInfo = await fetchUserInfo();
+      setUserInfo: async (userInfo: any) => {
+        // const userInfo = await fetchUserInfo();
         set({userInfo});
       },
       clearUserInfo: async () => {

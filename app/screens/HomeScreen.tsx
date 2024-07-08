@@ -5,12 +5,16 @@ import Button from '@/components/ui/Button';
 import {windowWidth} from '@/constants/screenSize';
 import {useGameActions} from '@/data/gameStore';
 import {useUserInfoActions} from '@/data/userStore';
-import MainLayout from '@/layouts/MainLayout';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
+import {
+  SafeAreaInsetsContext,
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
   const {setGameEngineRef} = useGameActions();
@@ -58,28 +62,35 @@ const HomeScreen = () => {
   }, [character]);
 
   return (
-    <MainLayout>
-      <View style={styles.engineContainer}>
-        <Header />
-        <Background image={require('../assets/farm/background.png')} />
+    <SafeAreaProvider>
+      <SafeAreaInsetsContext.Consumer>
+        {insets => (
+          <View style={{flex: 1}}>
+            <View style={styles.engineContainer}>
+              <Header />
+              <Background image={require('../assets/farm/background.png')} />
 
-        {character && (
-          <GameEngine
-            key={engineKey} // key prop을 추가하여 엔진을 다시 렌더링
-            ref={ref => {
-              setGameEngineRef(ref);
-            }}
-            style={[styles.engine]}
-            systems={[MoveCharacterSystem]}
-            entities={entities}
-          />
+              {character && (
+                <GameEngine
+                  key={engineKey} // key prop을 추가하여 엔진을 다시 렌더링
+                  ref={ref => {
+                    setGameEngineRef(ref);
+                  }}
+                  style={[styles.engine]}
+                  systems={[MoveCharacterSystem]}
+                  entities={entities}
+                />
+              )}
+
+              <Button label="테스트" onPress={test} />
+            </View>
+
+            <BottomTab />
+            {/* <View style={[{height: insets?.bottom || 0}]} /> */}
+          </View>
         )}
-
-        <Button label="테스트" onPress={test} />
-      </View>
-
-      <BottomTab />
-    </MainLayout>
+      </SafeAreaInsetsContext.Consumer>
+    </SafeAreaProvider>
   );
 };
 
@@ -90,9 +101,7 @@ const styles = StyleSheet.create({
   },
   engineContainer: {
     width: '100%',
-    height: '82%',
-    // borderWidth: 3,
-    // borderBlockColor: 'red',
+    height: '80%',
   },
   engine: {
     flex: 1,
@@ -103,8 +112,10 @@ const styles = StyleSheet.create({
 });
 
 const Header = () => {
+  const {top} = useSafeAreaInsets();
+
   return (
-    <View style={{padding: 10}}>
+    <View style={{padding: 10, marginTop: top}}>
       <View
         style={{
           flexDirection: 'row',

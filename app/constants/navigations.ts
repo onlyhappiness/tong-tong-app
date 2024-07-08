@@ -1,11 +1,13 @@
 const authNavigations = {
-  STACK: 'Auth_Stack',
-  LOGIN: 'Login',
+  STACK: 'authStack',
+  LOGIN: 'login',
 };
 
 const mainNavigations = {
-  STACK: 'Main_Stack',
-  HOME: 'Home',
+  STACK: 'mainStack',
+  HOME: 'home',
+
+  CREATE_FARM: 'createFarm',
 } as const;
 
 export {authNavigations, mainNavigations};

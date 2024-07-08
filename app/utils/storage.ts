@@ -1,4 +1,17 @@
+import api from '@/services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+function setHeader(key: string, value: string) {
+  api.defaults.headers.common[key] = value;
+}
+
+function removeHeader(key: string) {
+  if (!api.defaults.headers.common[key]) {
+    return;
+  }
+
+  delete api.defaults.headers.common[key];
+}
 
 const getStorage = async (key: string) => {
   const storedData = await AsyncStorage.getItem(key);
@@ -17,4 +30,4 @@ const removeStorage = async (key: string) => {
   }
 };
 
-export {getStorage, removeStorage, setStorage};
+export {getStorage, removeHeader, removeStorage, setHeader, setStorage};

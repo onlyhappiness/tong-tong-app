@@ -33,6 +33,7 @@ const Background = (props: any) => {
         // colors={['#1A2980', '#26D0CE']} // 저녁 색상
         style={styles.weather}
       />
+
       <Animated.View style={[styles.stars, {opacity: fadeAnim}]}>
         {Array.from({length: 20}).map((_, index) => (
           <View
@@ -47,11 +48,8 @@ const Background = (props: any) => {
           />
         ))}
       </Animated.View>
-      <Image
-        source={props.image}
-        style={styles.background}
-        resizeMode="cover"
-      />
+
+      <Image source={props.image} style={styles.farm} resizeMode="stretch" />
     </View>
   );
 };
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
   },
   weather: {
     position: 'absolute',
-    height: '75%',
+    height: '100%',
     width: '100%',
   },
   stars: {
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 1,
   },
-  background: {
+  farm: {
     top: (windowHeight * 0.7) / 1.25,
     width: '100%',
     height: '30%',
