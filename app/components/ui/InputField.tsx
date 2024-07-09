@@ -4,10 +4,12 @@ import {mergeRefs} from '@/utils/func';
 import React, {ForwardedRef, ReactNode, forwardRef, useRef} from 'react';
 import {
   Pressable,
+  StyleProp,
   StyleSheet,
   TextInput,
   TextInputProps,
   View,
+  ViewStyle,
 } from 'react-native';
 import Text from './Text';
 
@@ -16,11 +18,19 @@ interface InputFieldProps extends TextInputProps {
   error?: string;
   touched?: boolean;
   icon?: ReactNode;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 const InputField = forwardRef(
   (
-    {disabled = false, error, touched, icon = null, ...props}: InputFieldProps,
+    {
+      disabled = false,
+      error,
+      touched,
+      icon = null,
+      containerStyle,
+      ...props
+    }: InputFieldProps,
     ref?: ForwardedRef<TextInput>,
   ) => {
     const innerRef = useRef<TextInput | null>(null);
@@ -30,7 +40,9 @@ const InputField = forwardRef(
     };
 
     return (
-      <Pressable onPress={handlePressInput} style={{width: '100%'}}>
+      <Pressable
+        onPress={handlePressInput}
+        style={[containerStyle, {width: '100%'}]}>
         <View
           style={[
             styles.container,

@@ -2,6 +2,7 @@ import {BUTTON} from '@/constants/color';
 import {screenHeight} from '@/constants/screenSize';
 import React, {ReactNode} from 'react';
 import {
+  ActivityIndicator,
   Pressable,
   PressableProps,
   StyleProp,
@@ -19,6 +20,7 @@ interface ButtonProps extends PressableProps {
   containerStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
   icon?: ReactNode;
+  isLoading?: boolean;
 }
 
 export default ({
@@ -28,6 +30,7 @@ export default ({
   containerStyle = null,
   textStyle = null,
   icon = null,
+  isLoading,
   ...props
 }: ButtonProps) => {
   return (
@@ -41,12 +44,18 @@ export default ({
       ]}
       {...props}>
       <View style={styles.button}>
-        {icon}
-        <Text
-          variant="button"
-          textStyle={[styles[`${variant}Text`], textStyle]}>
-          {label}
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator color={'white'} />
+        ) : (
+          <>
+            {icon}
+            <Text
+              variant="button"
+              textStyle={[styles[`${variant}Text`], textStyle]}>
+              {label}
+            </Text>
+          </>
+        )}
       </View>
     </Pressable>
   );
