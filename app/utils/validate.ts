@@ -21,8 +21,26 @@ function validateUser(values: userLoginFormData) {
   return errors;
 }
 
+// 로그인 검증
 function validateLogin(values: userLoginFormData) {
   return validateUser(values);
 }
 
-export {validateLogin};
+// 농장 이름 검증
+function validateCreateFarm(values: {name: string}) {
+  const errors = {
+    name: '',
+  };
+
+  if (isBlank(values.name)) {
+    errors.name = '농장 이름을 입력해주세요.';
+  }
+
+  // if (!(values.name.length >= 3 && values.name.length <= 15)) {
+  //   errors.name = '농장 이름은 3~15자 사이로 입력해주세요.';
+  // }
+
+  return errors;
+}
+
+export {validateCreateFarm, validateLogin};

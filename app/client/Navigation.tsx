@@ -1,15 +1,15 @@
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo} from 'react';
+import {ActivityIndicator} from 'react-native';
 
 import {authNavigations, mainNavigations} from '@/constants/navigations';
 import {useUserInfoActions, useUserInfoState} from '@/data/userStore';
 import Login from '@/screens/auth/Login';
-import CreateFarm from '@/screens/farm/CreateFarm';
+import CreateFarm from '@/screens/main/farm/CreateFarm';
 import useAuth from '@/services/queries/auth/useAuth';
 import useGetUserFarm from '@/services/queries/user/useGetUserFarm';
-import {ActivityIndicator} from 'react-native';
-import HomeScreen from '../screens/HomeScreen';
+import HomeScreen from '../screens/main/HomeScreen';
 
 const AuthStack = () => {
   const Stack = useMemo(() => createNativeStackNavigator(), []);
@@ -29,14 +29,15 @@ const MainStack = () => {
 
   const Stack = useMemo(() => createNativeStackNavigator(), []);
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     console.log('userFarm:: ', data);
-  //     navigation.navigate(mainNavigations.CREATE_FARM);
-  //   } else if (isError) {
-  //     console.log('error: ', isError);
-  //   }
-  // }, [data, isError, isSuccess, navigation]);
+  console.log('data::: ', data);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigation.navigate(mainNavigations.CREATE_FARM);
+    } else if (isError) {
+      console.log('error: ', isError);
+    }
+  }, [data, isError, isSuccess, navigation]);
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -53,7 +54,7 @@ const MainStack = () => {
 
 const Navigation = () => {
   const {userInfo} = useUserInfoState();
-  const {setUserInfo} = useUserInfoActions();
+  const {setUserInfo, clearUserInfo} = useUserInfoActions();
 
   const Stack = useMemo(() => createNativeStackNavigator(), []);
 
@@ -64,6 +65,12 @@ const Navigation = () => {
       setUserInfo(isLogin.data);
     }
   }, [isLogin.data, isLogin.isSuccess, setUserInfo]);
+
+  useEffect(() => {
+    if (isLogin.isError) {
+      clearUserInfo();
+    }
+  }, [clearUserInfo, isLogin.isError]);
 
   return (
     <NavigationContainer>

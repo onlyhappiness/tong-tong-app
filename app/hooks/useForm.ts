@@ -37,6 +37,8 @@ function useForm<T>({initialValue, validate}: UseFormProps<T>) {
     setErrors(newErrors);
   }, [validate, values]);
 
+  console.log('touched:: ', touched);
+
   return {values, errors, touched, getTextInputProps};
 }
 

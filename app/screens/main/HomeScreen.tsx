@@ -68,7 +68,7 @@ const HomeScreen = () => {
           <View style={{flex: 1}}>
             <View style={styles.engineContainer}>
               <Header />
-              <Background image={require('../assets/farm/background.png')} />
+              <Background image={require('../../assets/farm/background.png')} />
 
               {character && (
                 <GameEngine

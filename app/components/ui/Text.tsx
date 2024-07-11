@@ -8,10 +8,17 @@ interface CustomTextProps {
 }
 
 export default ({variant = 'body', children, textStyle}: CustomTextProps) => {
-  return <Text style={[styles[`${variant}`], textStyle]}>{children}</Text>;
+  return (
+    <Text style={[styles.text, styles[`${variant}`], textStyle]}>
+      {children}
+    </Text>
+  );
 };
 
 const styles = StyleSheet.create({
+  text: {
+    color: '#333333',
+  },
   header: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -23,7 +30,6 @@ const styles = StyleSheet.create({
   body: {
     fontSize: 16,
     fontWeight: 'medium',
-    color: '#555555',
   },
   caption: {
     fontSize: 13,

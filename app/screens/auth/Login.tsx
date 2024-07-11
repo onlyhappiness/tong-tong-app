@@ -79,9 +79,13 @@ const Login = () => {
             {...login.getTextInputProps('password')}
           />
 
+          {/* {loginMutation.isError && (
+            <Text>아이디 또는 비밀번호를 다시 확인해주세요.</Text>
+          )} */}
+
           <Button
             label="로그인"
-            textStyle={{color: 'white'}}
+            // textStyle={{color: 'white'}}
             containerStyle={{marginBottom: 30}}
             onPress={handleSubmit}
             disabled={loginMutation.isPending}

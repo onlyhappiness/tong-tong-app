@@ -7,14 +7,17 @@ const COLOR = {
 };
 
 const BUTTON = {
-  primary: '#AEC6CF',
-  primary_hover: '#87CEEB',
+  // primary: '#AEC6CF',
+  // primary_hover: '#87CEEB',
 
   secondary: '#FFFACD',
   secondary_hover: '#FFDAB9',
 
   highlight: '#FF6F61',
   highlight_hover: '#FFB7CE',
+
+  primary: '#98FF98',
+  primary_hover: '#B2E8A4',
 };
 
 export {BUTTON, COLOR};
