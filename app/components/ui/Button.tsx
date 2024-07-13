@@ -45,7 +45,7 @@ export default ({
       {...props}>
       <View style={styles.button}>
         {isLoading ? (
-          <ActivityIndicator color={'white'} />
+          <ActivityIndicator color={'#333onl'} />
         ) : (
           <>
             {icon}

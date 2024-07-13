@@ -7,9 +7,9 @@ import {
   UseQueryOptions,
 } from '@tanstack/react-query';
 
-const queryClient = new QueryClient();
-
 function useAuthLogin() {
+  const queryClient = new QueryClient();
+
   return useMutation({
     mutationFn: postAuthLogin,
     onSuccess: ({access_token: accessToken}) => {

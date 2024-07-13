@@ -1,56 +1,12 @@
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo} from 'react';
-import {ActivityIndicator} from 'react-native';
 
 import {authNavigations, mainNavigations} from '@/constants/navigations';
 import {useUserInfoActions, useUserInfoState} from '@/data/userStore';
-import Login from '@/screens/auth/Login';
-import CreateFarm from '@/screens/main/farm/CreateFarm';
-import useAuth from '@/services/queries/auth/useAuth';
-import useGetUserFarm from '@/services/queries/user/useGetUserFarm';
-import HomeScreen from '../screens/main/HomeScreen';
-
-const AuthStack = () => {
-  const Stack = useMemo(() => createNativeStackNavigator(), []);
-
-  return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name={authNavigations.LOGIN} component={Login} />
-    </Stack.Navigator>
-  );
-};
-
-// 메인 stack
-const MainStack = () => {
-  const navigation = useNavigation();
-
-  const {data, isSuccess, isError, isLoading} = useGetUserFarm();
-
-  const Stack = useMemo(() => createNativeStackNavigator(), []);
-
-  console.log('data::: ', data);
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigation.navigate(mainNavigations.CREATE_FARM);
-    } else if (isError) {
-      console.log('error: ', isError);
-    }
-  }, [data, isError, isSuccess, navigation]);
-
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
-  return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name={mainNavigations.HOME} component={HomeScreen} />
-
-      <Stack.Screen name={mainNavigations.CREATE_FARM} component={CreateFarm} />
-    </Stack.Navigator>
-  );
-};
+import useAuth from '@/hooks/queries/useAuth';
+import AuthStack from '@/stack/AuthStack';
+import MainStack from '@/stack/MainStack';
 
 const Navigation = () => {
   const {userInfo} = useUserInfoState();

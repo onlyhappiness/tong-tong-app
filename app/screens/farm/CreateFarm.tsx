@@ -3,7 +3,7 @@ import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import Text from '@/components/ui/Text';
 import {BUTTON} from '@/constants/color';
-import useBlockBackHandler from '@/hooks/useBlockBack';
+import {mainNavigations} from '@/constants/navigations';
 import useForm from '@/hooks/useForm';
 import MainLayout from '@/layouts/MainLayout';
 import {postUserFarmSetting} from '@/services/apis/user';
@@ -31,7 +31,7 @@ const checkboxList = [
 ];
 
 const CreateFarm = () => {
-  useBlockBackHandler();
+  // useBlockBackHandler();
 
   const queryClient = useQueryClient();
   const navigation = useNavigation();
@@ -56,11 +56,16 @@ const CreateFarm = () => {
 
     const req = {
       ...form.values,
-      farmType,
+      type: farmType,
     };
 
-    createFarm.mutateAsync(req).then(() => {});
-    // console.log('req::: ', req);
+    // console.log('req: ', req);
+    createFarm.mutateAsync(req).then(() => {
+      navigation.navigate(mainNavigations.HOME);
+      queryClient.invalidateQueries({
+        queryKey: ['userFarm'],
+      });
+    });
   };
 
   return (
@@ -100,8 +105,8 @@ const CreateFarm = () => {
         <Button
           label="시작하기"
           onPress={handleCreateFarm}
-          // disabled={}
-          // isLoading={}
+          disabled={createFarm.isPending}
+          isLoading={createFarm.isPending}
         />
       </Bottom>
     </MainLayout>
