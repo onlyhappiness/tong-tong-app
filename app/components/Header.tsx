@@ -1,8 +1,9 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import HomeHeader from './header/HomeHeader';
 
 interface HeaderProps {
-  type: 'default';
+  type: 'default' | 'home';
   title?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -20,6 +21,10 @@ const Header = ({type, title, leftIcon, rightIcon}: HeaderProps) => {
           <View>{rightIcon && rightIcon}</View>
         </View>
       );
+    }
+
+    if (type === 'home') {
+      return <HomeHeader />;
     }
   };
 

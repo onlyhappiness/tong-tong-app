@@ -26,7 +26,7 @@ const BottomTab = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#DEAF85',
-    height: '20%',
+    height: '18%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',

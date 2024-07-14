@@ -15,7 +15,7 @@ interface Actions {
 interface Store extends State, Actions {}
 
 const useGameStore = create<Store>(set => ({
-  character: null,
+  character: 'egg',
   setCharacter: (data: string) => set({character: data}),
 
   gameEngineRef: null,

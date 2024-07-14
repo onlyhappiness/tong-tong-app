@@ -7,8 +7,8 @@ const COLOR = {
 };
 
 const BUTTON = {
-  // primary: '#AEC6CF',
-  // primary_hover: '#87CEEB',
+  third: '#AEC6CF',
+  third_hover: '#87CEEB',
 
   secondary: '#FFFACD',
   secondary_hover: '#FFDAB9',

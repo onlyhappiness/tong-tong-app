@@ -28,8 +28,8 @@ const Background = (props: any) => {
   return (
     <View style={styles.container}>
       <LinearGradient
-        // colors={['#2980B9', '#6DD5FA', '#FFFFFF']} // 아침색상 - 그라데이션 색상 배열
-        colors={['#7F7FD5', '#86A8E7', '#91EAE4']} // 오후 색상
+        colors={['#2980B9', '#6DD5FA', '#FFFFFF']} // 아침색상 - 그라데이션 색상 배열
+        // colors={['#7F7FD5', '#86A8E7', '#91EAE4']} // 오후 색상
         // colors={['#1A2980', '#26D0CE']} // 저녁 색상
         style={styles.weather}
       />
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 1,
   },
   farm: {
-    top: (windowHeight * 0.7) / 1.25,
+    top: (windowHeight * 0.7) / 1.1,
     width: '100%',
     height: '30%',
   },

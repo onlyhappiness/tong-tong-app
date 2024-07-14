@@ -21,8 +21,8 @@ const Character = (props: any) => {
   const x = props.position[0] - width / 2;
   const y =
     props.size[0] === 70
-      ? (windowHeight * 0.7) / 1.35
-      : (windowHeight * 0.7) / 1.3;
+      ? (windowHeight * 0.7) / 1.4
+      : (windowHeight * 0.7) / 1.4;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -33,7 +33,6 @@ const Character = (props: any) => {
         return prev;
       });
       setPetStatus(gameRef, 'start');
-      // setPetStatus(gameEngine, 'start');
     }, 5000);
 
     return () => clearInterval(interval);
@@ -44,9 +43,6 @@ const Character = (props: any) => {
 
     setShowDialog(!showDialog);
     setPetStatus(gameRef, 'stop');
-    // if (props.onPress) {
-    //   props.onPress();
-    // }
   };
 
   return (

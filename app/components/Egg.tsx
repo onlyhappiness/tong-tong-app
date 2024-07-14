@@ -38,11 +38,6 @@ const styles = StyleSheet.create({
     top: 0,
     width: 80,
     height: 80,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    backgroundColor: 'red',
-
-    // right: windowWidth / 2,
   },
 });
 

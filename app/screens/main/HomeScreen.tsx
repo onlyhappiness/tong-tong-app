@@ -1,8 +1,9 @@
 import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Character from '@/components/Character';
-import Button from '@/components/ui/Button';
+import Header from '@/components/Header';
 import {windowWidth} from '@/constants/screenSize';
+import {useCharacterActions, useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
 import {useUserInfoActions} from '@/data/userStore';
 import MoveCharacterSystem from '@/utils/MoveSystem';
@@ -13,17 +14,20 @@ import {GameEngine} from 'react-native-game-engine';
 import {
   SafeAreaInsetsContext,
   SafeAreaProvider,
-  useSafeAreaInsets,
 } from 'react-native-safe-area-context';
 
 const HomeScreen = () => {
+  const {character} = useCharacterState();
+
+  const {setCharacter} = useCharacterActions();
+
   const {setGameEngineRef} = useGameActions();
+
+  const {clearUserInfo} = useUserInfoActions();
 
   const [entities, setEntities] = useState({});
 
   const [engineKey, setEngineKey] = useState(0);
-
-  const [character, setCharacter] = useState<string | null>('chick');
 
   const setupWorld = (characterType: string) => {
     const selectedCharacter = characterTypes[characterType];
@@ -48,10 +52,9 @@ const HomeScreen = () => {
     };
   };
 
-  const {clearUserInfo} = useUserInfoActions();
-
   const test = async () => {
-    clearUserInfo();
+    // clearUserInfo();
+    setCharacter('chick');
   };
 
   useEffect(() => {
@@ -67,7 +70,12 @@ const HomeScreen = () => {
         {insets => (
           <View style={{flex: 1}}>
             <View style={styles.engineContainer}>
-              <Header />
+              <Header type="home" />
+
+              <View style={{padding: 20}}>
+                <Text>펫</Text>
+              </View>
+
               <Background image={require('../../assets/farm/background.png')} />
 
               {character && (
@@ -81,12 +89,10 @@ const HomeScreen = () => {
                   entities={entities}
                 />
               )}
-
-              <Button label="테스트" onPress={test} />
+              {/* <Button label="테스트" onPress={test} /> */}
             </View>
 
             <BottomTab />
-            {/* <View style={[{height: insets?.bottom || 0}]} /> */}
           </View>
         )}
       </SafeAreaInsetsContext.Consumer>
@@ -101,7 +107,7 @@ const styles = StyleSheet.create({
   },
   engineContainer: {
     width: '100%',
-    height: '80%',
+    height: '82%',
   },
   engine: {
     flex: 1,
@@ -110,49 +116,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
 });
-
-const Header = () => {
-  const {top} = useSafeAreaInsets();
-
-  return (
-    <View style={{padding: 10, marginTop: top}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          gap: 30,
-          marginTop: 10,
-        }}>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: 'white',
-            flex: 1,
-            paddingVertical: 15,
-          }}>
-          <Text>날씨</Text>
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: 'white',
-            flex: 1,
-            paddingVertical: 15,
-          }}>
-          <Text>시간</Text>
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: 'white',
-            flex: 1,
-            paddingVertical: 15,
-          }}>
-          <Text>포인트</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
 
 export default HomeScreen;

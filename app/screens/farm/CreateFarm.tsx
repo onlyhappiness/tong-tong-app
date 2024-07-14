@@ -31,10 +31,8 @@ const checkboxList = [
 ];
 
 const CreateFarm = () => {
-  // useBlockBackHandler();
-
   const queryClient = useQueryClient();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const [farmType, setFarmType] = useState('default');
   const form = useForm({
@@ -59,7 +57,6 @@ const CreateFarm = () => {
       type: farmType,
     };
 
-    // console.log('req: ', req);
     createFarm.mutateAsync(req).then(() => {
       navigation.navigate(mainNavigations.HOME);
       queryClient.invalidateQueries({
@@ -69,14 +66,13 @@ const CreateFarm = () => {
   };
 
   return (
-    <MainLayout className={styles.container}>
-      <View style={{width: '100%', marginVertical: 30}}>
+    <MainLayout className={styles.layout}>
+      <View style={styles.container}>
         <View style={{gap: 10}}>
           <Text variant="body">농장 이름</Text>
           <InputField
             {...form.getTextInputProps('name')}
             error={form.errors.name}
-            // touched={form.touched.name}
             touched={form.touched.name}
             placeholder="농장 이름을 입력해주세요."
             returnKeyType="join"
@@ -114,9 +110,10 @@ const CreateFarm = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  layout: {
     margin: 20,
   },
+  container: {width: '100%', marginVertical: 30},
   checkboxContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
