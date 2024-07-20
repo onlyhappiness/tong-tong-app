@@ -7,6 +7,7 @@ import {BUTTON, COLOR} from '@/constants/color';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Timer from '../Timer';
 import Text from '../ui/Text';
 
 export default ({}) => {
@@ -20,7 +21,7 @@ export default ({}) => {
           <Text>Rainbow</Text>
         </View>
         <View style={styles.button}>
-          <Text>시간</Text>
+          <Timer />
         </View>
         <View style={styles.button}>
           <Image source={Coin} style={{width: 24, height: 24}} />

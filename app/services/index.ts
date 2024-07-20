@@ -1,19 +1,15 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {Platform} from 'react-native';
+import Config from 'react-native-config';
 
 export const getApiHost = () => {
-  return Platform.OS === 'android'
-    ? 'http://10.0.2.2:3030'
-    : 'http://localhost:3030';
+  return Config.API_URL;
 };
 
 const api = axios.create({
   baseURL: getApiHost(),
   withCredentials: true,
 });
-
-console.log('api:: ', getApiHost());
 
 api.interceptors.request.use(async (config: any) => {
   // const token = await getStorage('token');

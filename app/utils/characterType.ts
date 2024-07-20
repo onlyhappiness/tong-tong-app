@@ -1,6 +1,6 @@
 const characterTypes: any = {
   egg: {
-    size: 100,
+    size: 70,
     idleImages: [require('../assets/egg.png')],
     leftImages: [require('../assets/egg.png')],
     rightImages: [require('../assets/egg.png')],
@@ -21,7 +21,7 @@ const characterTypes: any = {
     ],
   },
   poodle: {
-    size: 80,
+    size: 90,
     idleImages: [require('../assets/poodle/idle-1.png')],
     leftImages: [
       require('../assets/poodle/left-1.png'),

@@ -5,11 +5,10 @@ import Header from '@/components/Header';
 import {windowWidth} from '@/constants/screenSize';
 import {useCharacterActions, useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
-import {useUserInfoActions} from '@/data/userStore';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 import {GameEngine} from 'react-native-game-engine';
 import {
   SafeAreaInsetsContext,
@@ -22,8 +21,6 @@ const HomeScreen = () => {
   const {setCharacter} = useCharacterActions();
 
   const {setGameEngineRef} = useGameActions();
-
-  const {clearUserInfo} = useUserInfoActions();
 
   const [entities, setEntities] = useState({});
 
@@ -72,9 +69,9 @@ const HomeScreen = () => {
             <View style={styles.engineContainer}>
               <Header type="home" />
 
-              <View style={{padding: 20}}>
+              <Pressable style={[styles.petButton]}>
                 <Text>펫</Text>
-              </View>
+              </Pressable>
 
               <Background image={require('../../assets/farm/background.png')} />
 
@@ -114,6 +111,14 @@ const styles = StyleSheet.create({
   },
   character: {
     position: 'absolute',
+  },
+  petButton: {
+    position: 'absolute',
+    left: 5,
+    top: 150,
+    padding: 15,
+    borderRadius: 30,
+    backgroundColor: 'white',
   },
 });
 
