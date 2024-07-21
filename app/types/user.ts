@@ -13,6 +13,14 @@ export interface userData {
   profileUrl: null | string;
 }
 
+export interface userRegisterRequest {
+  method: string;
+  email: string;
+  nickname: string;
+  username: string;
+  password: string;
+}
+
 export interface userLoginFormData {
   email: string;
   password: string;

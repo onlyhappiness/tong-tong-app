@@ -1,3 +1,5 @@
+import {farmRequest} from '@/types/farm';
+import {petBuyRequest} from '@/types/pet';
 import api from '..';
 
 // 내 농장 확인하기
@@ -13,13 +15,13 @@ const getUserPetList = async () => {
 };
 
 // 농장 설정
-const postUserFarmSetting = async (req: any) => {
+const postUserFarmSetting = async (req: farmRequest) => {
   const {data} = await api.post('/user/farm-setting', req);
   return data;
 };
 
 // 펫 구입
-const postUserPetBuy = async (req: any) => {
+const postUserPetBuy = async (req: petBuyRequest) => {
   const {data} = await api.post('/user/pet-buy', req);
   return data;
 };

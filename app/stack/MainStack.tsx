@@ -4,7 +4,7 @@ import CreateFarm from '@/screens/farm/CreateFarm';
 import HomeScreen from '@/screens/main/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useEffect, useMemo} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 
 // 메인 stack
 const MainStack = () => {
@@ -23,7 +23,11 @@ const MainStack = () => {
   }, [isUserFarmError]);
 
   if (isUserFarmLoading) {
-    return <ActivityIndicator />;
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator />
+      </View>
+    );
   }
 
   return (

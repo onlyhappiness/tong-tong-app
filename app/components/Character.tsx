@@ -25,18 +25,20 @@ const Character = (props: any) => {
       : (windowHeight * 0.7) / 1.4;
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowDialog(prev => {
-        if (prev === true) {
-          return false;
-        }
-        return prev;
-      });
-      setPetStatus(gameRef, 'start');
-    }, 5000);
+    if (showDialog) {
+      const interval = setInterval(() => {
+        setShowDialog(prev => {
+          if (prev === true) {
+            return false;
+          }
+          return prev;
+        });
+        setPetStatus(gameRef, 'start');
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }
+  }, [gameRef, showDialog]);
 
   const handlePress = () => {
     console.log('Character pressed', gameRef);

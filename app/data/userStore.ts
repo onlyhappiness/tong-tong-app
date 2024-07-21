@@ -19,7 +19,7 @@ export const fetchUserInfo = async () => {
 
 type userStore = {
   userInfo: userData | null;
-  setUserInfo: (data: userData | unknown) => void;
+  setUserInfo: (data: userData | null) => void;
   clearUserInfo: () => void;
 };
 
@@ -27,7 +27,7 @@ const userStore = create(
   persist<userStore>(
     set => ({
       userInfo: null,
-      setUserInfo: async (userInfo: any) => {
+      setUserInfo: async (userInfo: userData | null) => {
         // const userInfo = await fetchUserInfo();
         set({userInfo});
       },

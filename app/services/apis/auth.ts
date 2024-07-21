@@ -1,4 +1,4 @@
-import {userLoginRequest} from '@/types/user';
+import {userLoginRequest, userRegisterRequest} from '@/types/user';
 import api from '..';
 
 // 로그인 유저 확인
@@ -9,7 +9,7 @@ const getAuthLogin = async () => {
 };
 
 // 회원가입
-const postAuthRegister = async (req: any) => {
+const postAuthRegister = async (req: userRegisterRequest) => {
   const {data} = await api.post('/auth/register', req);
   return data;
 };

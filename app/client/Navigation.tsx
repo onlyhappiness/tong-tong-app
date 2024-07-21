@@ -7,6 +7,7 @@ import {useUserInfoActions, useUserInfoState} from '@/data/userStore';
 import useAuth from '@/hooks/queries/useAuth';
 import AuthStack from '@/stack/AuthStack';
 import MainStack from '@/stack/MainStack';
+import {ActivityIndicator, View} from 'react-native';
 
 const Navigation = () => {
   const {userInfo} = useUserInfoState();
@@ -27,6 +28,14 @@ const Navigation = () => {
       clearUserInfo();
     }
   }, [clearUserInfo, isLogin.isError]);
+
+  if (isLogin?.isLoading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>

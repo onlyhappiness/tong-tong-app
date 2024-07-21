@@ -1,24 +1,37 @@
+import {useCharacterActions} from '@/data/characterStore';
 import {useGameActions, useGameState} from '@/data/gameStore';
+import {setPetStatus} from '@/utils/petStatus';
 import React from 'react';
 import {Button, StyleSheet, View} from 'react-native';
 
 const BottomTab = () => {
   const gameRef = useGameState();
+  const {setGameEngineRef} = useGameActions();
 
-  const {setCharacter} = useGameActions();
+  const {setCharacter} = useCharacterActions();
 
   return (
     <View style={styles.container}>
       <Button
         title="하트"
         onPress={() => {
-          console.log('gameRef::: ', gameRef);
+          setCharacter('poodle');
         }}
       />
 
-      <Button title="씻겨주기" />
+      <Button
+        title="씻겨주기"
+        onPress={() => {
+          setPetStatus(gameRef, 'stop');
+        }}
+      />
 
-      <Button title="먹이주기" />
+      <Button
+        title="먹이주기"
+        onPress={() => {
+          setPetStatus(gameRef, 'start');
+        }}
+      />
     </View>
   );
 };

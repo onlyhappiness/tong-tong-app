@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {useShallow} from 'zustand/react/shallow';
 
 interface State {
-  character: any;
+  character: string;
 }
 
 interface Actions {

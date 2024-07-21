@@ -4,33 +4,25 @@ import {useShallow} from 'zustand/react/shallow';
 
 interface State {
   gameEngineRef: GameEngine | null;
-  character: any;
 }
 
 interface Actions {
-  setCharacter: (data: string) => void;
   setGameEngineRef: (data: GameEngine | null) => void;
 }
 
 interface Store extends State, Actions {}
 
 const useGameStore = create<Store>(set => ({
-  character: 'egg',
-  setCharacter: (data: string) => set({character: data}),
-
   gameEngineRef: null,
   setGameEngineRef: (data: GameEngine | null) => set({gameEngineRef: data}),
 }));
 
 export const useGameState = () =>
-  useGameStore(
-    useShallow(({character, gameEngineRef}) => ({character, gameEngineRef})),
-  );
+  useGameStore(useShallow(({gameEngineRef}) => ({gameEngineRef})));
 
 export const useGameActions = () =>
   useGameStore(
-    useShallow(({setCharacter, setGameEngineRef}) => ({
-      setCharacter,
+    useShallow(({setGameEngineRef}) => ({
       setGameEngineRef,
     })),
   );

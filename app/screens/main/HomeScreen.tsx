@@ -2,6 +2,7 @@ import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Character from '@/components/Character';
 import Header from '@/components/Header';
+import Button from '@/components/ui/Button';
 import {windowWidth} from '@/constants/screenSize';
 import {useCharacterActions, useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
@@ -46,12 +47,14 @@ const HomeScreen = () => {
         // 캐릭터 이벤트
         onPress: () => {},
       },
+      status: 'start',
     };
   };
 
   const test = async () => {
     // clearUserInfo();
-    setCharacter('chick');
+    // setCharacter('chick');
+    // setPetStatus(gameRef, 'start');
   };
 
   useEffect(() => {
@@ -86,7 +89,7 @@ const HomeScreen = () => {
                   entities={entities}
                 />
               )}
-              {/* <Button label="테스트" onPress={test} /> */}
+              <Button label="테스트" onPress={test} />
             </View>
 
             <BottomTab />
