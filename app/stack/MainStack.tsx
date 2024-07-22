@@ -1,9 +1,10 @@
 import {mainNavigations} from '@/constants/navigations';
 import useGetUserFarm from '@/hooks/queries/useGetUserFarm';
+import useGetUserPoint from '@/hooks/queries/useGetUserPoint';
 import CreateFarm from '@/screens/farm/CreateFarm';
 import HomeScreen from '@/screens/main/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 
 // 메인 stack
@@ -16,13 +17,15 @@ const MainStack = () => {
     isLoading: isUserFarmLoading,
   } = useGetUserFarm();
 
-  useEffect(() => {
-    if (isUserFarmError) {
-      console.log('error: ', isUserFarmError);
-    }
-  }, [isUserFarmError]);
+  const {data: userPoint, isLoading: isUserPointLoading} = useGetUserPoint();
 
-  if (isUserFarmLoading) {
+  // useEffect(() => {
+  //   if (isUserFarmError) {
+  //     console.log('error: ', isUserFarmError);
+  //   }
+  // }, [isUserFarmError]);
+
+  if (isUserFarmLoading || isUserPointLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator />

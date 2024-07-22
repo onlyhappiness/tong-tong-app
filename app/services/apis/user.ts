@@ -14,6 +14,12 @@ const getUserPetList = async () => {
   return data;
 };
 
+// 포인트 조회
+const getUserPoint = async () => {
+  const {data} = await api.get('/user/point');
+  return data.data;
+};
+
 // 농장 설정
 const postUserFarmSetting = async (req: farmRequest) => {
   const {data} = await api.post('/user/farm-setting', req);
@@ -26,4 +32,10 @@ const postUserPetBuy = async (req: petBuyRequest) => {
   return data;
 };
 
-export {getUserFarm, getUserPetList, postUserFarmSetting, postUserPetBuy};
+export {
+  getUserFarm,
+  getUserPetList,
+  getUserPoint,
+  postUserFarmSetting,
+  postUserPetBuy,
+};

@@ -1,7 +1,7 @@
 import {GameEngine} from 'react-native-game-engine';
 
 // 펫 상태 변경
-const setPetStatus = (gameRef: GameEngine | null, state: string) => {
+const setPetStatus = (gameRef: GameEngine | any, state: string) => {
   const {gameEngineRef} = gameRef;
 
   if (gameEngineRef) {

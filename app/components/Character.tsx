@@ -1,5 +1,6 @@
 import {windowHeight} from '@/constants/screenSize';
 import {useGameState} from '@/data/gameStore';
+import useTimeStore from '@/data/timeStore';
 import {setPetStatus} from '@/utils/petStatus';
 import React, {useEffect, useState} from 'react';
 import {
@@ -14,6 +15,8 @@ import Egg from './Egg';
 const Character = (props: any) => {
   const gameRef = useGameState();
 
+  const {timeOfDay} = useTimeStore();
+
   const [showDialog, setShowDialog] = useState(false);
 
   const width = props.size[0];
@@ -23,6 +26,13 @@ const Character = (props: any) => {
     props.size[0] === 70
       ? (windowHeight * 0.7) / 1.4
       : (windowHeight * 0.7) / 1.4;
+
+  const handlePress = () => {
+    // console.log('Character pressed', gameRef);
+
+    setShowDialog(!showDialog);
+    setPetStatus(gameRef, 'stop');
+  };
 
   useEffect(() => {
     if (showDialog) {
@@ -40,12 +50,13 @@ const Character = (props: any) => {
     }
   }, [gameRef, showDialog]);
 
-  const handlePress = () => {
-    console.log('Character pressed', gameRef);
+  useEffect(() => {
+    if (timeOfDay === 'Evening' || 'Night') {
+      setPetStatus(gameRef, 'stop');
+    }
+  }, [gameRef, timeOfDay]);
 
-    setShowDialog(!showDialog);
-    setPetStatus(gameRef, 'stop');
-  };
+  // console.log('timeOfDay: ', timeOfDay);
 
   return (
     <View style={[styles.container, {left: x, top: y, zIndex: 50}]}>

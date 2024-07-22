@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import Config from 'react-native-config';
 
 export const getApiHost = () => {
-  return Config.API_URL;
+  // return Config.API_URL;
+  return 'http://localhost:3030';
 };
 
 const api = axios.create({

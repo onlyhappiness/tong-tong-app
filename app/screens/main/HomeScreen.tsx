@@ -2,9 +2,8 @@ import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Character from '@/components/Character';
 import Header from '@/components/Header';
-import Button from '@/components/ui/Button';
 import {windowWidth} from '@/constants/screenSize';
-import {useCharacterActions, useCharacterState} from '@/data/characterStore';
+import {useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import characterTypes from '@/utils/characterType';
@@ -19,7 +18,7 @@ import {
 const HomeScreen = () => {
   const {character} = useCharacterState();
 
-  const {setCharacter} = useCharacterActions();
+  // const {setCharacter} = useCharacterActions();
 
   const {setGameEngineRef} = useGameActions();
 
@@ -89,7 +88,7 @@ const HomeScreen = () => {
                   entities={entities}
                 />
               )}
-              <Button label="테스트" onPress={test} />
+              {/* <Button label="테스트" onPress={test} /> */}
             </View>
 
             <BottomTab />

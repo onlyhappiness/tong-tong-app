@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {useShallow} from 'zustand/react/shallow';
 
 interface State {
-  character: string;
+  character: string | null;
 }
 
 interface Actions {
@@ -12,7 +12,8 @@ interface Actions {
 interface Store extends State, Actions {}
 
 const useCharacterStore = create<Store>(set => ({
-  character: 'chick',
+  character: null,
+  // character: 'chick',
   setCharacter: (data: string) => set({character: data}),
 }));
 

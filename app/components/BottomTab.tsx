@@ -1,12 +1,12 @@
 import {useCharacterActions} from '@/data/characterStore';
-import {useGameActions, useGameState} from '@/data/gameStore';
+import {useGameState} from '@/data/gameStore';
 import {setPetStatus} from '@/utils/petStatus';
 import React from 'react';
 import {Button, StyleSheet, View} from 'react-native';
 
 const BottomTab = () => {
   const gameRef = useGameState();
-  const {setGameEngineRef} = useGameActions();
+  // const {setGameEngineRef} = useGameActions();
 
   const {setCharacter} = useCharacterActions();
 

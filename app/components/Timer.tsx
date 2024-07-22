@@ -20,15 +20,15 @@ export default () => {
       setGameTime(newTime);
 
       updateTimeOfDay(newTime);
-    }, 600000); // 600000ms = 10분
+    }, 1800000); // 600000ms = 10분
 
     return () => clearInterval(interval);
   }, [gameTime, setGameTime, updateTimeOfDay]);
 
-  const performActivity = () => {
-    setGameTime(prevTime => (prevTime + 1) % 24); // 활동 완료 시 1시간 증가
-    updateTimeOfDay((gameTime + 1) % 24);
-  };
+  // const performActivity = () => {
+  //   setGameTime(prevTime => (prevTime + 1) % 24); // 활동 완료 시 1시간 증가
+  //   updateTimeOfDay((gameTime + 1) % 24);
+  // };
 
   return (
     <View>

@@ -7,6 +7,7 @@ import {BUTTON, COLOR} from '@/constants/color';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Point from '../Point';
 import Timer from '../Timer';
 import Text from '../ui/Text';
 
@@ -25,9 +26,7 @@ export default ({}) => {
         </View>
         <View style={styles.button}>
           <Image source={Coin} style={{width: 24, height: 24}} />
-          <Text textStyle={{fontWeight: 'bold', color: BUTTON.third_hover}}>
-            9,999,999
-          </Text>
+          <Point />
         </View>
       </View>
     </View>
@@ -49,13 +48,13 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: BUTTON.third_hover,
     backgroundColor: 'white',
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     borderRadius: 30,
   },
 });
