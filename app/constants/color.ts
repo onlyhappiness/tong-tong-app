@@ -1,8 +1,4 @@
 const COLOR = {
-  wood: '#DEAF85',
-  bottom: '#B58282',
-
-  // border: '#bfbfbf',
   border: '#c6c6c6',
 };
 

@@ -1,11 +1,6 @@
 import {getAuthLogin, postAuthLogin} from '@/services/apis/auth';
 import {setStorage} from '@/utils/storage';
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  UseQueryOptions,
-} from '@tanstack/react-query';
+import {QueryClient, useMutation, useQuery} from '@tanstack/react-query';
 
 function useAuthLogin() {
   const queryClient = new QueryClient();
@@ -23,7 +18,7 @@ function useAuthLogin() {
   });
 }
 
-function useGetAuthLogin(queryOptions?: UseQueryOptions) {
+function useGetAuthLogin(queryOptions?: any) {
   return useQuery({
     queryFn: getAuthLogin,
     queryKey: ['auth', 'getAuthLogin'],

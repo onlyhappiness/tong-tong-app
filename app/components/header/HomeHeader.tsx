@@ -3,7 +3,7 @@ import Rainbow from '@/assets/weather/rainbow.png';
 // import Sunny from '@/assets/weather/sunny.png'
 // import Rainy from '@/assets/weather/rainy.png'
 
-import {BUTTON, COLOR} from '@/constants/color';
+import {BUTTON} from '@/constants/color';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -36,8 +36,7 @@ export default ({}) => {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    // backgroundColor: '#DEAF85',
-    backgroundColor: COLOR.wood,
+    backgroundColor: '#DEAF85',
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -7,6 +7,7 @@ import {useUserInfoActions, useUserInfoState} from '@/data/userStore';
 import useAuth from '@/hooks/queries/useAuth';
 import AuthStack from '@/stack/AuthStack';
 import MainStack from '@/stack/MainStack';
+import {userData} from '@/types/user';
 import {ActivityIndicator, View} from 'react-native';
 
 const Navigation = () => {
@@ -19,7 +20,7 @@ const Navigation = () => {
 
   useEffect(() => {
     if (isLogin.isSuccess) {
-      setUserInfo(isLogin.data);
+      setUserInfo(isLogin.data as userData);
     }
   }, [isLogin.data, isLogin.isSuccess, setUserInfo]);
 
@@ -29,13 +30,21 @@ const Navigation = () => {
     }
   }, [clearUserInfo, isLogin.isError]);
 
-  if (isLogin?.isLoading) {
+  // useEffect(() => {
+  //   if (isLogin.isError) {
+  //     clearUserInfo();
+  //   }
+  // }, [clearUserInfo, isLogin.isError]);
+
+  if (isLogin?.isPending) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator />
       </View>
     );
   }
+
+  // console.log('isLogin?.isPending::: ', isLogin?.isPending);
 
   return (
     <NavigationContainer>

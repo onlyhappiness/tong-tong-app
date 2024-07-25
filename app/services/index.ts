@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+// import Config from 'react-native-config';
 
 export const getApiHost = () => {
   // return Config.API_URL;

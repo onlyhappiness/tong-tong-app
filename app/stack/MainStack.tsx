@@ -1,4 +1,5 @@
 import {mainNavigations} from '@/constants/navigations';
+import useGetPetList from '@/hooks/queries/useGetPetList';
 import useGetUserFarm from '@/hooks/queries/useGetUserFarm';
 import useGetUserPoint from '@/hooks/queries/useGetUserPoint';
 import CreateFarm from '@/screens/farm/CreateFarm';
@@ -17,7 +18,17 @@ const MainStack = () => {
     isLoading: isUserFarmLoading,
   } = useGetUserFarm();
 
-  const {data: userPoint, isLoading: isUserPointLoading} = useGetUserPoint();
+  const {
+    data: userPoint,
+    isLoading: isUserPointLoading,
+    isError: isUserPointError,
+  } = useGetUserPoint();
+
+  const {
+    data: userPet,
+    isLoading: isPetLoading,
+    isError: isPetError,
+  } = useGetPetList();
 
   // useEffect(() => {
   //   if (isUserFarmError) {
@@ -25,7 +36,11 @@ const MainStack = () => {
   //   }
   // }, [isUserFarmError]);
 
-  if (isUserFarmLoading || isUserPointLoading) {
+  // console.log('isError: ', isUserFarmError);
+  // console.log('isUserPointError: ', isUserPointError);
+  // console.log('isPetError: ', isPetError);
+
+  if (isUserFarmLoading || isUserPointLoading || isPetLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator />
@@ -41,6 +56,11 @@ const MainStack = () => {
           component={CreateFarm}
         />
       )}
+
+      {/* TODO: 펫이 없다면 튜토리얼로 이동 */}
+      {/* 튜토리얼은 modal로 보여줄 수 있고, 화면으로 보여줄 수도 있음. */}
+      {/* 빗이나 장난감 등을 사면, 달성 완료 modal을 보여줌 */}
+      {/* 이후, 펫이 놀러왔다는 modal을 보여줌 */}
 
       <Stack.Screen name={mainNavigations.HOME} component={HomeScreen} />
     </Stack.Navigator>
