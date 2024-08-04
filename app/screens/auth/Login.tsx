@@ -134,6 +134,7 @@ const Login = () => {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+
       <Alert
         open={loginError}
         content="아이디 또는 비밀번호를 다시 확인해주세요."
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 250,
+    height: 230,
   },
   loginContainer: {
     gap: 15,

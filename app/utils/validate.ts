@@ -36,9 +36,9 @@ function validateCreateFarm(values: {name: string}) {
     errors.name = '농장 이름을 입력해주세요.';
   }
 
-  // if (!(values.name.length >= 3 && values.name.length <= 15)) {
-  //   errors.name = '농장 이름은 3~15자 사이로 입력해주세요.';
-  // }
+  if (!(values.name.length >= 3 && values.name.length <= 15)) {
+    errors.name = '농장 이름은 3~15자 사이로 입력해주세요.';
+  }
 
   return errors;
 }

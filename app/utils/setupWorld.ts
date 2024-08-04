@@ -1,15 +1,13 @@
+import Character from '@/components/Character';
 import {windowWidth} from '@/constants/screenSize';
-import characterTypes from '@/utils/characterType';
-import Character from './Character';
+import characterTypes from './characterType';
 
-const SetupWorld = (characterType: string) => {
-  // const {character} = useGameState();
-
-  const selectedCharacter = characterTypes[characterType];
+const setupWorld = (character: string) => {
+  const selectedCharacter = characterTypes[character];
 
   return {
     character: {
-      type: characterType,
+      type: character,
       position: [windowWidth / 2, 200],
       size: [selectedCharacter.size, selectedCharacter.size],
       state: 0,
@@ -24,7 +22,8 @@ const SetupWorld = (characterType: string) => {
       // 캐릭터 이벤트
       onPress: () => {},
     },
+    status: 'start',
   };
 };
 
-export default SetupWorld;
+export default setupWorld;

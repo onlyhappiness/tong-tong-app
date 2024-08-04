@@ -14,31 +14,21 @@ const MainStack = () => {
 
   const {
     data: userFarm,
-    isError: isUserFarmError,
     isLoading: isUserFarmLoading,
+    // isError: isUserFarmError,
   } = useGetUserFarm();
 
   const {
-    data: userPoint,
+    // data: userPoint,
     isLoading: isUserPointLoading,
-    isError: isUserPointError,
+    // isError: isUserPointError,
   } = useGetUserPoint();
 
   const {
-    data: userPet,
+    // data: userPet,
     isLoading: isPetLoading,
-    isError: isPetError,
+    // isError: isPetError,
   } = useGetPetList();
-
-  // useEffect(() => {
-  //   if (isUserFarmError) {
-  //     console.log('error: ', isUserFarmError);
-  //   }
-  // }, [isUserFarmError]);
-
-  // console.log('isError: ', isUserFarmError);
-  // console.log('isUserPointError: ', isUserPointError);
-  // console.log('isPetError: ', isPetError);
 
   if (isUserFarmLoading || isUserPointLoading || isPetLoading) {
     return (

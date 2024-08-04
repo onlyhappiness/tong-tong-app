@@ -32,8 +32,10 @@ export default () => {
 
   return (
     <View>
-      <Text>{timeOfDay}</Text>
-      <Text>{Math.floor(gameTime)}:00</Text>
+      {/* <Text style={{color: 'white'}}>{timeOfDay}</Text> */}
+      <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
+        {Math.floor(gameTime)}:00
+      </Text>
     </View>
   );
 };

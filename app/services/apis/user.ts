@@ -17,7 +17,6 @@ const getUserPetList = async () => {
 // 포인트 조회
 const getUserPoint = async () => {
   const {data} = await api.get('/user/point');
-  console.log('data: ', data);
   return data.data;
 };
 

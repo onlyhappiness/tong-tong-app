@@ -24,8 +24,8 @@ const Character = (props: any) => {
   const x = props.position[0] - width / 2;
   const y =
     props.size[0] === 70
-      ? (windowHeight * 0.7) / 1.4
-      : (windowHeight * 0.7) / 1.4;
+      ? (windowHeight * 0.7) / 1.35
+      : (windowHeight * 0.7) / 1.35;
 
   const handlePress = () => {
     // console.log('Character pressed', gameRef);
@@ -50,11 +50,11 @@ const Character = (props: any) => {
     }
   }, [gameRef, showDialog]);
 
-  useEffect(() => {
-    if (timeOfDay === 'Evening' || 'Night') {
-      setPetStatus(gameRef, 'stop');
-    }
-  }, [gameRef, timeOfDay]);
+  // useEffect(() => {
+  //   if (timeOfDay === 'Evening' || 'Night') {
+  //     setPetStatus(gameRef, 'stop');
+  //   }
+  // }, [gameRef, timeOfDay]);
 
   // console.log('timeOfDay: ', timeOfDay);
 

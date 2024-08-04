@@ -1,9 +1,9 @@
 import {getAuthLogin, postAuthLogin} from '@/services/apis/auth';
 import {setStorage} from '@/utils/storage';
-import {QueryClient, useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
 function useAuthLogin() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: postAuthLogin,
@@ -19,11 +19,20 @@ function useAuthLogin() {
 }
 
 function useGetAuthLogin(queryOptions?: any) {
-  return useQuery({
+  const {data, isSuccess, isError, isLoading} = useQuery({
     queryFn: getAuthLogin,
     queryKey: ['auth', 'getAuthLogin'],
     ...queryOptions,
   });
+
+  console.log({data, isSuccess, isError, isLoading});
+
+  return {
+    data,
+    isSuccess,
+    isError,
+    isLoading,
+  };
 }
 
 function useAuth() {
@@ -31,12 +40,12 @@ function useAuth() {
   const getLoginQuery = useGetAuthLogin({
     enabled: loginMutation.isSuccess,
   });
-  const isLogin = useGetAuthLogin();
 
   return {
     loginMutation,
     getLoginQuery,
-    isLogin,
+    isLogin: getLoginQuery,
+    isLoginLoading: getLoginQuery.isLoading,
   };
 }
 

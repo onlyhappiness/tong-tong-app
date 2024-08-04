@@ -57,11 +57,25 @@ const CreateFarm = () => {
       type: farmType,
     };
 
-    createFarm.mutateAsync(req).then(() => {
-      navigation.navigate(mainNavigations.HOME);
-      queryClient.invalidateQueries({
-        queryKey: ['userFarm'],
-      });
+    console.log('req:: ', req);
+
+    // createFarm.mutateAsync(req).then(() => {
+    //   navigation.navigate(mainNavigations.HOME);
+    //   queryClient.invalidateQueries({
+    //     queryKey: ['userFarm'],
+    //   });
+    // });
+
+    createFarm.mutate(req, {
+      onSuccess: () => {
+        navigation.navigate(mainNavigations.HOME);
+        queryClient.invalidateQueries({
+          queryKey: ['userFarm'],
+        });
+      },
+      onError: err => {
+        console.log('err: ', err);
+      },
     });
   };
 
@@ -129,6 +143,7 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: '#c6c6c6',
     borderRadius: 20,
+    marginTop: 5,
   },
 });
 

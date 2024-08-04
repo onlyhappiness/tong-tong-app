@@ -16,35 +16,29 @@ const Navigation = () => {
 
   const Stack = useMemo(() => createNativeStackNavigator(), []);
 
-  const {isLogin} = useAuth();
+  const {isLoginLoading, isLogin} = useAuth();
 
   useEffect(() => {
-    if (isLogin.isSuccess) {
+    if (isLogin.data) {
       setUserInfo(isLogin.data as userData);
     }
-  }, [isLogin.data, isLogin.isSuccess, setUserInfo]);
+  }, [isLogin.isSuccess]);
 
   useEffect(() => {
     if (isLogin.isError) {
       clearUserInfo();
     }
-  }, [clearUserInfo, isLogin.isError]);
+  }, [isLogin.isError]);
 
-  // useEffect(() => {
-  //   if (isLogin.isError) {
-  //     clearUserInfo();
-  //   }
-  // }, [clearUserInfo, isLogin.isError]);
+  console.log('isLogin::: ', isLogin);
 
-  if (isLogin?.isPending) {
+  if (isLoginLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator />
       </View>
     );
   }
-
-  // console.log('isLogin?.isPending::: ', isLogin?.isPending);
 
   return (
     <NavigationContainer>

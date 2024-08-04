@@ -17,6 +17,7 @@ const postAuthRegister = async (req: userRegisterRequest) => {
 // 로그인
 const postAuthLogin = async (req: userLoginRequest) => {
   const {data} = await api.post('/auth/login', req);
+
   return data.data;
 };
 

@@ -18,7 +18,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Navigation />
-      {/* <Toast /> */}
     </QueryClientProvider>
   );
 };
