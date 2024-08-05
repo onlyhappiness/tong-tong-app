@@ -23,13 +23,20 @@ export default ({
   submitText,
   isLoading,
 }: Props) => {
+  const contentLines = content.split('\\n');
+  // console.log('contentLines: ', contentLines);
+
   return (
     <Modal visible={open} transparent={true} animationType="fade">
       <View style={styles.container}>
         <View style={styles.alert}>
           <View style={styles.top}>
-            {title}
-            <Text textStyle={styles.content}>{content}</Text>
+            {title && <Text textStyle={styles.title}>{title}</Text>}
+            {contentLines.map((line, index) => (
+              <Text key={index} textStyle={styles.content}>
+                {line}
+              </Text>
+            ))}
           </View>
 
           <View style={styles.bottom}>
@@ -73,6 +80,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     minHeight: 100,
+  },
+  title: {
+    marginBottom: 10,
+    fontWeight: 500,
   },
   content: {
     fontSize: 15,

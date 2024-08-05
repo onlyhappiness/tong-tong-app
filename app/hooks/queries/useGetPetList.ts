@@ -7,7 +7,7 @@ const useGetPetList = () => {
 
   return useQuery({
     queryKey: ['petList'],
-    queryFn: () => getUserPetList(),
+    queryFn: getUserPetList,
     enabled: !!userInfo,
   });
 };

@@ -3341,11 +3341,11 @@ __metadata:
     babel-jest: ^29.6.3
     babel-plugin-module-resolver: ^5.0.2
     commitlint-config-git-commit-emoji: ^1.0.0
+    es-toolkit: ^1.13.1
     eslint: ^8.19.0
     husky: ^8.0.0
     jest: ^29.6.3
     lint-staged: ^15.2.7
-    matter-js: ^0.19.0
     prettier: 2.8.8
     react: 18.2.0
     react-error-boundary: ^4.0.13
@@ -3355,7 +3355,6 @@ __metadata:
     react-native-linear-gradient: ^2.8.3
     react-native-safe-area-context: ^4.10.5
     react-native-screens: ^3.32.0
-    react-native-toast-message: ^2.2.0
     react-test-renderer: 18.2.0
     typescript: 5.0.4
     zustand: ^4.5.2
@@ -4980,6 +4979,13 @@ __metadata:
     is-date-object: ^1.0.1
     is-symbol: ^1.0.2
   checksum: 4ead6671a2c1402619bdd77f3503991232ca15e17e46222b0a41a5d81aebc8740a77822f5b3c965008e631153e9ef0580540007744521e72de8e33599fca2eed
+  languageName: node
+  linkType: hard
+
+"es-toolkit@npm:^1.13.1":
+  version: 1.13.1
+  resolution: "es-toolkit@npm:1.13.1"
+  checksum: 4e412038f8b7ab84657e2fd30a4d7662afa7c2678db2cd5dec87f331a7ee0c175edb009eb81d2670f9e32bbe257eb698bf73e5aeae60446b9b2f2e30727524ac
   languageName: node
   linkType: hard
 
@@ -7693,13 +7699,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"matter-js@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "matter-js@npm:0.19.0"
-  checksum: 1f226a0826ad9700e7d171daeb17f6d18b7f4fcc94a6530b7dd190d2e3c7380b5b4d518a4d0272aaf6a674475b2ef777a44320ab639ce2e8974ebb02a58a50ca
-  languageName: node
-  linkType: hard
-
 "memoize-one@npm:^5.0.0":
   version: 5.2.1
   resolution: "memoize-one@npm:5.2.1"
@@ -9062,16 +9061,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: afcb93e9cd48d5071278213bbc4ddc18112dbdbd16c11e3c7129368614396d8aae13fd70bb299f3c84f52a28e34af06ccdc514de1e97a99f4197069301dab136
-  languageName: node
-  linkType: hard
-
-"react-native-toast-message@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "react-native-toast-message@npm:2.2.0"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: b286b8d5ca0f21737c2e0a8e9c2d6dab2c06a3895335aa541c69eeb42d526cc6f3951069e59d8d346d3e6cafb8feaa450c35b0efe7c3d51ff81351d1477e71eb
   languageName: node
   linkType: hard
 

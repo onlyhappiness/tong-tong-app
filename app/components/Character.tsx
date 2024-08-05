@@ -24,8 +24,8 @@ const Character = (props: any) => {
   const x = props.position[0] - width / 2;
   const y =
     props.size[0] === 70
-      ? (windowHeight * 0.7) / 1.35
-      : (windowHeight * 0.7) / 1.35;
+      ? (windowHeight * 0.7) / 1.3
+      : (windowHeight * 0.7) / 1.3;
 
   const handlePress = () => {
     // console.log('Character pressed', gameRef);

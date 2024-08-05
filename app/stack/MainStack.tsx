@@ -1,5 +1,4 @@
 import {mainNavigations} from '@/constants/navigations';
-import useGetPetList from '@/hooks/queries/useGetPetList';
 import useGetUserFarm from '@/hooks/queries/useGetUserFarm';
 import useGetUserPoint from '@/hooks/queries/useGetUserPoint';
 import CreateFarm from '@/screens/farm/CreateFarm';
@@ -12,25 +11,11 @@ import {ActivityIndicator, View} from 'react-native';
 const MainStack = () => {
   const Stack = useMemo(() => createNativeStackNavigator(), []);
 
-  const {
-    data: userFarm,
-    isLoading: isUserFarmLoading,
-    // isError: isUserFarmError,
-  } = useGetUserFarm();
+  const {data: userFarm, isLoading: isUserFarmLoading} = useGetUserFarm();
 
-  const {
-    // data: userPoint,
-    isLoading: isUserPointLoading,
-    // isError: isUserPointError,
-  } = useGetUserPoint();
+  const {isLoading: isUserPointLoading} = useGetUserPoint();
 
-  const {
-    // data: userPet,
-    isLoading: isPetLoading,
-    // isError: isPetError,
-  } = useGetPetList();
-
-  if (isUserFarmLoading || isUserPointLoading || isPetLoading) {
+  if (isUserFarmLoading || isUserPointLoading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator />

@@ -1,9 +1,10 @@
 import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Header from '@/components/Header';
-import TestButton from '@/components/TestButton';
-import {useCharacterState} from '@/data/characterStore';
+import Tutorial from '@/components/Tutorial';
+import {useCharacterActions, useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
+import useGetPetList from '@/hooks/queries/useGetPetList';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import setupWorld from '@/utils/setupWorld';
 import React, {useEffect, useState} from 'react';
@@ -14,11 +15,17 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 const HomeScreen = () => {
   const {character} = useCharacterState();
 
+  const {setCharacter} = useCharacterActions();
+
   const {setGameEngineRef} = useGameActions();
 
   const [entities, setEntities] = useState({});
 
   const [engineKey, setEngineKey] = useState(0);
+
+  const {data: petData, isLoading, isError} = useGetPetList();
+
+  const shouldShowTutorial = !isLoading && !isError && petData?.length === 0;
 
   useEffect(() => {
     if (character) {
@@ -27,11 +34,17 @@ const HomeScreen = () => {
     }
   }, [character]);
 
+  useEffect(() => {
+    if (petData?.length > 0) {
+      console.log('petData:: ', petData?.[0]?.type);
+      const character = petData?.[0]?.type;
+      setCharacter(character);
+    }
+  }, [petData, setCharacter]);
+
   return (
     <>
       <SafeAreaProvider>
-        {/* <SafeAreaInsetsContext.Consumer>
-          {insets => ( */}
         <View style={{flex: 1}}>
           <View style={styles.engineContainer}>
             <Header type="home" />
@@ -49,16 +62,15 @@ const HomeScreen = () => {
                 entities={entities}
               />
             )}
-            <TestButton />
+            {/* <TestButton /> */}
           </View>
 
           <BottomTab />
         </View>
-        {/* )}
-        </SafeAreaInsetsContext.Consumer> */}
       </SafeAreaProvider>
 
       {/* 튜토리얼 */}
+      {shouldShowTutorial && <Tutorial />}
     </>
   );
 };

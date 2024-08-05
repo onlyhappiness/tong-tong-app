@@ -11,7 +11,7 @@ const getUserFarm = async () => {
 // 내 펫 목록
 const getUserPetList = async () => {
   const {data} = await api.get('/user/pet-list');
-  return data;
+  return data.data;
 };
 
 // 포인트 조회

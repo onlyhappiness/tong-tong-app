@@ -3,9 +3,13 @@ import api from '..';
 
 // 로그인 유저 확인
 const getAuthLogin = async () => {
-  const {data} = await api.get('/auth/login');
-
-  return data.data;
+  try {
+    const {data} = await api.get('/auth/login');
+    return data.data;
+  } catch (error) {
+    // console.error('Error fetching auth login:', error);
+    throw error;
+  }
 };
 
 // 회원가입
@@ -17,7 +21,6 @@ const postAuthRegister = async (req: userRegisterRequest) => {
 // 로그인
 const postAuthLogin = async (req: userLoginRequest) => {
   const {data} = await api.post('/auth/login', req);
-
   return data.data;
 };
 

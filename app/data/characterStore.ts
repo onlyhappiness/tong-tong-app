@@ -12,8 +12,8 @@ interface Actions {
 interface Store extends State, Actions {}
 
 const useCharacterStore = create<Store>(set => ({
-  // character: null,
-  character: 'poodle',
+  character: null,
+  // character: 'poodle',
   setCharacter: (data: string) => set({character: data}),
 }));
 

@@ -18,18 +18,19 @@ function useAuthLogin() {
   });
 }
 
-function useGetAuthLogin(queryOptions?: any) {
-  const {data, isSuccess, isError, isLoading} = useQuery({
+function useGetAuthLogin(queryOptions = {}) {
+  const {data, isSuccess, error, isError, isLoading} = useQuery({
     queryFn: getAuthLogin,
     queryKey: ['auth', 'getAuthLogin'],
     ...queryOptions,
   });
 
-  console.log({data, isSuccess, isError, isLoading});
+  // console.log({data, isSuccess, error, isError, isLoading});
 
   return {
     data,
     isSuccess,
+    error,
     isError,
     isLoading,
   };

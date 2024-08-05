@@ -5,13 +5,14 @@ import React, {useEffect, useMemo} from 'react';
 import {authNavigations, mainNavigations} from '@/constants/navigations';
 import {useUserInfoActions, useUserInfoState} from '@/data/userStore';
 import useAuth from '@/hooks/queries/useAuth';
+import {getAuthLogin} from '@/services/apis/auth';
 import AuthStack from '@/stack/AuthStack';
 import MainStack from '@/stack/MainStack';
-import {userData} from '@/types/user';
 import {ActivityIndicator, View} from 'react-native';
 
 const Navigation = () => {
   const {userInfo} = useUserInfoState();
+
   const {setUserInfo, clearUserInfo} = useUserInfoActions();
 
   const Stack = useMemo(() => createNativeStackNavigator(), []);
@@ -19,18 +20,16 @@ const Navigation = () => {
   const {isLoginLoading, isLogin} = useAuth();
 
   useEffect(() => {
-    if (isLogin.data) {
-      setUserInfo(isLogin.data as userData);
-    }
-  }, [isLogin.isSuccess]);
-
-  useEffect(() => {
-    if (isLogin.isError) {
-      clearUserInfo();
-    }
-  }, [isLogin.isError]);
-
-  console.log('isLogin::: ', isLogin);
+    (async () => {
+      try {
+        const user = await getAuthLogin();
+        console.log('user::: ', user);
+        setUserInfo(user);
+      } catch (error) {
+        clearUserInfo();
+      }
+    })();
+  }, [clearUserInfo, setUserInfo]);
 
   if (isLoginLoading) {
     return (

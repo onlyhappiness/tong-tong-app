@@ -9,7 +9,7 @@ export default () => {
 
   const test = async () => {
     // clearUserInfo();
-    setCharacter('chick');
+    setCharacter('egg');
     setPetStatus(gameRef, 'start');
   };
 

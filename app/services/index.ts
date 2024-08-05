@@ -1,4 +1,3 @@
-import {useUserInfoActions} from '@/data/userStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 // import Config from 'react-native-config';
@@ -15,34 +14,34 @@ const api = axios.create({
 
 api.interceptors.request.use(async (config: any) => {
   const token = await AsyncStorage.getItem('token');
-  console.log('token:: ', token);
+  console.log('API 요청 할 때 token:: ', token);
 
   config.headers.Authorization = `Bearer ${token}`;
 
   return config;
 });
 
-api.interceptors.response.use(
-  response => {
-    return response;
-  },
-  async error => {
-    const {clearUserInfo} = useUserInfoActions();
-    const {
-      config,
-      response: {status},
-    } = error;
+// api.interceptors.response.use(
+//   response => {
+//     return response;
+//   },
+//   async error => {
+//     const {clearUserInfo} = useUserInfoActions();
+//     const {
+//       config,
+//       response: {status},
+//     } = error;
 
-    console.log({error, config, status});
+//     console.log({error, config, status});
 
-    if (status === 401) {
-      console.log('토큰 제거 해야함');
-      await AsyncStorage.removeItem('token');
-      clearUserInfo();
-    }
+//     if (status === 401) {
+//       console.log('토큰 제거 해야함');
+//       await AsyncStorage.removeItem('token');
+//       clearUserInfo();
+//     }
 
-    return Promise.reject(error);
-  },
-);
+//     return Promise.reject(error);
+//   },
+// );
 
 export default api;

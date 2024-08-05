@@ -31,3 +31,15 @@ export interface userLoginRequest {
   email: string;
   password: string;
 }
+
+export interface userPetListData {
+  id: string;
+  createAt: string;
+  updatedAt: string;
+  name: string | null;
+  type: string;
+  intimacy: number;
+  nature: string;
+  species: string;
+  exp: number;
+}

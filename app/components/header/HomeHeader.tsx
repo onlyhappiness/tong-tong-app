@@ -18,7 +18,7 @@ export default ({}) => {
       <View style={[styles.container, {paddingTop: top}]}>
         <View style={styles.buttonContainer}>
           <Pressable
-            style={{padding: 15, borderRadius: 30, backgroundColor: 'white'}}>
+            style={{padding: 15, borderRadius: 50, backgroundColor: 'white'}}>
             <Text>펫</Text>
           </Pressable>
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     left: 8,
     top: 130,
     padding: 15,
-    borderRadius: 30,
+    borderRadius: 50,
     backgroundColor: 'white',
   },
 });
