@@ -36,7 +36,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (petData?.length > 0) {
-      console.log('petData:: ', petData?.[0]?.type);
+      // eslint-disable-next-line @typescript-eslint/no-shadow
       const character = petData?.[0]?.type;
       setCharacter(character);
     }

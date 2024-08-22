@@ -24,7 +24,7 @@ const Login = () => {
   const [loginError, setLoginError] = useState(false);
 
   const login = useForm({
-    initialValue: {email: '', password: ''},
+    initialValue: {account: '', password: ''},
     validate: validateLogin,
   });
 
@@ -62,15 +62,15 @@ const Login = () => {
           <View>
             <InputField
               autoFocus
-              placeholder="이메일 입력"
-              error={login.errors.email}
-              touched={login.touched.email}
+              placeholder="아이디 입력"
+              error={login.errors.account}
+              touched={login.touched.account}
               containerStyle={{marginBottom: 20}}
-              inputMode="email"
+              inputMode="text"
               returnKeyType="next"
               blurOnSubmit={false}
               onSubmitEditing={() => passwordRef.current?.focus()}
-              {...login.getTextInputProps('email')}
+              {...login.getTextInputProps('account')}
             />
 
             <InputField
@@ -85,10 +85,6 @@ const Login = () => {
               {...login.getTextInputProps('password')}
             />
 
-            {/* {loginMutation.isError && (
-            <Text>아이디 또는 비밀번호를 다시 확인해주세요.</Text>
-          )} */}
-
             <Button
               label="로그인"
               // textStyle={{color: 'white'}}
@@ -99,39 +95,9 @@ const Login = () => {
             />
           </View>
 
-          <View style={styles.textContainer}>
-            <Pressable>
-              <Text variant="caption" textStyle={{fontSize: 14}}>
-                아이디 찾기
-              </Text>
-            </Pressable>
+          <AuthTextButtonList />
 
-            <Pressable>
-              <Text variant="caption" textStyle={{fontSize: 14}}>
-                비밀번호 찾기
-              </Text>
-            </Pressable>
-
-            <Pressable>
-              <Text variant="caption" textStyle={{fontSize: 14}}>
-                회원가입
-              </Text>
-            </Pressable>
-          </View>
-
-          <View style={styles.authContainer}>
-            <RowStack containerStyle={{gap: 20}}>
-              <View style={styles.line} />
-              <Text>간편 계정 연결</Text>
-              <View style={styles.line} />
-            </RowStack>
-
-            <RowStack containerStyle={{marginTop: 30, gap: 30}}>
-              <Text>카카오톡</Text>
-              <Text>구글</Text>
-              <Text>네이버</Text>
-            </RowStack>
-          </View>
+          <SocialButtonList />
         </ScrollView>
       </KeyboardAvoidingView>
 
@@ -143,6 +109,48 @@ const Login = () => {
         }}
       />
     </>
+  );
+};
+
+const AuthTextButtonList = () => {
+  return (
+    <View style={styles.textContainer}>
+      <Pressable>
+        <Text variant="caption" textStyle={{fontSize: 14}}>
+          아이디 찾기
+        </Text>
+      </Pressable>
+
+      <Pressable>
+        <Text variant="caption" textStyle={{fontSize: 14}}>
+          비밀번호 찾기
+        </Text>
+      </Pressable>
+
+      <Pressable>
+        <Text variant="caption" textStyle={{fontSize: 14}}>
+          회원가입
+        </Text>
+      </Pressable>
+    </View>
+  );
+};
+
+const SocialButtonList = () => {
+  return (
+    <View style={styles.authContainer}>
+      <RowStack containerStyle={{gap: 20}}>
+        <View style={styles.line} />
+        <Text>간편 계정 연결</Text>
+        <View style={styles.line} />
+      </RowStack>
+
+      <RowStack containerStyle={{marginTop: 30, gap: 30}}>
+        <Text>카카오톡</Text>
+        <Text>구글</Text>
+        <Text>네이버</Text>
+      </RowStack>
+    </View>
   );
 };
 

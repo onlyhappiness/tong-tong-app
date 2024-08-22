@@ -20,6 +20,12 @@ const Navigation = () => {
   const {isLoginLoading, isLogin} = useAuth();
 
   useEffect(() => {
+    if (isLogin.isSuccess) {
+      setUserInfo(isLogin.data);
+    }
+  }, [isLogin.isSuccess]);
+
+  useEffect(() => {
     (async () => {
       try {
         const user = await getAuthLogin();

@@ -16,19 +16,20 @@ export interface userData {
 export interface userRegisterRequest {
   method: string;
   email: string;
+  account: string;
   nickname: string;
   username: string;
   password: string;
 }
 
 export interface userLoginFormData {
-  email: string;
+  account: string;
   password: string;
 }
 
 export interface userLoginRequest {
   method: 'email';
-  email: string;
+  account: string;
   password: string;
 }
 
