@@ -2,7 +2,7 @@ import {getAuthLogin, postAuthLogin} from '@/services/apis/auth';
 import {setStorage} from '@/utils/storage';
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 
-function useAuthLogin() {
+function usePostLogin() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -37,7 +37,7 @@ function useGetAuthLogin(queryOptions = {}) {
 }
 
 function useAuth() {
-  const loginMutation = useAuthLogin();
+  const loginMutation = usePostLogin();
   const getLoginQuery = useGetAuthLogin({
     enabled: loginMutation.isSuccess,
   });

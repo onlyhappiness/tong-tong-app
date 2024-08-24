@@ -3,10 +3,13 @@ import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import {RowStack} from '@/components/ui/Stack';
 import Text from '@/components/ui/Text';
-import useAuth from '@/hooks/queries/useAuth';
+import {queryKeys} from '@/hooks/queries/queryKey';
 import useForm from '@/hooks/useForm';
+import {postAuthLogin} from '@/services/apis/auth';
 import {userLoginRequest} from '@/types/user';
+import {setStorage} from '@/utils/storage';
 import {validateLogin} from '@/utils/validate';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 import React, {useRef, useState} from 'react';
 import {
   Image,
@@ -19,6 +22,8 @@ import {
 } from 'react-native';
 
 const Login = () => {
+  const queryClient = useQueryClient();
+
   const passwordRef = useRef<TextInput | null>(null);
 
   const [loginError, setLoginError] = useState(false);
@@ -28,7 +33,20 @@ const Login = () => {
     validate: validateLogin,
   });
 
-  const {loginMutation} = useAuth();
+  // const {loginMutation} = useAuth();
+
+  const loginMutation = useMutation({
+    mutationFn: postAuthLogin,
+    onSuccess: ({access_token: accessToken}) => {
+      setStorage('token', accessToken);
+    },
+    onError: () => setLoginError(true),
+    onSettled: () => {
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.AUTH_LOGIN,
+      });
+    },
+  });
 
   const handleSubmit = () => {
     const isEmpty = Object.values(login.errors).every(value => value === '');
@@ -41,9 +59,7 @@ const Login = () => {
       ...login.values,
     };
 
-    loginMutation.mutate(loginFormData, {
-      onError: () => setLoginError(true),
-    });
+    loginMutation.mutate(loginFormData);
   };
 
   return (

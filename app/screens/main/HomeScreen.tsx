@@ -1,10 +1,11 @@
 import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Header from '@/components/Header';
+import TestButton from '@/components/TestButton';
 import Tutorial from '@/components/Tutorial';
 import {useCharacterActions, useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
-import useGetPetList from '@/hooks/queries/useGetPetList';
+import useGetPetList from '@/hooks/queries/user/useGetPetList';
 import MoveCharacterSystem from '@/utils/MoveSystem';
 import setupWorld from '@/utils/setupWorld';
 import React, {useEffect, useState} from 'react';
@@ -62,7 +63,7 @@ const HomeScreen = () => {
                 entities={entities}
               />
             )}
-            {/* <TestButton /> */}
+            <TestButton />
           </View>
 
           <BottomTab />

@@ -1,6 +1,9 @@
-const authKeys = {
-  auth: ['AUTH'],
-  login: ['LOGIN'],
+const queryKeys = {
+  AUTH: ['AUTH'],
+  LOGIN: ['LOGIN'],
+  AUTH_LOGIN: ['AUTH-LOGIN'],
+
+  USER: ['USER'],
 };
 
-export {authKeys};
+export {queryKeys};

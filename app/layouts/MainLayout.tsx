@@ -6,7 +6,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface IMainLayout {
   children: React.ReactNode;
@@ -14,11 +13,11 @@ interface IMainLayout {
   extraChildren?: React.ReactNode;
 }
 export default ({children, extraChildren, className}: IMainLayout) => {
-  const {top} = useSafeAreaInsets();
+  // const {top} = useSafeAreaInsets();
 
   return (
     <SafeAreaView style={[styles.layout, className]}>
-      <View style={[styles.container, {paddingTop: top}]}>{children}</View>
+      <View style={[styles.container]}>{children}</View>
       {extraChildren}
     </SafeAreaView>
   );
@@ -27,7 +26,6 @@ export default ({children, extraChildren, className}: IMainLayout) => {
 const styles = StyleSheet.create({
   layout: {
     flex: 1,
-    // backgroundColor: '#7F7FD5',
   },
   container: {
     flex: 1,
