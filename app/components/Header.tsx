@@ -1,5 +1,13 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {Pressable, StyleProp, Text, View, ViewStyle} from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import HomeHeader from './header/HomeHeader';
 import CustomText from './ui/Text';
 
@@ -20,9 +28,14 @@ const Header = ({
   rightIcon,
   back,
 }: HeaderProps) => {
+  const navigation = useNavigation();
+
   const backIcon = () => {
     return (
-      <Pressable>
+      <Pressable
+        onPress={() => {
+          navigation.goBack();
+        }}>
         <CustomText variant="body">뒤로</CustomText>
       </Pressable>
     );
@@ -31,15 +44,19 @@ const Header = ({
   const header = () => {
     if (type === 'default') {
       return (
-        <View style={[viewStyle]}>
-          <View>
+        <View style={[styles.header, viewStyle]}>
+          <View style={styles.view}>
             {leftIcon && leftIcon}
             {back && backIcon()}
           </View>
-          <View>
-            <Text>{title ? <CustomText>{title}</CustomText> : null}</Text>
+
+          <View style={styles.view}>
+            <Text style={styles.title}>
+              {title ? <CustomText>{title}</CustomText> : null}
+            </Text>
           </View>
-          <View>{rightIcon && rightIcon}</View>
+
+          <View style={styles.view}>{rightIcon && rightIcon}</View>
         </View>
       );
     }
@@ -51,5 +68,19 @@ const Header = ({
 
   return <View>{header()}</View>;
 };
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+  },
+  view: {
+    flex: 1,
+  },
+  title: {textAlign: 'center'},
+});
 
 export default Header;

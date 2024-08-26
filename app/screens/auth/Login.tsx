@@ -3,12 +3,14 @@ import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import {RowStack} from '@/components/ui/Stack';
 import Text from '@/components/ui/Text';
+import {authNavigations} from '@/constants/navigations';
 import {queryKeys} from '@/hooks/queries/queryKey';
 import useForm from '@/hooks/useForm';
 import {postAuthLogin} from '@/services/apis/auth';
 import {userLoginRequest} from '@/types/user';
 import {setStorage} from '@/utils/storage';
 import {validateLogin} from '@/utils/validate';
+import {useNavigation} from '@react-navigation/native';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import React, {useRef, useState} from 'react';
 import {
@@ -129,6 +131,8 @@ const Login = () => {
 };
 
 const AuthTextButtonList = () => {
+  const navigation = useNavigation<any>();
+
   return (
     <View style={styles.textContainer}>
       <Pressable>
@@ -143,7 +147,10 @@ const AuthTextButtonList = () => {
         </Text>
       </Pressable>
 
-      <Pressable>
+      <Pressable
+        onPress={() => {
+          navigation.navigate(authNavigations.SIGNUP);
+        }}>
         <Text variant="caption" textStyle={{fontSize: 14}}>
           회원가입
         </Text>

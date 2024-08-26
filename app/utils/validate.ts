@@ -21,6 +21,19 @@ function validateUser(values: userLoginFormData) {
   return errors;
 }
 
+// 회원가입
+function validateSignup(values) {
+  const errors = {
+    email: '',
+    account: '',
+    nickname: '',
+    username: '',
+    password: '',
+  };
+
+  return errors;
+}
+
 // 로그인 검증
 function validateLogin(values: userLoginFormData) {
   return validateUser(values);
@@ -43,4 +56,4 @@ function validateCreateFarm(values: {name: string}) {
   return errors;
 }
 
-export {validateCreateFarm, validateLogin};
+export {validateCreateFarm, validateLogin, validateSignup};

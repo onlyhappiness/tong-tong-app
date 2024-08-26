@@ -1,3 +1,4 @@
+import {Center} from '@/components/ui/Stack';
 import {mainNavigations} from '@/constants/navigations';
 import useGetUserFarm from '@/hooks/queries/user/useGetUserFarm';
 import useGetUserPoint from '@/hooks/queries/user/useGetUserPoint';
@@ -5,7 +6,7 @@ import CreateFarm from '@/screens/farm/CreateFarm';
 import HomeScreen from '@/screens/main/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useMemo} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator} from 'react-native';
 
 // 메인 stack
 const MainStack = () => {
@@ -17,15 +18,15 @@ const MainStack = () => {
 
   if (isUserFarmLoading || isUserPointLoading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Center>
         <ActivityIndicator />
-      </View>
+      </Center>
     );
   }
 
   return (
     <Stack.Navigator screenOptions={{headerShown: false}}>
-      {!userFarm && (
+      {!isUserFarmLoading && !userFarm && (
         <Stack.Screen
           name={mainNavigations.CREATE_FARM}
           component={CreateFarm}

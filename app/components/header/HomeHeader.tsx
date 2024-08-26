@@ -13,13 +13,20 @@ import Text from '../ui/Text';
 export default ({}) => {
   const {top} = useSafeAreaInsets();
 
+  // console.log('windowWidth: ', windowWidth);
+  // console.log('screenWidth: ', screenWidth);
+
   return (
     <>
       <View style={[styles.container, {paddingTop: top}]}>
         <View style={styles.buttonContainer}>
           <Pressable
             style={{padding: 15, borderRadius: 50, backgroundColor: 'white'}}>
-            <Text>펫</Text>
+            <Text
+            // textStyle={{fontSize: screenWidth > 400 ? 16 : 14}}
+            >
+              펫
+            </Text>
           </Pressable>
 
           <View style={[styles.button, {justifyContent: 'space-between'}]}>
@@ -37,10 +44,6 @@ export default ({}) => {
           </View>
         </View>
       </View>
-
-      {/* <Pressable style={[styles.petButton]}>
-        <Text>펫</Text>
-      </Pressable> */}
 
       <Pressable style={[styles.settingButton]}>
         <Text>설정</Text>

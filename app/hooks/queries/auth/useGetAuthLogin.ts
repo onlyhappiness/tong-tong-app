@@ -9,6 +9,7 @@ const useGetAuthLogin = () => {
 
   const {
     data: userInfo,
+    isLoading,
     isSuccess: isLoginSuccess,
     isError: isLoginError,
   } = useQuery({
@@ -26,6 +27,11 @@ const useGetAuthLogin = () => {
       clearUserInfo();
     }
   }, [clearUserInfo, isLoginError, isLoginSuccess, setUserInfo, userInfo]);
+
+  return {
+    data: userInfo,
+    isLoading,
+  };
 };
 
 export default useGetAuthLogin;

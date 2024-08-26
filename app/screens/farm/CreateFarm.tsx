@@ -111,7 +111,7 @@ const CreateFarm = () => {
         })}
       </View>
 
-      <Bottom className={{paddingVertical: 20}}>
+      <Bottom viewStyle={{paddingVertical: 20}}>
         <Button
           label="시작하기"
           onPress={handleCreateFarm}

@@ -2,12 +2,12 @@ import React, {ReactNode} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 
 interface Props {
-  className?: StyleProp<ViewStyle>;
+  viewStyle?: StyleProp<ViewStyle>;
   children: ReactNode;
 }
 
-export default ({className, children}: Props) => {
-  return <View style={[styles.container, className]}>{children}</View>;
+export default ({viewStyle, children}: Props) => {
+  return <View style={[styles.container, viewStyle]}>{children}</View>;
 };
 
 const styles = StyleSheet.create({

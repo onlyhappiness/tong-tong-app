@@ -12,9 +12,13 @@ const api = axios.create({
   withCredentials: true,
 });
 
+let requestCount = 0;
+
 api.interceptors.request.use(async (config: any) => {
   const token = await AsyncStorage.getItem('token');
-  console.log('API 요청 할 때 token:: ', token);
+
+  requestCount++;
+  console.log(`API 요청: ${config.url} ${requestCount}`);
 
   config.headers.Authorization = `Bearer ${token}`;
 

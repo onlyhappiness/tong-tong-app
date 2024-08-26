@@ -1,6 +1,5 @@
 import {COLOR} from '@/constants/color';
 import {screenHeight} from '@/constants/screenSize';
-import {mergeRefs} from '@/utils/func';
 import React, {ForwardedRef, ReactNode, forwardRef, useRef} from 'react';
 import {
   Pressable,
@@ -51,7 +50,7 @@ const InputField = forwardRef(
           <View style={Boolean(icon) && styles.innerContainer}>
             {icon}
             <TextInput
-              ref={ref ? mergeRefs(innerRef, ref) : innerRef}
+              // ref={ref ? mergeRefs(innerRef, ref) : innerRef}
               style={styles.input}
               autoCapitalize="none"
               spellCheck={false}
