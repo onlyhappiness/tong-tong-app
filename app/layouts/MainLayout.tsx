@@ -9,14 +9,14 @@ import {
 
 interface IMainLayout {
   children: React.ReactNode;
-  className?: StyleProp<ViewStyle>;
+  viewStyle?: StyleProp<ViewStyle>;
   extraChildren?: React.ReactNode;
 }
-export default ({children, extraChildren, className}: IMainLayout) => {
+export default ({children, extraChildren, viewStyle}: IMainLayout) => {
   // const {top} = useSafeAreaInsets();
 
   return (
-    <SafeAreaView style={[styles.layout, className]}>
+    <SafeAreaView style={[styles.layout, viewStyle]}>
       <View style={[styles.container]}>{children}</View>
       {extraChildren}
     </SafeAreaView>

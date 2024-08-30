@@ -13,6 +13,7 @@ import {
 import Text from './Text';
 
 interface InputFieldProps extends TextInputProps {
+  variant?: 'border' | 'underscore';
   disabled?: boolean;
   error?: string;
   touched?: boolean;
@@ -23,6 +24,7 @@ interface InputFieldProps extends TextInputProps {
 const InputField = forwardRef(
   (
     {
+      variant = 'border',
       disabled = false,
       error,
       touched,
@@ -45,17 +47,19 @@ const InputField = forwardRef(
         <View
           style={[
             styles.container,
-            touched && Boolean(error) && styles.inputError,
+            styles[variant],
+            touched && Boolean(error) && styles[`input${variant}Error`],
           ]}>
           <View style={Boolean(icon) && styles.innerContainer}>
             {icon}
             <TextInput
               // ref={ref ? mergeRefs(innerRef, ref) : innerRef}
-              style={styles.input}
+              style={styles[`input${variant}`]}
               autoCapitalize="none"
               spellCheck={false}
               autoCorrect={false}
               {...props}
+              placeholderTextColor={'#B1B8C0'}
             />
           </View>
         </View>
@@ -71,24 +75,37 @@ const InputField = forwardRef(
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1.2,
-    borderColor: COLOR.border,
     width: '100%',
     justifyContent: 'center',
     paddingHorizontal: screenHeight > 700 ? 10 : 8,
-    // paddingVertical: screenHeight > 700 ? 6 : 4,
-    borderRadius: 30,
     height: 50,
   },
   innerContainer: {
     flexDirection: 'row',
   },
-  input: {
+  border: {
+    borderWidth: 1.2,
+    borderColor: COLOR.border,
+    borderRadius: 30,
+  },
+  inputborder: {
     paddingVertical: 10,
     paddingHorizontal: 8,
     fontSize: 14,
   },
-  inputError: {
+  inputborderError: {
+    borderWidth: 1,
+    borderColor: 'red',
+  },
+  underscore: {
+    borderBottomWidth: 1.5,
+    borderColor: COLOR.border,
+  },
+  inputunderscore: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  inputunderscoreError: {
     borderWidth: 1,
     borderColor: 'red',
   },

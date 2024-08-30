@@ -80,7 +80,7 @@ const CreateFarm = () => {
   };
 
   return (
-    <MainLayout className={styles.layout}>
+    <MainLayout viewStyle={styles.layout}>
       <View style={styles.container}>
         <View style={{gap: 10}}>
           <Text variant="body">농장 이름</Text>
