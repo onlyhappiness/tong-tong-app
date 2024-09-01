@@ -1,15 +1,16 @@
-import Header from '@/components/Header';
 import Bottom from '@/components/ui/Bottom';
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import Text from '@/components/ui/Text';
 import {useFunnel} from '@/hooks/useFunnel';
 import MainLayout from '@/layouts/MainLayout';
+import {useNavigation} from '@react-navigation/native';
+import {ArrowLeftIcon, XIcon} from 'lucide-react-native';
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 
 const Signup = () => {
-  const {setStep, Funnel} = useFunnel('step1');
+  const {step, setStep, Funnel} = useFunnel('step1');
 
   const [form, setForm] = useState({
     email: '',
@@ -23,7 +24,8 @@ const Signup = () => {
 
   return (
     <MainLayout>
-      <Header type="default" title="" back />
+      {/* <Header type="default" title="" back /> */}
+      <Header step={step} setStep={setStep} />
 
       <Funnel>
         <Funnel.Step name="step1">
@@ -87,6 +89,36 @@ const Signup = () => {
   );
 };
 
+const Header = ({
+  step,
+  setStep,
+}: {
+  step: string;
+  setStep: (step: string) => void;
+}) => {
+  const navigation = useNavigation();
+
+  return (
+    <View style={styles.header}>
+      <View style={styles.view}>
+        {step === 'step1' ? (
+          <XIcon
+            color={'black'}
+            size={22}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
+        ) : (
+          <ArrowLeftIcon color={'black'} size={22} onPress={() => {}} />
+        )}
+      </View>
+      <View style={styles.view}></View>
+      <View style={styles.view}></View>
+    </View>
+  );
+};
+
 const NextButton = ({onPress}: {onPress: () => void}) => {
   return (
     <Bottom>
@@ -113,6 +145,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     paddingLeft: 4,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+  },
+  view: {
+    flex: 1,
+  },
+  title: {textAlign: 'center'},
 });
 
 export default Signup;

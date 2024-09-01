@@ -1,13 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
+import {ArrowLeftIcon} from 'lucide-react-native';
 import React from 'react';
-import {
-  Pressable,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, StyleSheet, Text, View, ViewStyle} from 'react-native';
 import HomeHeader from './header/HomeHeader';
 import CustomText from './ui/Text';
 
@@ -32,12 +26,15 @@ const Header = ({
 
   const backIcon = () => {
     return (
-      <Pressable
-        onPress={() => {
-          navigation.goBack();
-        }}>
-        <CustomText variant="body">뒤로</CustomText>
-      </Pressable>
+      // <Pressable
+      //   onPress={() => {
+      //     navigation.goBack();
+      //   }}>
+      //   {/* <CustomText variant="body">뒤로</CustomText> */}
+      // </Pressable>
+
+      // <Icon name="arrow-left" />
+      <ArrowLeftIcon color={'black'} size={22} />
     );
   };
 
