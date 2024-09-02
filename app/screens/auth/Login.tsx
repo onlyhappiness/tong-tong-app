@@ -1,4 +1,4 @@
-import Alert from '@/components/Alert';
+import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import InputField from '@/components/ui/InputField';
 import {RowStack} from '@/components/ui/Stack';
@@ -7,7 +7,7 @@ import {authNavigations} from '@/constants/navigations';
 import {queryKeys} from '@/hooks/queries/queryKey';
 import useForm from '@/hooks/useForm';
 import {postAuthLogin} from '@/services/apis/auth';
-import {userLoginRequest} from '@/types/user';
+import {userLoginRequest} from '@/types/auth';
 import {setStorage} from '@/utils/storage';
 import {validateLogin} from '@/utils/validate';
 import {useNavigation} from '@react-navigation/native';
@@ -34,8 +34,6 @@ const Login = () => {
     initialValue: {account: '', password: ''},
     validate: validateLogin,
   });
-
-  // const {loginMutation} = useAuth();
 
   const loginMutation = useMutation({
     mutationFn: postAuthLogin,

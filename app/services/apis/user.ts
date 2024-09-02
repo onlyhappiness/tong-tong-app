@@ -20,6 +20,31 @@ const getUserPoint = async () => {
   return data.data;
 };
 
+// 유저 닉네임 중복 확인
+const checkDuplicatedNickname = async (nickname: string) => {
+  const {data} = await api.post('/user/check-duplicated-nickname', null, {
+    params: {nickname: nickname},
+  });
+  return data;
+};
+
+// 유저 이메일 중복 확인
+const checkDuplicatedEmail = async (email: string) => {
+  const {data} = await api.post('/user/check-duplicated-email', null, {
+    params: {email: email},
+  });
+  console.log('이메일 중복 체크:::: ', data, email);
+  return data;
+};
+
+// 유저 계정 중복 확인
+const checkDuplicatedAccount = async (account: string) => {
+  const {data} = await api.post('/user/check-duplicated-account', null, {
+    params: {account: account},
+  });
+  return data;
+};
+
 // 농장 설정
 const postUserFarmSetting = async (req: farmRequest) => {
   const {data} = await api.post('/user/farm-setting', req);
@@ -33,6 +58,9 @@ const postUserPetBuy = async (req: petBuyRequest) => {
 };
 
 export {
+  checkDuplicatedAccount,
+  checkDuplicatedEmail,
+  checkDuplicatedNickname,
   getUserFarm,
   getUserPetList,
   getUserPoint,

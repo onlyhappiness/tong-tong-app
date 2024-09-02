@@ -25,9 +25,6 @@ const Navigation = () => {
     );
   }
 
-  // console.log('isLoginLoading:', isLoginLoading);
-  // console.log('userInfo:: ', userInfo);
-
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>

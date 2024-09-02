@@ -1,4 +1,4 @@
-import {userLoginRequest, userRegisterRequest} from '@/types/user';
+import {userLoginRequest, userRegisterRequest} from '@/types/auth';
 import api from '..';
 
 // 로그인 유저 확인

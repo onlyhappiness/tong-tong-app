@@ -1,4 +1,4 @@
-import {userLoginFormData} from '@/types/user';
+import {userLoginFormData} from '@/types/auth';
 
 function isBlank(value: string) {
   return value.trim() === '';
@@ -22,17 +22,6 @@ function validateUser(values: userLoginFormData) {
 }
 
 // 회원가입
-function validateSignup(values) {
-  const errors = {
-    email: '',
-    account: '',
-    nickname: '',
-    username: '',
-    password: '',
-  };
-
-  return errors;
-}
 
 // 로그인 검증
 function validateLogin(values: userLoginFormData) {
@@ -56,4 +45,4 @@ function validateCreateFarm(values: {name: string}) {
   return errors;
 }
 
-export {validateCreateFarm, validateLogin, validateSignup};
+export {isBlank, validateCreateFarm, validateLogin};

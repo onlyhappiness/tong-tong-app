@@ -1,14 +1,13 @@
-import {useFunnel} from '@/hooks/useFunnel';
 import {postUserPetBuy} from '@/services/apis/user';
 import {petBuyRequest} from '@/types/pet';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import React, {useState} from 'react';
-import Alert from './Alert';
+import Alert from './ui/Alert';
 
 export default () => {
   const queryClient = useQueryClient();
 
-  const {setStep, Funnel} = useFunnel('step1');
+  // const {setStep, Funnel} = useFunnel('step1');
 
   const [stepOne, setStepOne] = useState(true);
   const [stepTwo, setStepTwo] = useState(false);

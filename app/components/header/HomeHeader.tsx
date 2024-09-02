@@ -13,9 +13,6 @@ import Text from '../ui/Text';
 export default ({}) => {
   const {top} = useSafeAreaInsets();
 
-  // console.log('windowWidth: ', windowWidth);
-  // console.log('screenWidth: ', screenWidth);
-
   return (
     <>
       <View style={[styles.container, {paddingTop: top}]}>
@@ -35,9 +32,11 @@ export default ({}) => {
               Rainbow
             </Text>
           </View>
+
           <View style={[styles.button, {justifyContent: 'center'}]}>
             <Timer />
           </View>
+
           <View style={[styles.button, {justifyContent: 'space-between'}]}>
             <Image source={Coin} style={{width: 24, height: 24}} />
             <Point />

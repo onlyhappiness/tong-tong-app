@@ -1,6 +1,6 @@
 import React from 'react';
 import {Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
-import Text from './ui/Text';
+import Text from './Text';
 
 interface Props {
   open: boolean;
@@ -21,7 +21,6 @@ export default ({
   onSubmit,
   cancelText,
   submitText,
-  isLoading,
 }: Props) => {
   const contentLines = content.split('\\n');
   // console.log('contentLines: ', contentLines);
