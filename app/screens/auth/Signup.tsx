@@ -1,7 +1,7 @@
 import SignUpStepOne from '@/components/form/SignUpStepOne';
+import SignUpStepThree from '@/components/form/SignUpStepThree';
 import SignUpStepTwo from '@/components/form/SignUpStepTwo';
 import Header from '@/components/Header';
-import Text from '@/components/ui/Text';
 import {useFunnel} from '@/hooks/useFunnel';
 import MainLayout from '@/layouts/MainLayout';
 import React, {useState} from 'react';
@@ -43,7 +43,12 @@ const Signup = () => {
         </Funnel.Step>
 
         <Funnel.Step name="step3">
-          <Text>로그인 완료!</Text>
+          <SignUpStepThree
+            form={form}
+            setForm={setForm}
+            step={step}
+            setStep={setStep}
+          />
         </Funnel.Step>
       </Funnel>
     </MainLayout>

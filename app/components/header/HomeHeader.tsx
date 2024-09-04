@@ -4,7 +4,7 @@ import Rainbow from '@/assets/weather/rainbow.png';
 // import Rainy from '@/assets/weather/rainy.png'
 
 import React from 'react';
-import {Image, Pressable, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Point from '../Point';
 import Timer from '../Timer';
@@ -17,17 +17,8 @@ export default ({}) => {
     <>
       <View style={[styles.container, {paddingTop: top}]}>
         <View style={styles.buttonContainer}>
-          <Pressable
-            style={{padding: 15, borderRadius: 50, backgroundColor: 'white'}}>
-            <Text
-            // textStyle={{fontSize: screenWidth > 400 ? 16 : 14}}
-            >
-              펫
-            </Text>
-          </Pressable>
-
           <View style={[styles.button, {justifyContent: 'space-between'}]}>
-            <Image source={Rainbow} style={{width: 24, height: 24}} />
+            <Image source={Rainbow} style={{width: 23, height: 23}} />
             <Text textStyle={{color: 'white', fontWeight: 'bold'}}>
               Rainbow
             </Text>
@@ -43,10 +34,6 @@ export default ({}) => {
           </View>
         </View>
       </View>
-
-      <Pressable style={[styles.settingButton]}>
-        <Text>설정</Text>
-      </Pressable>
     </>
   );
 };
@@ -67,10 +54,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 2,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    // borderColor: BUTTON.third_hover,
     borderColor: 'white',
     paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
+    // paddingHorizontal: 10,
     borderRadius: 30,
   },
   petButton: {
@@ -83,8 +70,9 @@ const styles = StyleSheet.create({
   },
   settingButton: {
     position: 'absolute',
-    left: 8,
-    top: 130,
+    // left: 8,
+    right: 8,
+    top: 115,
     padding: 15,
     borderRadius: 50,
     backgroundColor: 'white',

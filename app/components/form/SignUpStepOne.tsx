@@ -4,11 +4,12 @@ import {userRegisterFormData} from '@/types/auth';
 import {isBlank} from '@/utils/validate';
 import {useMutation} from '@tanstack/react-query';
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import Alert from '../ui/Alert';
 import Bottom from '../ui/Bottom';
 import Button from '../ui/Button';
 import InputField from '../ui/InputField';
+import {Center} from '../ui/Stack';
 import Text from '../ui/Text';
 
 interface Props {
@@ -25,6 +26,7 @@ const StepOne = ({form, setForm, setStep}: Props) => {
   });
 
   const [emailError, setEmailError] = useState(false);
+  const [errorContent, setErrorContent] = useState('');
 
   const checkEmailMutation = useMutation({
     mutationFn: (email: string) => {
@@ -33,9 +35,17 @@ const StepOne = ({form, setForm, setStep}: Props) => {
   });
 
   const nextStep = () => {
+    const isEmpty = stepOne.errors.email;
+    if (isEmpty !== '') {
+      setErrorContent(stepOne.errors.email);
+      setEmailError(true);
+      return;
+    }
+
     checkEmailMutation.mutate(stepOne.values.email, {
       onSuccess: (res: any) => {
         if (res.data) {
+          setErrorContent('이미 사용중인 이메일입니다.');
           setEmailError(true);
         }
         if (!res.data) {
@@ -49,6 +59,14 @@ const StepOne = ({form, setForm, setStep}: Props) => {
     });
   };
 
+  if (checkEmailMutation.isPending) {
+    return (
+      <Center flex={1}>
+        <ActivityIndicator />
+      </Center>
+    );
+  }
+
   return (
     <>
       <View style={styles.step}>
@@ -61,20 +79,19 @@ const StepOne = ({form, setForm, setStep}: Props) => {
           variant="underscore"
           placeholder="이메일 입력"
           error={stepOne.errors.email}
-          touched={stepOne.touched.account}
+          touched={stepOne.touched.email}
+          containerStyle={{marginTop: 10}}
           blurOnSubmit={false}
+          inputMode="email"
+          returnKeyType="join"
+          onSubmitEditing={nextStep}
           {...stepOne.getTextInputProps('email')}
-          containerStyle={{
-            marginTop: 10,
-          }}
         />
 
         <Bottom>
           <Button
             label="확인"
-            onPress={() => {
-              nextStep();
-            }}
+            onPress={nextStep}
             disabled={checkEmailMutation.isPending}
             isLoading={checkEmailMutation.isPending}
           />
@@ -83,7 +100,7 @@ const StepOne = ({form, setForm, setStep}: Props) => {
 
       <Alert
         open={emailError}
-        content="이미 사용중인 이메일입니다."
+        content={errorContent}
         onClose={() => {
           setEmailError(false);
         }}
@@ -99,6 +116,8 @@ function validateForm(values: {email: string}) {
 
   if (isBlank(values.email)) {
     errors.email = '이메일을 입력해주세요.';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email)) {
+    errors.email = '올바른 이메일 형식이 아닙니다.';
   }
 
   return errors;
@@ -115,7 +134,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 18,
     paddingLeft: 4,
   },
 });

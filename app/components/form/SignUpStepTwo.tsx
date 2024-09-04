@@ -24,7 +24,8 @@ const StepTwo = ({form, setForm, setStep}: Props) => {
     validate: validateForm,
   });
 
-  const [accountError, setAccountError] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorContent, setErrorContent] = useState('');
 
   const checkAccountMutation = useMutation({
     mutationFn: (account: string) => {
@@ -33,10 +34,18 @@ const StepTwo = ({form, setForm, setStep}: Props) => {
   });
 
   const nextStep = () => {
+    const isEmpty = stepTwo.errors.account;
+    if (isEmpty !== '') {
+      setErrorContent(stepTwo.errors.account);
+      setError(true);
+      return;
+    }
+
     checkAccountMutation.mutate(stepTwo.values.account, {
       onSuccess: (res: any) => {
         if (res.data) {
-          setAccountError(true);
+          setErrorContent('다른 유저가 사용중인 계정입니다.');
+          setError(true);
         }
         if (!res.data) {
           setForm({
@@ -53,7 +62,7 @@ const StepTwo = ({form, setForm, setStep}: Props) => {
     <>
       <View style={styles.step}>
         <Text variant="title" textStyle={styles.text}>
-          사용하실 아이디를 입력해주세요.
+          아이디를 입력해주세요.
         </Text>
 
         <InputField
@@ -62,23 +71,23 @@ const StepTwo = ({form, setForm, setStep}: Props) => {
           placeholder="아이디 입력"
           error={stepTwo.errors.account}
           touched={stepTwo.touched.account}
+          containerStyle={{marginTop: 10}}
           blurOnSubmit={false}
+          returnKeyType="join"
+          onSubmitEditing={nextStep}
           {...stepTwo.getTextInputProps('account')}
-          containerStyle={{
-            marginTop: 10,
-          }}
         />
 
         <Bottom>
-          <Button label="확인" onPress={nextStep} />
+          <Button label="다음" onPress={nextStep} />
         </Bottom>
       </View>
 
       <Alert
-        open={accountError}
-        content="다른 유저가 사용중인 계정입니다."
+        open={error}
+        content={errorContent}
         onClose={() => {
-          setAccountError(false);
+          setError(false);
         }}
       />
     </>
@@ -91,7 +100,7 @@ function validateForm(values: {account: string}) {
   };
 
   if (isBlank(values.account)) {
-    errors.account = '이메일을 입력해주세요.';
+    errors.account = '아이디를 입력해주세요.';
   }
 
   return errors;
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'left',
     marginBottom: 10,
-    fontSize: 20,
+    fontSize: 18,
     paddingLeft: 4,
   },
 });

@@ -167,9 +167,22 @@ const SocialButtonList = () => {
       </RowStack>
 
       <RowStack containerStyle={{marginTop: 30, gap: 30}}>
-        <Text>카카오톡</Text>
-        <Text>구글</Text>
-        <Text>네이버</Text>
+        <Pressable>
+          <Image
+            resizeMode="contain"
+            style={styles.icon}
+            source={require('@/assets/icon/kakao.png')}
+          />
+        </Pressable>
+
+        <Pressable>
+          <Image
+            resizeMode="contain"
+            style={styles.icon}
+            source={require('@/assets/icon/google.png')}
+          />
+        </Pressable>
+        {/* <Text>네이버</Text> */}
       </RowStack>
     </View>
   );
@@ -203,6 +216,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   line: {backgroundColor: 'gray', height: 1, width: '30%'},
+  icon: {
+    width: 40,
+    height: 40,
+  },
 });
 
 export default Login;

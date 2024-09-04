@@ -1,7 +1,6 @@
 import Background from '@/components/Background';
 import BottomTab from '@/components/BottomTab';
 import Header from '@/components/Header';
-import TestButton from '@/components/TestButton';
 import Tutorial from '@/components/Tutorial';
 import {useCharacterActions, useCharacterState} from '@/data/characterStore';
 import {useGameActions} from '@/data/gameStore';
@@ -63,7 +62,9 @@ const HomeScreen = () => {
                 entities={entities}
               />
             )}
-            <TestButton />
+            {/* <TestButton /> */}
+
+            {/* <UserCircle /> */}
           </View>
 
           <BottomTab />
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
   },
   engineContainer: {
     width: '100%',
-    height: '82%',
+    height: '84%',
   },
   engine: {
     flex: 1,
