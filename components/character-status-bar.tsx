@@ -9,13 +9,26 @@ import Animated, {
 // 임시 데이터 (나중에 tanstack으로 교체)
 const TEMP_HUNGER = 75;
 const TEMP_HAPPINESS = 60;
-const TEMP_EXPERIENCE = 45;
+// 경험치는 character-header.tsx로 이동
 
 type StatusBarItemProps = {
   label: string;
   value: number;
   color: string;
 };
+
+/**
+ * @description
+ * 캐릭터 하단 상태바 컴포넌트
+ */
+export default function CharacterStatusBar() {
+  return (
+    <View style={styles.container}>
+      <StatusBarItem label="배고픔" value={TEMP_HUNGER} color="#F44336" />
+      <StatusBarItem label="행복" value={TEMP_HAPPINESS} color="#2196F3" />
+    </View>
+  );
+}
 
 function StatusBarItem({ label, value, color }: StatusBarItemProps) {
   const progress = useSharedValue(0);
@@ -45,16 +58,6 @@ function StatusBarItem({ label, value, color }: StatusBarItemProps) {
           ]}
         />
       </View>
-    </View>
-  );
-}
-
-export default function CharacterStatusBar() {
-  return (
-    <View style={styles.container}>
-      <StatusBarItem label="배고픔" value={TEMP_HUNGER} color="#F44336" />
-      <StatusBarItem label="행복" value={TEMP_HAPPINESS} color="#2196F3" />
-      <StatusBarItem label="경험치" value={TEMP_EXPERIENCE} color="#4CAF50" />
     </View>
   );
 }

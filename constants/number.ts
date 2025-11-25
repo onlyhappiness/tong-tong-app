@@ -21,4 +21,4 @@ export const ACTION_CHANGE_INTERVAL = 2000; // 2초
 /**
  * @description 클릭 정지 간격
  */
-export const CLICK_STOP_DURATION = 2000; // 2초
+export const CLICK_STOP_DURATION = 2500; // 2초

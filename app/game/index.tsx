@@ -2,6 +2,8 @@ import { Image, Pressable, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import ActionButtons from "@/components/action-button";
+import CharacterHeader from "@/components/character-header";
 import CharacterMenu from "@/components/character-menu";
 import CharacterStatusBar from "@/components/character-status-bar";
 import { CHARACTER_SIZE } from "@/constants/number";
@@ -45,6 +47,8 @@ export default function GameScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <CharacterHeader />
+
       <View style={styles.gameArea}>
         <Animated.View style={[styles.characterContainer, animatedStyle]}>
           {/* 아이콘 메뉴 */}
@@ -60,6 +64,7 @@ export default function GameScreen() {
       </View>
 
       <CharacterStatusBar />
+      <ActionButtons />
     </SafeAreaView>
   );
 }
@@ -75,7 +80,7 @@ const styles = StyleSheet.create({
   },
   characterContainer: {
     position: "absolute",
-    bottom: 60, // 화면 하단에서의 위치 (조정 가능)
+    bottom: 40, // 화면 하단에서의 위치 (조정 가능)
   },
   character: {
     width: CHARACTER_SIZE,
