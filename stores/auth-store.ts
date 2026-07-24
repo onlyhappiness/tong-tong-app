@@ -1,6 +1,6 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
-import { api } from '@/api/client';
+import { api } from "@/api/client";
 
 export type PublicUser = {
   id: string;
@@ -26,7 +26,7 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   checkSession: async () => {
     try {
-      const user = await api.get<PublicUser>('/auth/me');
+      const user = await api.get<PublicUser>("/auth/me");
       set({ user, isLoading: false });
     } catch {
       set({ user: null, isLoading: false });
@@ -34,17 +34,21 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   login: async (email, password) => {
-    const user = await api.post<PublicUser>('/auth/login', { email, password });
+    const user = await api.post<PublicUser>("/auth/login", { email, password });
     set({ user });
   },
 
   signup: async (email, password) => {
-    const user = await api.post<PublicUser>('/auth/signup', { email, password });
+    const user = await api.post<PublicUser>("/auth/signup", {
+      email,
+      password,
+    });
     set({ user });
   },
 
   logout: async () => {
-    await api.post('/auth/logout');
+    console.log("로그아웃");
+    await api.post("/auth/logout");
     set({ user: null });
   },
 }));

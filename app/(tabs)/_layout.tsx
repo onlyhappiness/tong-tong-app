@@ -1,11 +1,18 @@
+import { Redirect } from 'expo-router';
 import { NativeTabs } from 'expo-router/unstable-native-tabs';
 import { useColorScheme } from 'react-native';
 
 import { Colors } from '@/constants/theme';
+import { useAuthStore } from '@/stores/auth-store';
 
 export default function TabLayout() {
+  const user = useAuthStore((s) => s.user);
   const colorScheme = useColorScheme();
   const colors = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
+
+  if (!user) {
+    return <Redirect href="/login" />;
+  }
 
   return (
     <NativeTabs

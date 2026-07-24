@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
-import { useAuthStore } from '@/stores/auth-store';
+import { Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function ExploreScreen() {
   const theme = useTheme();
@@ -32,21 +32,21 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingHorizontal: Spacing.four,
     gap: Spacing.four,
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   accountSection: {
-    alignItems: 'center',
+    alignItems: "center",
     gap: Spacing.two,
   },
   logoutText: {
-    color: '#3c87f7',
+    color: "#3c87f7",
     fontSize: 14,
   },
 });
