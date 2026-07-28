@@ -1,102 +1,108 @@
-import { Link } from 'expo-router';
-import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Link } from "expo-router";
+import { useForm } from "react-hook-form";
+import { StyleSheet, Text, View } from "react-native";
 
-import { TextField } from '@/components/text-field';
-import { Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
-import { ApiError } from '@/api/client';
-import { useAuthStore } from '@/stores/auth-store';
+import { ApiError } from "@/api/client";
+import { AuthScaffold } from "@/components/auth/auth-scaffold";
+import { FormTextField } from "@/components/auth/form-text-field";
+import { PrimaryButton } from "@/components/primary-button";
+import { Spacing } from "@/constants/theme";
+import { useTheme } from "@/hooks/use-theme";
+import { loginSchema, type LoginForm } from "@/schema/auth";
+import { useAuthStore } from "@/stores/auth-store";
 
 export default function LoginScreen() {
   const theme = useTheme();
   const login = useAuthStore((s) => s.login);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { isSubmitting, errors },
+  } = useForm<LoginForm>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+  });
 
-  async function handleSubmit() {
-    setError(null);
-    setSubmitting(true);
+  const onSubmit = handleSubmit(async ({ email, password }) => {
     try {
       await login(email, password);
     } catch (e) {
-      setError(e instanceof ApiError ? e.message : '연결 실패, 다시 시도해주세요.');
-    } finally {
-      setSubmitting(false);
+      setError("root", {
+        message:
+          e instanceof ApiError ? e.message : "연결 실패, 다시 시도해주세요.",
+      });
     }
-  }
+  });
+
+  const topError =
+    errors.email?.message ?? errors.password?.message ?? errors.root?.message;
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <SafeAreaView style={styles.safeArea}>
-        <Text style={[styles.title, { color: theme.text }]}>로그인</Text>
+    <AuthScaffold mascot="🐣" subtitle="다시 만나서 반가워요 👋">
+      {topError && (
+        <Text selectable style={[styles.error, { color: theme.danger }]}>
+          {topError}
+        </Text>
+      )}
 
-        {error && <Text style={styles.error}>{error}</Text>}
+      <FormTextField
+        control={control}
+        name="email"
+        icon="envelope.fill"
+        placeholder="이메일"
+        autoCapitalize="none"
+        autoComplete="email"
+        keyboardType="email-address"
+        hasError={!!errors.root}
+      />
+      <FormTextField
+        control={control}
+        name="password"
+        icon="lock.fill"
+        placeholder="비밀번호"
+        secureTextEntry
+        autoComplete="current-password"
+        hasError={!!errors.root}
+      />
 
-        <TextField
-          placeholder="이메일"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextField
-          placeholder="비밀번호"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+      <PrimaryButton
+        label={isSubmitting ? "로그인 중..." : "로그인"}
+        onPress={onSubmit}
+        loading={isSubmitting}
+      />
 
-        <Pressable style={styles.button} onPress={handleSubmit} disabled={submitting}>
-          <Text style={styles.buttonText}>{submitting ? '로그인 중...' : '로그인'}</Text>
-        </Pressable>
-
-        <Link href="/signup">
-          <Text style={styles.link}>계정이 없나요? 회원가입</Text>
-        </Link>
-      </SafeAreaView>
-    </View>
+      <Link href="/signup" style={styles.linkWrap}>
+        <View style={styles.linkRow}>
+          <Text style={[styles.linkMuted, { color: theme.textSecondary }]}>
+            계정이 없나요?{" "}
+          </Text>
+          <Text style={[styles.link, { color: theme.tint }]}>회원가입</Text>
+        </View>
+      </Link>
+    </AuthScaffold>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  safeArea: {
-    flex: 1,
-    justifyContent: 'center',
-    gap: Spacing.three,
-    paddingHorizontal: Spacing.four,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: Spacing.four,
-  },
   error: {
-    color: '#e5484d',
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 14,
   },
-  button: {
-    backgroundColor: '#3c87f7',
-    borderRadius: Spacing.two,
-    paddingVertical: Spacing.three,
-    alignItems: 'center',
+  linkWrap: {
+    alignSelf: "center",
+    paddingVertical: Spacing.two,
   },
-  buttonText: {
-    color: '#ffffff',
-    fontWeight: '700',
+  linkRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  linkMuted: {
     fontSize: 14,
   },
   link: {
-    color: '#3c87f7',
     fontSize: 14,
-    textAlign: 'center',
+    fontWeight: "600",
   },
 });

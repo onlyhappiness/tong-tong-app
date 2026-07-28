@@ -34,6 +34,9 @@ function SplashScreenController() {
   return null;
 }
 
+/**
+ * 최상위 스택. 인증 게이팅은 각 그룹 레이아웃의 Redirect가 담당한다.
+ */
 function RootNavigator() {
   return (
     <Stack screenOptions={{ headerShown: false }}>

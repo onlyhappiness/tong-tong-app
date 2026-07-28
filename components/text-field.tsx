@@ -1,29 +1,72 @@
-import { StyleSheet, TextInput, type TextInputProps } from 'react-native';
+import { Image } from 'expo-image';
+import { useState } from 'react';
+import { StyleSheet, TextInput, View, type TextInputProps } from 'react-native';
 
 import { Spacing } from '@/constants/theme';
 import { useTheme } from '@/hooks/use-theme';
 
-export function TextField({ style, ...rest }: TextInputProps) {
+type TextFieldProps = TextInputProps & {
+  /** SF Symbol name shown as a leading icon (iOS only). */
+  icon?: string;
+  /** Highlights the field border in the danger color. */
+  error?: boolean;
+};
+
+export function TextField({ style, icon, error, onFocus, onBlur, ...rest }: TextFieldProps) {
   const theme = useTheme();
+  const [focused, setFocused] = useState(false);
+
+  const borderColor = error ? theme.danger : focused ? theme.tint : 'transparent';
+  const iconColor = error ? theme.danger : focused ? theme.tint : theme.textSecondary;
 
   return (
-    <TextInput
+    <View
       style={[
-        styles.input,
-        { color: theme.text, backgroundColor: theme.backgroundElement },
-        style,
+        styles.wrapper,
+        { backgroundColor: theme.backgroundElement, borderColor },
       ]}
-      placeholderTextColor={theme.textSecondary}
-      {...rest}
-    />
+    >
+      {icon && process.env.EXPO_OS === 'ios' && (
+        <Image
+          source={`sf:${icon}`}
+          tintColor={iconColor as string}
+          style={styles.icon}
+        />
+      )}
+      <TextInput
+        style={[styles.input, { color: theme.text }, style]}
+        placeholderTextColor={theme.textSecondary}
+        onFocus={(e) => {
+          setFocused(true);
+          onFocus?.(e);
+        }}
+        onBlur={(e) => {
+          setFocused(false);
+          onBlur?.(e);
+        }}
+        {...rest}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    borderRadius: Spacing.two,
+  wrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: Spacing.two,
+    borderRadius: 14,
+    borderCurve: 'continuous',
+    borderWidth: 1.5,
     paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.two,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+  },
+  input: {
+    flex: 1,
+    paddingVertical: Spacing.three,
     fontSize: 16,
   },
 });

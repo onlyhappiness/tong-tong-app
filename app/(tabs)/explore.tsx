@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     gap: Spacing.two,
   },
   logoutText: {
-    color: "#3c87f7",
+    color: "#30A46C",
     fontSize: 14,
   },
 });
