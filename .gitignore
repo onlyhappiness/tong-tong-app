@@ -47,3 +47,5 @@ docs/
 .claude/
 CHANGELOG.md
 skills-lock.json
+
+.env

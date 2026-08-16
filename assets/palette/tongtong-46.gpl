@@ -1,0 +1,50 @@
+GIMP Palette
+Name: TongTong 46
+Columns: 6
+# Apollo (AdamCYounis) 기반. grass 램프 6색만 통통 한낮 초원용으로 교체.
+ 23  32  56	sky-100
+ 37  58  94	sky-200
+ 60  94 139	sky-300
+ 79 143 186	sky-400
+115 190 211	sky-500
+164 221 219	sky-600
+ 47  79  60	grass-100
+ 72 122  82	grass-200
+106 164 108	grass-300
+144 201 138	grass-400
+182 227 168	grass-500
+220 243 200	grass-600
+ 77  43  50	soil-100
+122  72  65	soil-200
+173 119  87	soil-300
+192 148 115	soil-400
+215 181 148	soil-500
+231 213 179	soil-600
+ 52  28  39	gold-100
+ 96  44  44	gold-200
+136  75  43	gold-300
+190 119  43	gold-400
+222 158  65	gold-500
+232 193 112	gold-600
+ 36  21  39	berry-100
+ 65  29  49	berry-200
+117  36  56	berry-300
+165  48  48	berry-400
+207  87  60	berry-500
+218 134  62	berry-600
+ 30  29  57	bloom-100
+ 64  39  81	bloom-200
+122  54 123	bloom-300
+162  62 140	bloom-400
+198  81 151	bloom-500
+223 132 165	bloom-600
+  9  10  20	neutral-100
+ 16  20  31	neutral-200
+ 21  29  40	neutral-300
+ 32  46  55	neutral-400
+ 57  74  80	neutral-500
+ 87 114 119	neutral-600
+129 151 150	neutral-700
+168 181 178	neutral-800
+199 207 204	neutral-900
+235 237 233	neutral-1000

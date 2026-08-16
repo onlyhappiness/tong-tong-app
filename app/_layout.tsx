@@ -1,25 +1,42 @@
-import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { useColorScheme } from "react-native";
-
+import { queryClient } from "@/api/query-client";
 import { useAuthStore } from "@/stores/auth-store";
+import { focusManager, QueryClientProvider } from "@tanstack/react-query";
+import { DefaultTheme, SplashScreen, Stack, ThemeProvider } from "expo-router";
+import { useEffect } from "react";
+import { AppState } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   useEffect(() => {
     useAuthStore.getState().checkSession();
   }, []);
 
+  useAppFocus();
+
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SplashScreenController />
-      <RootNavigator />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider value={DefaultTheme}>
+        <SplashScreenController />
+        <RootNavigation />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
+}
+
+/**
+ * 앱이 다시 앞으로 나올 때 낡은 데이터를 새로 가져오게 함.
+ */
+function useAppFocus() {
+  useEffect(() => {
+    if (process.env.EXPO_OS === "web") return;
+
+    const subscription = AppState.addEventListener("change", (status) => {
+      focusManager.setFocused(status === "active");
+    });
+
+    return () => subscription.remove();
+  }, []);
 }
 
 function SplashScreenController() {
@@ -35,9 +52,9 @@ function SplashScreenController() {
 }
 
 /**
- * 최상위 스택. 인증 게이팅은 각 그룹 레이아웃의 Redirect가 담당한다.
+ * 최상위 스택
  */
-function RootNavigator() {
+function RootNavigation() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
