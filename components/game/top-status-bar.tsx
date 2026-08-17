@@ -1,6 +1,7 @@
 import { Ramp, Spacing } from "@/constants/theme";
 import { isDaytime } from "@/utils/game-time";
-import { StyleSheet, Text, View } from "react-native";
+import { Link } from "expo-router";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type TopStatusBarProps = {
   now: Date;
@@ -14,9 +15,19 @@ export function TopStatusBar({ now, coins }: TopStatusBarProps) {
   return (
     <View style={styles.root}>
       <Text style={styles.text}>{isDaytime(now) ? "낮" : "밤"}</Text>
-      <Text style={[styles.text, styles.coins]} selectable>
-        {coins.toLocaleString("ko-KR")} 코인
-      </Text>
+
+      <View style={styles.right}>
+        <Text style={[styles.text, styles.coins]} selectable>
+          {coins.toLocaleString("ko-KR")} 코인
+        </Text>
+
+        {/* 탭바를 없애면서 설정으로 갈 길이 여기 하나만 남았다. */}
+        <Link href="/settings" asChild>
+          <Pressable hitSlop={12}>
+            <Text style={styles.text}>설정</Text>
+          </Pressable>
+        </Link>
+      </View>
     </View>
   );
 }
@@ -34,6 +45,11 @@ const styles = StyleSheet.create({
     color: Ramp.neutral[9],
     fontSize: 13,
     fontWeight: "700",
+  },
+  right: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: Spacing.three,
   },
   coins: {
     fontVariant: ["tabular-nums"],

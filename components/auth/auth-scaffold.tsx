@@ -1,27 +1,38 @@
-import { Image } from 'expo-image';
-import { type ReactNode } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Image } from "expo-image";
+import { type ReactNode } from "react";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Fonts, Spacing } from '@/constants/theme';
-import { useTheme } from '@/hooks/use-theme';
+import { Fonts, Spacing } from "@/constants/theme";
+import { useKeyboardVisible } from "@/hooks/use-keyboard-visible";
+import { useTheme } from "@/hooks/use-theme";
 
 type AuthScaffoldProps = {
-  /** Mascot emoji shown over the brand glow. */
   mascot?: string;
   subtitle: string;
   children: ReactNode;
 };
 
-export function AuthScaffold({ mascot = '🐣', subtitle, children }: AuthScaffoldProps) {
+export function AuthScaffold({
+  mascot = "🐣",
+  subtitle,
+  children,
+}: AuthScaffoldProps) {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
+  const keyboardVisible = useKeyboardVisible();
 
   return (
     <View style={[styles.root, { backgroundColor: theme.background }]}>
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={process.env.EXPO_OS === 'ios' ? 'padding' : undefined}
+        behavior={process.env.EXPO_OS === "android" ? "height" : undefined}
       >
         <ScrollView
           style={styles.flex}
@@ -30,15 +41,18 @@ export function AuthScaffold({ mascot = '🐣', subtitle, children }: AuthScaffo
             {
               paddingTop: insets.top + Spacing.six,
               paddingBottom: insets.bottom + Spacing.five,
+              justifyContent: keyboardVisible ? "flex-start" : "center",
             },
           ]}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps="handled" // iOS 전용.
+          automaticallyAdjustKeyboardInsets
+          keyboardDismissMode="on-drag" // 목록을 끌어내리면 키보드가 내려간다.
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.hero}>
             <View style={styles.mascotWrap}>
               <Image
-                source={require('@/assets/images/logo-glow.png')}
+                source={require("@/assets/images/logo-glow.png")}
                 style={StyleSheet.absoluteFill}
                 contentFit="contain"
               />
@@ -46,7 +60,9 @@ export function AuthScaffold({ mascot = '🐣', subtitle, children }: AuthScaffo
             </View>
             <View style={styles.headings}>
               <Text style={[styles.wordmark, { color: theme.text }]}>통통</Text>
-              <Text style={[styles.subtitle, { color: theme.textSecondary }]}>{subtitle}</Text>
+              <Text style={[styles.subtitle, { color: theme.textSecondary }]}>
+                {subtitle}
+              </Text>
             </View>
           </View>
 
@@ -66,36 +82,35 @@ const styles = StyleSheet.create({
   },
   content: {
     flexGrow: 1,
-    justifyContent: 'center',
     paddingHorizontal: Spacing.four,
     gap: Spacing.five,
   },
   hero: {
-    alignItems: 'center',
+    alignItems: "center",
     gap: Spacing.three,
   },
   mascotWrap: {
     width: 160,
     height: 160,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   mascot: {
     fontSize: 80,
   },
   headings: {
-    alignItems: 'center',
+    alignItems: "center",
     gap: Spacing.one,
   },
   wordmark: {
     fontFamily: Fonts?.rounded,
     fontSize: 36,
-    fontWeight: '800',
+    fontWeight: "800",
     letterSpacing: 2,
   },
   subtitle: {
     fontSize: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
   form: {
     gap: Spacing.three,

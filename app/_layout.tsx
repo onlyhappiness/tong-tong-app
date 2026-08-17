@@ -57,7 +57,7 @@ function SplashScreenController() {
 function RootNavigation() {
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(game)" />
       <Stack.Screen name="(auth)" />
     </Stack>
   );

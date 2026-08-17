@@ -2,9 +2,11 @@ import { Pet } from "@/api/type";
 import { ActionBar } from "@/components/game/action-bar";
 import { FoodBowl } from "@/components/game/food-bowl";
 import { HeartRow } from "@/components/game/heart-row";
-import { BottomTabInset, Colors, Spacing } from "@/constants/theme";
+import { Colors, Spacing } from "@/constants/theme";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+const HUNGER_MAX = 100;
 
 type ControlPanelProps = {
   pet: Pet;
@@ -38,15 +40,9 @@ export function ControlPanel({
     <View
       style={[
         styles.root,
-        // iOS는 네이티브 탭바가 콘텐츠 위를 덮으므로 그만큼 비워야 한다.
-        // 안드로이드는 탭바가 레이아웃 공간을 이미 차지해 더 주면 이중이 된다.
-        {
-          paddingBottom:
-            Spacing.three +
-            (process.env.EXPO_OS === "ios"
-              ? insets.bottom + BottomTabInset
-              : 0),
-        },
+        // 탭바가 없어졌으므로 홈 인디케이터·제스처 바만 피하면 된다.
+        // 플랫폼 분기도 필요 없다 — 안전영역은 양쪽에서 같은 뜻이다.
+        { paddingBottom: Spacing.three + insets.bottom },
       ]}
     >
       {!isEgg && (
@@ -64,6 +60,7 @@ export function ControlPanel({
         pettingUsed={pet.petting.used}
         pettingMax={pet.petting.max}
         petActionsEnabled={!isEgg}
+        full={pet.hunger >= HUNGER_MAX}
         busy={busy}
       />
     </View>

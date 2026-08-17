@@ -29,6 +29,8 @@ export default function LoginScreen() {
     try {
       await login(email, password);
     } catch (e) {
+      console.log("error::: ", e);
+
       setError("root", {
         message:
           e instanceof ApiError ? e.message : "연결 실패, 다시 시도해주세요.",

@@ -10,8 +10,9 @@ import { SkyBackdrop, skyBands } from "@/components/game/sky-backdrop";
 import { SpeechBubble } from "@/components/game/speech-bubble";
 import { TopStatusBar } from "@/components/game/top-status-bar";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
-import { useAttendance } from "@/hooks/use-attendance";
-import { usePets } from "@/hooks/use-pet";
+import { useAttendance, useCheckIn } from "@/hooks/use-attendance";
+import { useFeed, usePets, useTouch } from "@/hooks/use-pet";
+import { useTransientMessage } from "@/hooks/use-transient-message";
 import { useWallet } from "@/hooks/use-wallet";
 
 const GREETING = "주인님! 오늘 날씨가 정말 좋아요!";
@@ -22,6 +23,12 @@ export default function HomeScreen() {
   const pets = usePets();
   const wallet = useWallet();
   const attendance = useAttendance();
+
+  const checkIn = useCheckIn();
+  const feed = useFeed();
+  const touch = useTouch();
+
+  const [message, setMessage] = useTransientMessage();
 
   const error = pets.error ?? wallet.error ?? attendance.error;
 
@@ -55,6 +62,24 @@ export default function HomeScreen() {
 
   const isEgg = pet.stage === "EGG";
 
+  const busy = checkIn.isPending || feed.isPending || touch.isPending;
+
+  const showFailure = (failure: Error) => setMessage(failure.message);
+
+  const handleCheckIn = () =>
+    checkIn.mutate(undefined, {
+      onSuccess: ({ amount }) => setMessage(`코인 ${amount}개를 받았어요!`),
+      onError: showFailure,
+    });
+
+  const handleFeed = () => feed.mutate(pet.id, { onError: showFailure });
+
+  const handleTouch = () => touch.mutate(pet.id, { onError: showFailure });
+
+  const line = message ?? GREETING;
+
+  const showBubble = !isEgg || message !== null;
+
   return (
     <View style={[styles.root, { backgroundColor: skyBands(now)[0] }]}>
       <SafeAreaView style={styles.safeArea} edges={["top"]}>
@@ -63,7 +88,7 @@ export default function HomeScreen() {
         {/* 하늘 */}
         <View style={styles.stage}>
           <SkyBackdrop now={now} />
-          {!isEgg && <SpeechBubble line={GREETING} />}
+          {showBubble && <SpeechBubble line={line} />}
         </View>
 
         {/* 지평선. 펫의 발이 이 위에 닿는다. */}
@@ -76,18 +101,16 @@ export default function HomeScreen() {
 
         <ControlPanel
           pet={pet}
-          onCheckIn={noop}
-          onFeed={noop}
-          onTouch={noop}
+          onCheckIn={handleCheckIn}
+          onFeed={handleFeed}
+          onTouch={handleTouch}
           checkedIn={attendance.data.checkedIn}
-          busy={false}
+          busy={busy}
         />
       </SafeAreaView>
     </View>
   );
 }
-
-function noop() {}
 
 const styles = StyleSheet.create({
   root: {

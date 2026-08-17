@@ -12,10 +12,12 @@ type ActionBarProps = {
   pettingMax: number;
 
   /**
-   *  펫 대상 액션
-   * 알인 상태에서는 false
+   * 펫 대상 액션
    */
   petActionsEnabled: boolean;
+
+  /** 배고픔 가득 찼는지 */
+  full: boolean;
 
   /** 요청이 도는 중 */
   busy: boolean;
@@ -29,6 +31,7 @@ export function ActionBar({
   pettingUsed,
   pettingMax,
   petActionsEnabled,
+  full,
   busy,
 }: ActionBarProps) {
   const pettingLeft = pettingMax - pettingUsed;
@@ -47,7 +50,7 @@ export function ActionBar({
         <>
           <ActionButton
             label="밥 주기"
-            hint="-30"
+            hint={full ? "배부름" : "-30"}
             onPress={onFeed}
             disabled={busy}
           />
