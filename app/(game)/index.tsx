@@ -1,24 +1,32 @@
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Centered } from "@/components/centered";
-import { ControlPanel } from "@/components/game/control-panel";
+import { ActionBar } from "@/components/game/action-bar";
+import { AttendanceButton } from "@/components/game/attendance-button";
+import { GaugeCard } from "@/components/game/gauge-card";
+import { InfoPanel } from "@/components/game/info-panel";
 import { MeadowGround } from "@/components/game/meadow-ground";
 import { PetPlaceholder } from "@/components/game/pet-placeholder";
 import { PetSlot } from "@/components/game/pet-slot";
 import { SkyBackdrop, skyBands } from "@/components/game/sky-backdrop";
+import { SettingsButton } from "@/components/game/settings-button";
 import { SpeechBubble } from "@/components/game/speech-bubble";
-import { TopStatusBar } from "@/components/game/top-status-bar";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useAttendance, useCheckIn } from "@/hooks/use-attendance";
 import { useFeed, usePets, useTouch } from "@/hooks/use-pet";
 import { useTransientMessage } from "@/hooks/use-transient-message";
+import { useNow } from "@/hooks/use-now";
 import { useWallet } from "@/hooks/use-wallet";
 
 const GREETING = "주인님! 오늘 날씨가 정말 좋아요!";
 
+/** 배고픔 눈금의 상한. 밸런스 상수가 아니라 척도라 앱이 알아도 된다. */
+const HUNGER_MAX = 100;
+
 export default function HomeScreen() {
-  const now = new Date();
+  const now = useNow();
+  const insets = useSafeAreaInsets();
 
   const pets = usePets();
   const wallet = useWallet();
@@ -83,7 +91,16 @@ export default function HomeScreen() {
   return (
     <View style={[styles.root, { backgroundColor: skyBands(now)[0] }]}>
       <SafeAreaView style={styles.safeArea} edges={["top"]}>
-        <TopStatusBar now={now} coins={wallet.data.coins} />
+        {/* 좌측 줄. 보는 것(게이지)과 펫과 무관한 조작(출석·설정)이 여기 모인다.
+            펫에게 하는 일(밥·쓰다듬기)은 펫 곁에 따로 있다.
+            알은 배고픔·친밀도가 의미 없어 게이지를 안 띄운다. */}
+        {!isEgg && <GaugeCard pet={pet} />}
+        <AttendanceButton
+          onPress={handleCheckIn}
+          checkedIn={attendance.data.checkedIn}
+          busy={busy}
+        />
+        <SettingsButton />
 
         {/* 하늘 */}
         <View style={styles.stage}>
@@ -91,22 +108,32 @@ export default function HomeScreen() {
           {showBubble && <SpeechBubble line={line} />}
         </View>
 
-        {/* 지평선. 펫의 발이 이 위에 닿는다. */}
+        {/* 지평선. 펫의 발이 이 위에 닿고, 액션도 펫과 한 덩어리로 붙는다. */}
         <View style={styles.ground}>
           <MeadowGround />
-          <PetSlot>
+
+          <PetSlot
+            footer={
+              !isEgg && (
+                <ActionBar
+                  onFeed={handleFeed}
+                  onTouch={handleTouch}
+                  pettingUsed={pet.petting.used}
+                  pettingMax={pet.petting.max}
+                  full={pet.hunger >= HUNGER_MAX}
+                  busy={busy}
+                />
+              )
+            }
+          >
             <PetPlaceholder pet={pet} />
           </PetSlot>
-        </View>
 
-        <ControlPanel
-          pet={pet}
-          onCheckIn={handleCheckIn}
-          onFeed={handleFeed}
-          onTouch={handleTouch}
-          checkedIn={attendance.data.checkedIn}
-          busy={busy}
-        />
+          {/* 계기판. 카드 없이 잔디 위에 얹히므로 글자에 그림자가 있다. */}
+          <View style={[styles.info, { bottom: Spacing.three + insets.bottom }]}>
+            <InfoPanel now={now} coins={wallet.data.coins} />
+          </View>
+        </View>
       </SafeAreaView>
     </View>
   );
@@ -130,6 +157,10 @@ const styles = StyleSheet.create({
   },
   ground: {
     flex: 4,
+  },
+  info: {
+    position: "absolute",
+    right: Spacing.three,
   },
   notice: {
     color: Colors.text,

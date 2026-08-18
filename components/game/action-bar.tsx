@@ -1,20 +1,13 @@
 import { Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
 type ActionBarProps = {
-  onCheckIn: () => void;
   onFeed: () => void;
   onTouch: () => void;
 
-  /** 오늘 출석 받았는지 확인 */
-  checkedIn: boolean;
   pettingUsed: number;
   pettingMax: number;
-
-  /**
-   * 펫 대상 액션
-   */
-  petActionsEnabled: boolean;
 
   /** 배고픔 가득 찼는지 */
   full: boolean;
@@ -23,14 +16,17 @@ type ActionBarProps = {
   busy: boolean;
 };
 
+/**
+ * 펫 대상 액션. 펫 바로 밑에 아이콘 두 개로 선다.
+ *
+ * 화면 아래 카드에서 여기로 옮긴 이유: 밥 주기·쓰다듬기는 **펫에게 하는 일**이라
+ * 펫 곁에 있어야 대상이 분명하다. 출석은 계정 단위라 좌측 상단에 따로 있다.
+ */
 export function ActionBar({
-  onCheckIn,
   onFeed,
   onTouch,
-  checkedIn,
   pettingUsed,
   pettingMax,
-  petActionsEnabled,
   full,
   busy,
 }: ActionBarProps) {
@@ -39,69 +35,48 @@ export function ActionBar({
   return (
     <View style={styles.root}>
       <ActionButton
-        label="출석"
-        hint={checkedIn ? "받음" : "+200"}
-        onPress={onCheckIn}
-        primary
-        disabled={busy || checkedIn}
+        icon="bowl-mix"
+        label={full ? "배부름" : "밥 주기"}
+        onPress={onFeed}
+        disabled={busy}
       />
-
-      {petActionsEnabled && (
-        <>
-          <ActionButton
-            label="밥 주기"
-            hint={full ? "배부름" : "-30"}
-            onPress={onFeed}
-            disabled={busy}
-          />
-          <ActionButton
-            label="쓰다듬기"
-            hint={`${pettingLeft}/${pettingMax}`}
-            onPress={onTouch}
-            disabled={busy || pettingLeft <= 0}
-          />
-        </>
-      )}
+      <ActionButton
+        icon="hand-heart"
+        label={`쓰다듬기 ${pettingLeft}/${pettingMax}`}
+        onPress={onTouch}
+        disabled={busy || pettingLeft <= 0}
+      />
     </View>
   );
 }
 
 type ActionButtonProps = {
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
   label: string;
-  hint: string;
   onPress: () => void;
-  primary?: boolean;
   disabled?: boolean;
 };
 
-function ActionButton({
-  label,
-  hint,
-  onPress,
-  primary,
-  disabled,
-}: ActionButtonProps) {
+function ActionButton({ icon, label, onPress, disabled }: ActionButtonProps) {
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled}
+      accessibilityRole="button"
+      accessibilityLabel={label}
       style={({ pressed }) => [
         styles.button,
         {
-          backgroundColor: primary
-            ? pressed
-              ? Colors.tintPressed
-              : Colors.tint
-            : Ramp.neutral[9],
+          backgroundColor: pressed ? Ramp.grass[5] : Colors.panel,
           opacity: disabled ? 0.45 : 1,
-          transform: [{ scale: pressed ? 0.97 : 1 }],
+          transform: [{ scale: pressed ? 0.94 : 1 }],
         },
       ]}
     >
-      <Text style={[styles.label, primary && styles.labelPrimary]}>
+      <MaterialCommunityIcons name={icon} size={26} color={Colors.tint} />
+      <Text style={styles.label} numberOfLines={1}>
         {label}
       </Text>
-      <Text style={[styles.hint, primary && styles.hintPrimary]}>{hint}</Text>
     </Pressable>
   );
 }
@@ -109,34 +84,24 @@ function ActionButton({
 const styles = StyleSheet.create({
   root: {
     flexDirection: "row",
-    gap: Spacing.two,
+    gap: Spacing.three,
   },
   button: {
-    flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     gap: 2,
-    borderRadius: 14,
+    minWidth: 76,
+    paddingHorizontal: Spacing.two,
+    paddingVertical: Spacing.two,
+    borderRadius: 18,
     borderCurve: "continuous",
-    borderWidth: 1,
-    // 패널이 옅은 연두라 흰 버튼이 그냥 얹히면 경계가 안 보인다.
-    borderColor: Ramp.grass[3],
-    paddingVertical: Spacing.three,
+    boxShadow: `0 4px 12px ${Colors.tintShadow}`,
   },
   label: {
     color: Colors.text,
     fontFamily: Fonts?.rounded,
-    fontSize: 14,
-    fontWeight: "700",
-  },
-  labelPrimary: {
-    color: Ramp.neutral[9],
-  },
-  hint: {
-    color: Colors.textSecondary,
     fontSize: 11,
+    fontWeight: "700",
     fontVariant: ["tabular-nums"],
-  },
-  hintPrimary: {
-    color: Ramp.grass[5],
   },
 });

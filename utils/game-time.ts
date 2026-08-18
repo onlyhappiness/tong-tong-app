@@ -3,7 +3,7 @@ import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 
-export const KST_OFFSET_MINUTES = 9 * 60;
+const KST_OFFSET_MINUTES = 9 * 60;
 
 /** 게임 하루의 경계 */
 export const GAME_DAY_START_HOUR = 6;
@@ -12,7 +12,7 @@ export const GAME_DAY_START_HOUR = 6;
 export const NIGHT_START_HOUR = 18;
 
 /** KST 시각 */
-export function kst(now: Date): Dayjs {
+function kst(now: Date): Dayjs {
   return dayjs(now).utcOffset(KST_OFFSET_MINUTES);
 }
 

@@ -1,4 +1,4 @@
-import { API_URL } from './config';
+import { API_URL } from '@/api/config';
 
 type SuccessEnvelope<T> = { success: true; data: T; timestamp: string };
 type ErrorEnvelope = {

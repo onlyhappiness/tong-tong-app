@@ -44,9 +44,22 @@ export const Colors = {
   tintPressed: Ramp.grass[0],
   tintShadow: "rgba(72,122,82,0.35)",
   danger: Ramp.berry[3],
-} as const;
 
-export type ThemeColor = keyof typeof Colors;
+  /**
+   * 잔디 위에 뜨는 카드. neutral[9]에 알파를 준 것이라 잔디가 비쳐 보인다.
+   * 순백을 쓰지 않는 이유는 팔레트에 흰색이 없기 때문이다.
+   */
+  panel: "rgba(235, 237, 233, 0.9)",
+
+  /**
+   * 카드 위의 보조 글자.
+   *
+   * `textSecondary`(neutral[5])는 반투명 배경 위에서 대비가 4.0까지 떨어져
+   * 기준에 못 미친다. soil[1]은 5.8이고, 따뜻한 갈색이라 초록 본문과
+   * 색상으로도 구분된다.
+   */
+  panelTextSecondary: Ramp.soil[1],
+} as const;
 
 export const Fonts = Platform.select({
   ios: {
@@ -79,5 +92,3 @@ export const Spacing = {
   six: 64,
 } as const;
 
-export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
-export const MaxContentWidth = 800;

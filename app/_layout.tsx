@@ -1,4 +1,5 @@
 import { queryClient } from "@/api/query-client";
+import { useSessionCacheReset } from "@/hooks/use-session-cache-reset";
 import { useAuthStore } from "@/stores/auth-store";
 import { focusManager, QueryClientProvider } from "@tanstack/react-query";
 import { DefaultTheme, SplashScreen, Stack, ThemeProvider } from "expo-router";
@@ -13,6 +14,7 @@ export default function RootLayout() {
   }, []);
 
   useAppFocus();
+  useSessionCacheReset();
 
   return (
     <QueryClientProvider client={queryClient}>
