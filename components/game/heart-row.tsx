@@ -1,9 +1,9 @@
 import { GaugeRow } from "@/components/game/gauge-row";
 import { Ramp } from "@/constants/theme";
-import { StyleSheet, View } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-const CELLS = 10;
-const PER_CELL = 100 / CELLS;
+const HEARTS = 5;
+const PER_HEART = 100 / HEARTS;
 
 type HeartRowProps = {
   /** 친밀도 0~100. */
@@ -11,44 +11,28 @@ type HeartRowProps = {
 };
 
 /**
- * 친밀도. 10칸이고 한 칸이 10이다.
+ * 친밀도. 하트 다섯 개이고 한 개가 20이다.
  *
+ * 빈 동그라미 열 개에서 하트 다섯 개로 줄였다. 도형 수가 줄어 카드가 좁아지고,
+ * 무엇을 재는 게이지인지 그림이 바로 말해준다. 반 칸은 `heart-half-full`이
+ * 그린다 — 색만 다른 반 칸은 "덜 찬 것"으로 안 읽힌다.
  */
 export function HeartRow({ value }: HeartRowProps) {
   return (
-    <GaugeRow label="친밀도" value={value}>
-      {Array.from({ length: CELLS }, (_, index) => {
-        const filled = value >= (index + 1) * PER_CELL;
-        const half = !filled && value >= index * PER_CELL + PER_CELL / 2;
+    <GaugeRow icon="heart" iconColor={Ramp.berry[3]} value={value}>
+      {Array.from({ length: HEARTS }, (_, index) => {
+        const filled = value >= (index + 1) * PER_HEART;
+        const half = !filled && value >= index * PER_HEART + PER_HEART / 2;
 
         return (
-          <View
+          <MaterialCommunityIcons
             key={index}
-            style={[
-              styles.cell,
-              filled && styles.cellFilled,
-              half && styles.cellHalf,
-            ]}
+            name={filled ? "heart" : half ? "heart-half-full" : "heart-outline"}
+            size={16}
+            color={Ramp.berry[3]}
           />
         );
       })}
     </GaugeRow>
   );
 }
-
-const styles = StyleSheet.create({
-  cell: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    borderWidth: 2,
-    borderColor: Ramp.berry[3],
-    backgroundColor: "transparent",
-  },
-  cellFilled: {
-    backgroundColor: Ramp.berry[3],
-  },
-  cellHalf: {
-    backgroundColor: Ramp.berry[5],
-  },
-});

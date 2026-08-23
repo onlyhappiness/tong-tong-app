@@ -1,4 +1,4 @@
-import { Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
+import { Card, Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -90,18 +90,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 2,
-    minWidth: 76,
+    minWidth: 78,
     paddingHorizontal: Spacing.two,
     paddingVertical: Spacing.two,
-    borderRadius: 18,
+    borderRadius: Card.radius,
     borderCurve: "continuous",
-    boxShadow: `0 4px 12px ${Colors.tintShadow}`,
+    borderWidth: Card.borderWidth,
+    borderColor: Card.borderColor,
+    boxShadow: Card.shadow,
   },
   label: {
     color: Colors.text,
     fontFamily: Fonts?.rounded,
-    fontSize: 11,
-    fontWeight: "700",
+    fontSize: 12,
+    fontWeight: "800",
     fontVariant: ["tabular-nums"],
   },
 });

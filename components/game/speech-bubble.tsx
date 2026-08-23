@@ -1,4 +1,4 @@
-import { Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
+import { Card, Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
 import { StyleSheet, Text, View } from "react-native";
 
 type SpeechBubbleProps = {
@@ -25,11 +25,13 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     maxWidth: "88%",
     backgroundColor: Ramp.neutral[9],
-    borderRadius: 16,
+    borderRadius: Card.radius,
     borderCurve: "continuous",
+    borderWidth: Card.borderWidth,
+    borderColor: Card.borderColor,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
-    boxShadow: `0 2px 6px ${Colors.tintShadow}`,
+    boxShadow: Card.shadow,
   },
   line: {
     color: Colors.text,
@@ -40,11 +42,16 @@ export const styles = StyleSheet.create({
   },
   tail: {
     position: "absolute",
-    bottom: -6,
+    bottom: -8,
     alignSelf: "center",
-    width: 12,
-    height: 12,
+    width: 14,
+    height: 14,
     backgroundColor: Ramp.neutral[9],
+    // 45도 돌린 네모라 바깥을 향하는 변은 오른쪽·아래 둘뿐이다.
+    // 이 둘에만 테두리를 줘야 말상자 윤곽이 꼬리까지 이어진다.
+    borderRightWidth: Card.borderWidth,
+    borderBottomWidth: Card.borderWidth,
+    borderColor: Card.borderColor,
     transform: [{ rotate: "45deg" }],
   },
 });

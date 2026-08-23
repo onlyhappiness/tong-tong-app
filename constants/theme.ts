@@ -61,6 +61,20 @@ export const Colors = {
   panelTextSecondary: Ramp.soil[1],
 } as const;
 
+/**
+ * 스티커 카드.
+ *
+ * 아기자기한 인상은 취향이 아니라 이 세 값에서 나온다 — 크게 둥근 모서리,
+ *
+ */
+export const Card = {
+  radius: 22,
+  borderWidth: 2,
+  borderColor: Ramp.grass[3],
+  /** blur 0. 번지는 그림자는 사진 UI의 것이다. */
+  shadow: `0 3px 0 ${Ramp.grass[2]}`,
+} as const;
+
 export const Fonts = Platform.select({
   ios: {
     sans: "system-ui",
@@ -91,4 +105,3 @@ export const Spacing = {
   five: 32,
   six: 64,
 } as const;
-

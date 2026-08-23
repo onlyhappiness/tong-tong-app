@@ -21,8 +21,8 @@ export function PetPlaceholder({ pet }: PetPlaceholderProps) {
 
 const styles = StyleSheet.create({
   root: {
-    width: 96,
-    height: 96,
+    width: 128,
+    height: 128,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 12,

@@ -1,5 +1,9 @@
+import { useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 import { Centered } from "@/components/centered";
 import { ActionBar } from "@/components/game/action-bar";
@@ -9,14 +13,15 @@ import { InfoPanel } from "@/components/game/info-panel";
 import { MeadowGround } from "@/components/game/meadow-ground";
 import { PetPlaceholder } from "@/components/game/pet-placeholder";
 import { PetSlot } from "@/components/game/pet-slot";
-import { SkyBackdrop, skyBands } from "@/components/game/sky-backdrop";
+import { PetSprite } from "@/components/game/pet-sprite";
 import { SettingsButton } from "@/components/game/settings-button";
+import { SkyBackdrop, skyBands } from "@/components/game/sky-backdrop";
 import { SpeechBubble } from "@/components/game/speech-bubble";
 import { Colors, Fonts, Spacing } from "@/constants/theme";
 import { useAttendance, useCheckIn } from "@/hooks/use-attendance";
+import { useNow } from "@/hooks/use-now";
 import { useFeed, usePets, useTouch } from "@/hooks/use-pet";
 import { useTransientMessage } from "@/hooks/use-transient-message";
-import { useNow } from "@/hooks/use-now";
 import { useWallet } from "@/hooks/use-wallet";
 
 const GREETING = "주인님! 오늘 날씨가 정말 좋아요!";
@@ -37,6 +42,10 @@ export default function HomeScreen() {
   const touch = useTouch();
 
   const [message, setMessage] = useTransientMessage();
+
+  // 쓰다듬기가 성공할 때마다 1씩 는다. PetSprite는 값이 아니라 "바뀌었다"만 본다.
+  // pet.petting.used를 쓰지 않는 이유: 그 값은 KST 06:00에 0으로 돌아간다.
+  const [hops, setHops] = useState(0);
 
   const error = pets.error ?? wallet.error ?? attendance.error;
 
@@ -82,7 +91,11 @@ export default function HomeScreen() {
 
   const handleFeed = () => feed.mutate(pet.id, { onError: showFailure });
 
-  const handleTouch = () => touch.mutate(pet.id, { onError: showFailure });
+  const handleTouch = () =>
+    touch.mutate(pet.id, {
+      onSuccess: () => setHops((n) => n + 1),
+      onError: showFailure,
+    });
 
   const line = message ?? GREETING;
 
@@ -91,21 +104,24 @@ export default function HomeScreen() {
   return (
     <View style={[styles.root, { backgroundColor: skyBands(now)[0] }]}>
       <SafeAreaView style={styles.safeArea} edges={["top"]}>
-        {/* 좌측 줄. 보는 것(게이지)과 펫과 무관한 조작(출석·설정)이 여기 모인다.
-            펫에게 하는 일(밥·쓰다듬기)은 펫 곁에 따로 있다.
-            알은 배고픔·친밀도가 의미 없어 게이지를 안 띄운다. */}
-        {!isEgg && <GaugeCard pet={pet} />}
-        <AttendanceButton
-          onPress={handleCheckIn}
-          checkedIn={attendance.data.checkedIn}
-          busy={busy}
-        />
-        <SettingsButton />
+        <View style={styles.hud}>
+          <View style={styles.hudColumn}>
+            {!isEgg && <GaugeCard pet={pet} />}
+          </View>
+
+          <View style={styles.hudColumn}>
+            <AttendanceButton
+              onPress={handleCheckIn}
+              checkedIn={attendance.data.checkedIn}
+              busy={busy}
+            />
+            <SettingsButton />
+          </View>
+        </View>
 
         {/* 하늘 */}
         <View style={styles.stage}>
           <SkyBackdrop now={now} />
-          {showBubble && <SpeechBubble line={line} />}
         </View>
 
         {/* 지평선. 펫의 발이 이 위에 닿고, 액션도 펫과 한 덩어리로 붙는다. */}
@@ -113,6 +129,7 @@ export default function HomeScreen() {
           <MeadowGround />
 
           <PetSlot
+            header={showBubble && <SpeechBubble line={line} />}
             footer={
               !isEgg && (
                 <ActionBar
@@ -126,11 +143,15 @@ export default function HomeScreen() {
               )
             }
           >
-            <PetPlaceholder pet={pet} />
+            <PetSprite bounceKey={hops}>
+              <PetPlaceholder pet={pet} />
+            </PetSprite>
           </PetSlot>
 
           {/* 계기판. 카드 없이 잔디 위에 얹히므로 글자에 그림자가 있다. */}
-          <View style={[styles.info, { bottom: Spacing.three + insets.bottom }]}>
+          <View
+            style={[styles.info, { bottom: Spacing.three + insets.bottom }]}
+          >
             <InfoPanel now={now} coins={wallet.data.coins} />
           </View>
         </View>
@@ -146,17 +167,21 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
+  hud: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    paddingHorizontal: Spacing.three,
+    paddingTop: Spacing.two,
+  },
+  hudColumn: {
+    gap: Spacing.two,
+  },
   stage: {
-    // 하늘 6 : 잔디 4. flex를 둘 다 1로 두면 안쪽 내용에 따라 비율이 흔들린다 —
-    // 숫자로 못 박아야 기기·플랫폼이 달라도 같은 그림이 나온다.
-    flex: 6,
-    alignItems: "center",
-    justifyContent: "flex-end",
-    gap: Spacing.three,
-    paddingBottom: 76,
+    flex: 5,
   },
   ground: {
-    flex: 4,
+    flex: 5,
   },
   info: {
     position: "absolute",

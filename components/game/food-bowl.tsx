@@ -19,7 +19,7 @@ export function FoodBowl({ hunger }: FoodBowlProps) {
   const level = Math.ceil((hunger / 100) * LEVELS);
 
   return (
-    <GaugeRow label="배고픔" value={hunger}>
+    <GaugeRow icon="bowl-mix" iconColor={Ramp.soil[2]} value={hunger}>
       {Array.from({ length: LEVELS }, (_, index) => (
         <View
           key={index}
@@ -32,12 +32,12 @@ export function FoodBowl({ hunger }: FoodBowlProps) {
 
 const styles = StyleSheet.create({
   block: {
-    width: 14,
-    height: 12,
-    borderRadius: 3,
+    width: 16,
+    height: 14,
+    borderRadius: 7,
     borderCurve: "continuous",
     borderWidth: 2,
-    borderColor: Ramp.soil[2],
+    borderColor: Ramp.soil[3],
     backgroundColor: "transparent",
   },
   blockFilled: {

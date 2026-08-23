@@ -1,4 +1,4 @@
-import { Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
+import { Card, Colors, Fonts, Ramp, Spacing } from "@/constants/theme";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Pressable, StyleSheet, Text } from "react-native";
 
@@ -46,23 +46,22 @@ export function IconCardButton({
 const styles = StyleSheet.create({
   root: {
     // 내용만큼만 차지한다. 화면 폭을 채우면 카드가 아니라 띠가 된다.
-    alignSelf: "flex-start",
     alignItems: "center",
     gap: 2,
-    marginLeft: Spacing.three,
-    marginTop: Spacing.two,
     paddingHorizontal: Spacing.three,
     paddingVertical: Spacing.two,
-    minWidth: 60,
-    borderRadius: 16,
+    minWidth: 62,
+    borderRadius: Card.radius,
     borderCurve: "continuous",
+    borderWidth: Card.borderWidth,
+    borderColor: Card.borderColor,
     backgroundColor: Colors.panel,
-    boxShadow: `0 4px 12px ${Colors.tintShadow}`,
+    boxShadow: Card.shadow,
   },
   label: {
     color: Ramp.grass[0],
     fontFamily: Fonts?.rounded,
-    fontSize: 11,
-    fontWeight: "700",
+    fontSize: 12,
+    fontWeight: "800",
   },
 });
